@@ -2,7 +2,6 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import './App.css';
 
 function Header() {
   return (
@@ -16,7 +15,7 @@ function Header() {
               <NavDropdown.Item href="#action/3.2">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Electrical Goods</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/link">Login & Register</Nav.Link>
+            <Nav.Link href="/login">Login & Register</Nav.Link>
           </Nav>
       </Container>
     </Navbar>

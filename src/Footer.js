@@ -5,7 +5,7 @@ import './App.css';
 
 function Footer() {
     return (
-      <Navbar bg='success' data-bs-theme='dark' className='Footer'>
+      <Navbar bg='success' data-bs-theme='dark'>
         <Container className="d-flex flex-column align-items-center">
           <Nav className="mx-auto mb-3">
             <Nav.Item>

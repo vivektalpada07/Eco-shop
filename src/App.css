@@ -1,12 +1,17 @@
 .Header {
-  margin-bottom: 600px;
+  margin-bottom: 550px;
 }
 
-.Footer nav-link:hover{
-  text-decoration: underline;
+.fixed-top {
+  padding-top: 120px;
 }
 
-p {
+h4 {
   text-align: center;
-  margin-top: 5px;
+  padding-left: 250px;
+}
+
+.Header-image {
+  width: 80px;
+  height: 80px;
 }

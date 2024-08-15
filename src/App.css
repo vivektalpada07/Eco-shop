@@ -1,5 +1,30 @@
 .Header {
-  margin-bottom: 600px;
+  background-color: #28a745;
+  padding: 10px 0;
+}
+
+.Header .nav-link {
+  color: #ffffff; 
+  margin-right: 15px;
+  text-transform: uppercase;
+}
+
+.Header .nav-link:hover {
+  color: #d4edda;
+  text-decoration: none; 
+}
+
+.Header .dropdown-menu {
+  background-color: #28a745;
+  border: none;
+}
+
+.Header .dropdown-item {
+  color: #ffffff;
+}
+
+.Header .dropdown-item:hover {
+  background-color: #218838;
 }
 
 .Footer nav-link:hover{

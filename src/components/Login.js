@@ -4,6 +4,7 @@ import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
+import Header from "./Header";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ const Login = () => {
     setError("");
     try {
       await logIn(email, password);
-      navigate("/dashborad");
+      navigate("/customer");
     } catch (err) {
       setError(err.message);
     }
@@ -35,8 +36,8 @@ const Login = () => {
 
   return (
     <>
+    <Header/>
       <div className="p-4 box">
-        <h2 className="mb-3">Firebase Auth Login</h2>
         {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">

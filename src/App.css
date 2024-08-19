@@ -1,37 +1,73 @@
 .Header {
-  background-color: #28a745;
-  padding: 10px 0;
+  margin-bottom: 550px;
 }
 
-.Header .nav-link {
-  color: #ffffff; 
-  margin-right: 15px;
-  text-transform: uppercase;
+.fixed-top {
+  padding-top: 120px;
 }
 
-.Header .nav-link:hover {
-  color: #d4edda;
-  text-decoration: none; 
-}
-
-.Header .dropdown-menu {
-  background-color: #28a745;
-  border: none;
-}
-
-.Header .dropdown-item {
-  color: #ffffff;
-}
-
-.Header .dropdown-item:hover {
-  background-color: #218838;
-}
-
-.Footer nav-link:hover{
-  text-decoration: underline;
-}
-
-p {
+h4 {
   text-align: center;
-  margin-top: 5px;
+  padding-left: 250px;
+}
+
+.Header-image {
+  width: 80px;
+  height: 80px;
+}
+
+.header .container {
+  justify-content: center;
+}
+.input-group-text {
+  background-color: #212529;
+  color: #fff;
+  font-weight: bold;
+}
+.edit,
+.delete {
+  padding: 0px 6px;
+  border-radius: 10px;
+
+}
+
+.edit {
+  margin-right: 10px;
+}
+table {
+  text-align: center;
+}
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

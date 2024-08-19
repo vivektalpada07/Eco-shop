@@ -7,7 +7,7 @@ function Header() {
   return (
     <Navbar bg='success' data-bs-theme='dark' className='Header'>
       <Container>
-          <Nav className="ms-auto" activeKey='/home'>
+          <Nav className="ms-auto" activeKey='/'>
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/link">About Us</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">

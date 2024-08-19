@@ -2,7 +2,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
-import './App.css';
+import '../App.css';
 
 function HomePage() {
   return (
@@ -13,12 +13,12 @@ function HomePage() {
           className='image' fluid/>
         </Col>
         <Col className='d-flex align-items-right text-end'>
-            <h4>If you're ever in the market for any furniture, 
+            <h3>If you're ever in the market for any furniture, 
                 <br></br>
                 homewares, electrical goods and more,
                 <br></br>
                 make the Eco Shop your first-stop shop!
-            </h4>
+            </h3>
         </Col>
       </Row> 
     </Container>

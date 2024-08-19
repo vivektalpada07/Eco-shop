@@ -1,12 +1,12 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import './App.css';
+import '../App.css';
 
 function Footer() {
     return (
-      <Navbar bg='success' data-bs-theme='dark'>
-        <Container className="d-flex flex-column align-items-center">
+      <Navbar bg='success' data-bs-theme='dark' style={{height:'80px'}}>
+        <Container className="d-flex flex-column align-items-center" style={{padding:'30px'}}>
           <Nav className="mx-auto mb-3">
             <Nav.Item>
               <Nav.Link href="/home">About Us</Nav.Link>

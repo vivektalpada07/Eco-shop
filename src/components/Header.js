@@ -3,7 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Image from 'react-bootstrap/Image';
-import './App.css';
+import '../App.css';
 
 function Header() {
   return (
@@ -13,7 +13,7 @@ function Header() {
           <Nav className="ms-auto" activeKey='/home'>
             <Nav.Link href="/home">Home</Nav.Link>
             <Nav.Link href="/aboutus">About Us</Nav.Link>
-            <NavDropdown title="Products" id="basic-nav-dropdown">
+            <NavDropdown title="Categories" id="basic-nav-dropdown">
               <NavDropdown.Item href="">Furniture</NavDropdown.Item>
               <NavDropdown.Item href="">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="">Electrical Goods</NavDropdown.Item>

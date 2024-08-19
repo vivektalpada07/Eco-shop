@@ -1,14 +1,15 @@
 .Header {
-  margin-bottom: 550px;
+  margin-bottom: 540px;
 }
 
 .fixed-top {
   padding-top: 120px;
 }
 
-h4 {
+h3 {
   text-align: center;
   padding-left: 250px;
+  padding-top: 180px;
 }
 
 .Header-image {
@@ -19,6 +20,7 @@ h4 {
 .header .container {
   justify-content: center;
 }
+
 .input-group-text {
   background-color: #212529;
   color: #fff;

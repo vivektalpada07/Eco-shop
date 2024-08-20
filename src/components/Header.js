@@ -14,9 +14,15 @@ function Header() {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/aboutus">About Us</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">
+
               <NavDropdown.Item href="/products/furniture">Furniture</NavDropdown.Item>
               <NavDropdown.Item href="/products/homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/products/electrical-goods">Electrical Goods</NavDropdown.Item>
+
+              <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Homewares</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Electrical Goods</NavDropdown.Item>
+
             </NavDropdown>
             <Nav.Link href="/login">Login & Register</Nav.Link>
           </Nav>

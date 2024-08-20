@@ -1,10 +1,18 @@
 .Header {
-  margin-bottom: 540px;
+  position: fixed; /* Fixed positioning keeps it at the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it's above other content */
+  background-color: #282c34; /* Example background */
+  color: white;
 }
 
+/* Adjust the container positioning */
 .fixed-top {
-  padding-top: 120px;
+  margin-top: 100px; /* Adjust if needed to prevent overlap with the header */
 }
+
 
 h3 {
   text-align: center;
@@ -18,7 +26,29 @@ h3 {
 }
 
 .header .container {
-  justify-content: center;
+  justify-content: center; /* Center content inside the header */
+}
+
+/* Furniture container styling */
+.furniture-container {
+  padding-top: 20px; /* Minimal padding to ensure the content starts right below the header */
+  margin-top: 0;
+}
+
+.furniture-container .row {
+  width: 100%;
+}
+
+.furniture-container h2, 
+.furniture-container p {
+  margin-bottom: 20px;
+}
+
+/* Text and table styling */
+h3 {
+  text-align: center;
+  padding-left: 250px;
+  padding-top: 180px;
 }
 
 .input-group-text {
@@ -26,19 +56,21 @@ h3 {
   color: #fff;
   font-weight: bold;
 }
+
 .edit,
 .delete {
   padding: 0px 6px;
   border-radius: 10px;
-
 }
 
 .edit {
   margin-right: 10px;
 }
+
 table {
   text-align: center;
 }
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -65,6 +97,16 @@ table {
   color: #61dafb;
 }
 
+/* Footer styling */
+footer {
+  background-color: #218559; /* Adjust with the extracted color */
+  padding: 10px 0;
+  text-align: center;
+  color: white; /* Ensures the text is readable on the green background */
+}
+
+
+/* Keyframes for spinning animation */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -73,3 +115,95 @@ table {
     transform: rotate(360deg);
   }
 }
+
+/* Ensure the footer stays at the bottom */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+.image-section {
+  flex: 1;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.p-4.box {
+  max-width: 400px;
+  width: 100%;
+}
+
+.signup-link {
+  margin-top: 1rem;
+}
+
+.signup-container {
+  display: flex;
+  height: 100vh;
+}
+
+.image-section {
+  flex: 1;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.p-4.box {
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-link {
+  margin-top: 1rem;
+}
+
+.Footer {
+  background-color: #282c34;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+}
+

@@ -1,15 +1,29 @@
+/* Ensure the body and html take full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container for the entire application */
+.container-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the container takes the full viewport height */
+}
+
+/* Main content area */
+.content {
+  flex: 1; /* This makes the content area expand to fill the available space, pushing the footer down */
+}
+
+/* Header styling */
 .Header {
-  margin-bottom: 540px;
+  margin-bottom: 0; /* Remove any bottom margin */
 }
 
 .fixed-top {
-  padding-top: 120px;
-}
-
-h3 {
-  text-align: center;
-  padding-left: 250px;
-  padding-top: 180px;
+  padding-top: 120px; /* Adjust based on your header's height */
 }
 
 .Header-image {
@@ -18,7 +32,29 @@ h3 {
 }
 
 .header .container {
-  justify-content: center;
+  justify-content: center; /* Center content inside the header */
+}
+
+/* Furniture container styling */
+.furniture-container {
+  padding-top: 20px; /* Minimal padding to ensure the content starts right below the header */
+  margin-top: 0;
+}
+
+.furniture-container .row {
+  width: 100%;
+}
+
+.furniture-container h2, 
+.furniture-container p {
+  margin-bottom: 20px;
+}
+
+/* Text and table styling */
+h3 {
+  text-align: center;
+  padding-left: 250px;
+  padding-top: 180px;
 }
 
 .input-group-text {
@@ -26,19 +62,22 @@ h3 {
   color: #fff;
   font-weight: bold;
 }
+
 .edit,
 .delete {
   padding: 0px 6px;
   border-radius: 10px;
-
 }
 
 .edit {
   margin-right: 10px;
 }
+
 table {
   text-align: center;
 }
+
+/* App-specific styles */
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -65,6 +104,16 @@ table {
   color: #61dafb;
 }
 
+/* Footer styling */
+footer {
+  background-color: #218559; /* Adjust with the extracted color */
+  padding: 10px 0;
+  text-align: center;
+  color: white; /* Ensures the text is readable on the green background */
+}
+
+
+/* Keyframes for spinning animation */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

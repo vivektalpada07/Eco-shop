@@ -6,16 +6,16 @@ import '../App.css';
 function Footer() {
     return (
       <Navbar bg='success' data-bs-theme='dark' style={{height:'80px'}}>
-        <Container className="d-flex flex-column align-items-center" style={{padding:'30px'}}>
+        <Container className="d-flex flex-column align-items-center">
           <Nav className="mx-auto mb-3">
             <Nav.Item>
-              <Nav.Link href="/home">About Us</Nav.Link>
+              <Nav.Link href="/aboutus">About Us</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="link-1">Return & Refund Policy</Nav.Link>
+              <Nav.Link href="/r&rpolicy">Return & Refund Policy</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="link-2">Contact Us</Nav.Link>
+              <Nav.Link href="/contactus">Contact Us</Nav.Link>
             </Nav.Item>
           
           </Nav>

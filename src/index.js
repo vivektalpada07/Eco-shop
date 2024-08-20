@@ -6,12 +6,11 @@ import reportWebVitals from './reportWebVitals';
 import Home from './components/Home';
 import App from './App';  // Correct import statement for App component
 
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    <App />  
+      <App />
     </BrowserRouter>
   </React.StrictMode>
 );

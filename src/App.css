@@ -1,15 +1,11 @@
-.Header {
-  margin-bottom: 540px;
-}
-
-.fixed-top {
-  padding-top: 120px;
+.Home {
+  padding-top: 75px;
 }
 
 h3 {
   text-align: center;
-  padding-left: 250px;
-  padding-top: 180px;
+  padding-left: 50px;
+  padding-top: 5px;
 }
 
 .Header-image {

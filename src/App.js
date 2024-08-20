@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
+import Furnitures from './components/Furnitures';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
 
@@ -20,6 +21,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/customer" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/Furnitures" element={<Furnitures/>} />
             </Routes>
           </Col>
         </Row>

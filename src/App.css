@@ -1,4 +1,3 @@
-/* Ensure the Header is properly positioned */
 .Header {
   position: fixed; /* Fixed positioning keeps it at the top */
   top: 0;
@@ -27,7 +26,29 @@ h3 {
 }
 
 .header .container {
-  justify-content: center;
+  justify-content: center; /* Center content inside the header */
+}
+
+/* Furniture container styling */
+.furniture-container {
+  padding-top: 20px; /* Minimal padding to ensure the content starts right below the header */
+  margin-top: 0;
+}
+
+.furniture-container .row {
+  width: 100%;
+}
+
+.furniture-container h2, 
+.furniture-container p {
+  margin-bottom: 20px;
+}
+
+/* Text and table styling */
+h3 {
+  text-align: center;
+  padding-left: 250px;
+  padding-top: 180px;
 }
 
 .input-group-text {
@@ -76,6 +97,16 @@ table {
   color: #61dafb;
 }
 
+/* Footer styling */
+footer {
+  background-color: #218559; /* Adjust with the extracted color */
+  padding: 10px 0;
+  text-align: center;
+  color: white; /* Ensures the text is readable on the green background */
+}
+
+
+/* Keyframes for spinning animation */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

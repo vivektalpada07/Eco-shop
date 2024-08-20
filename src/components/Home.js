@@ -1,11 +1,10 @@
-import Header from './Header';
-import Footer from './Footer';
-import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
+import Header from './Header';  // Import the Header component
+import Footer from './Footer';  // Import the Footer component
 import '../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Home() {
   return (

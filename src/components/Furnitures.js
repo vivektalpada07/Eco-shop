@@ -1,63 +1,68 @@
+import React, { useEffect, useState } from 'react';
+import { db } from '../firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import Header from './Header';
 import Footer from './Footer';
-import '../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Furnitures = () => {
+function Furnitures() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const q = query(collection(db, "products"), where("category", "==", "furniture"));
+      const querySnapshot = await getDocs(q);
+      const productsArray = querySnapshot.docs.map(doc => doc.data());
+      setProducts(productsArray);
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleBuyNow = (product) => {
+    console.log("Buying product:", product);
+    // Implement the logic for buying the product here
+  };
+
+  const handleAddToCart = (product) => {
+    console.log("Adding product to cart:", product);
+    // Implement the logic for adding the product to the cart here
+  };
+
   return (
-    <div className="container-wrapper">
+    <div className="wrapper">
       <Header />
-
       <div className="content">
-        <div className="furniture-container">
-          <h2 className="text-center">Our Furniture Collection</h2>
-          <p className="text-center">
-            Explore our wide range of stylish and modern furniture, crafted to perfection and designed to bring elegance to your living space.
-          </p>
-
+        <h2 className="text-center">Our Furniture Collection</h2>
+        {products.length > 0 ? (
           <div className="row justify-content-center">
-            <div className="col-md-4">
-              <div className="card text-center">
-                <img src="sofa.jpg" className="card-img-top" alt="Sofa" />
-                <div className="card-body">
-                  <h5 className="card-title">Elegant Sofa</h5>
-                  <p className="card-text">A perfect blend of comfort and style for your living room.</p>
-                  <p className="card-text"><strong>Price: $499</strong></p>
-                  <button className="btn btn-primary">Buy Now</button>
-                  <button className="btn btn-secondary ms-2">Add to Wishlist</button>
+            {products.map((product, index) => (
+              <div className="col-md-4" key={index}>
+                <div className="card text-center">
+                  <div className="card-body">
+                    <h5 className="card-title">{product.productName}</h5>
+                    <p className="card-text">{product.productDescription}</p>
+                    <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => handleBuyNow(product)}
+                    >
+                      Buy Now
+                    </button>
+                    <button 
+                      className="btn btn-secondary ms-2" 
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card text-center">
-                <img src="dining_table.jpg" className="card-img-top" alt="Dining Table" />
-                <div className="card-body">
-                  <h5 className="card-title">Modern Dining Table</h5>
-                  <p className="card-text">Designed for family gatherings, this table combines form and function.</p>
-                  <p className="card-text"><strong>Price: $799</strong></p>
-                  <button className="btn btn-primary">Buy Now</button>
-                  <button className="btn btn-secondary ms-2">Add to Wishlist</button>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card text-center">
-                <img src="bed.jpg" className="card-img-top" alt="Bed" />
-                <div className="card-body">
-                  <h5 className="card-title">Cozy Bed</h5>
-                  <p className="card-text">Experience luxury and comfort with our king-sized bed.</p>
-                  <p className="card-text"><strong>Price: $999</strong></p>
-                  <button className="btn btn-primary">Buy Now</button>
-                  <button className="btn btn-secondary ms-2">Add to Wishlist</button>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
+        ) : (
+          <p>No furniture products found.</p>
+        )}
       </div>
-
       <Footer />
     </div>
   );

@@ -1,63 +1,68 @@
+import React, { useEffect, useState } from 'react';
+import { db } from '../firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import Header from './Header';
 import Footer from './Footer';
-import '../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Electricalgoods = () => {
+function Electricalgoods() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const q = query(collection(db, "products"), where("category", "==", "electricalgoods"));
+      const querySnapshot = await getDocs(q);
+      const productsArray = querySnapshot.docs.map(doc => doc.data());
+      setProducts(productsArray);
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleBuyNow = (product) => {
+    console.log("Buying product:", product);
+    // Implement the logic for buying the product here
+  };
+
+  const handleAddToCart = (product) => {
+    console.log("Adding product to cart:", product);
+    // Implement the logic for adding the product to the cart here
+  };
+
   return (
-    <div className="container-wrapper">
+    <div className="wrapper">
       <Header />
-
       <div className="content">
-        <div className="electricalgoods-container">
-          <h2 className="text-center">Our Electrical Goods Collection</h2>
-          <p className="text-center">
-            Browse our range of top-quality electrical goods, designed to meet all your household needs.
-          </p>
-
+        <h2 className="text-center">Our Electrical Goods Collection</h2>
+        {products.length > 0 ? (
           <div className="row justify-content-center">
-            <div className="col-md-4">
-              <div className="card text-center">
-                <img src="tv.jpg" className="card-img-top" alt="Smart TV" />
-                <div className="card-body">
-                  <h5 className="card-title">4K Smart TV</h5>
-                  <p className="card-text">Experience entertainment like never before with our latest 4K Smart TV.</p>
-                  <p className="card-text"><strong>Price: $899</strong></p>
-                  <button className="btn btn-primary">Buy Now</button>
-                  <button className="btn btn-secondary ms-2">Add to Wishlist</button>
+            {products.map((product, index) => (
+              <div className="col-md-4" key={index}>
+                <div className="card text-center">
+                  <div className="card-body">
+                    <h5 className="card-title">{product.productName}</h5>
+                    <p className="card-text">{product.productDescription}</p>
+                    <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => handleBuyNow(product)}
+                    >
+                      Buy Now
+                    </button>
+                    <button 
+                      className="btn btn-secondary ms-2" 
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card text-center">
-                <img src="microwave.jpg" className="card-img-top" alt="Microwave Oven" />
-                <div className="card-body">
-                  <h5 className="card-title">Microwave Oven</h5>
-                  <p className="card-text">Quick and easy cooking with our high-performance microwave oven.</p>
-                  <p className="card-text"><strong>Price: $199</strong></p>
-                  <button className="btn btn-primary">Buy Now</button>
-                  <button className="btn btn-secondary ms-2">Add to Wishlist</button>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-md-4">
-              <div className="card text-center">
-                <img src="blender.jpg" className="card-img-top" alt="Blender" />
-                <div className="card-body">
-                  <h5 className="card-title">High-Speed Blender</h5>
-                  <p className="card-text">Perfect for smoothies, soups, and more with this powerful blender.</p>
-                  <p className="card-text"><strong>Price: $149</strong></p>
-                  <button className="btn btn-primary">Buy Now</button>
-                  <button className="btn btn-secondary ms-2">Add to Wishlist</button>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
-        </div>
+        ) : (
+          <p>No electrical goods products found.</p>
+        )}
       </div>
-
       <Footer />
     </div>
   );

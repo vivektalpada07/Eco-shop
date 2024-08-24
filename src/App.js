@@ -12,6 +12,7 @@ import Electricalgoods from './components/Electricalgoods';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext";  
 import { ProductContextProvider } from "./context/Productcontext";  
+import AboutUs from './components/AboutUs';
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Col>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/aboutus" element={<AboutUs />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/customer" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />

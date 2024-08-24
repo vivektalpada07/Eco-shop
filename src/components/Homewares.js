@@ -3,9 +3,11 @@ import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Header from './Header';
 import Footer from './Footer';
+import { useCartContext } from '../context/Cartcontext';  // Import the useCartContext hook
 
 function Homewares() {
   const [products, setProducts] = useState([]);
+  const { addToCart } = useCartContext();  // Destructure the addToCart function from the context
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,8 +26,8 @@ function Homewares() {
   };
 
   const handleAddToCart = (product) => {
+    addToCart(product);  // Call the addToCart function to add the product to the cart
     console.log("Adding product to cart:", product);
-    // Implement the logic for adding the product to the cart here
   };
 
   return (

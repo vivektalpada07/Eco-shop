@@ -8,10 +8,12 @@ import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import Furnitures from './components/Furnitures';
 import Homewares from './components/Homewares';
+import Cart from './components/Cart';
 import Electricalgoods from './components/Electricalgoods';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext";  
-import { ProductContextProvider } from "./context/Productcontext";  
+import { ProductContextProvider } from "./context/Productcontext";
+import { CartContextProvider } from "./context/Cartcontext";
 import AboutUs from './components/AboutUs';
 
 
@@ -19,6 +21,7 @@ function App() {
   return (
     <UserAuthContextProvider>
       <ProductContextProvider>
+        <CartContextProvider>
         <Container>
           <Row>
             <Col>
@@ -31,10 +34,12 @@ function App() {
                 <Route path="/Furnitures" element={<Furnitures/>} />
                 <Route path="/Homewares" element={<Homewares/>} />
                 <Route path="/Electricalgoods" element={<Electricalgoods/>} />
+                <Route path="/Cart" element={<Cart/>} />
               </Routes>
             </Col>
           </Row>
         </Container>
+        </CartContextProvider>
       </ProductContextProvider>
     </UserAuthContextProvider>
   );

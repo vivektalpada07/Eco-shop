@@ -16,16 +16,16 @@ function Header() {
             alt="Eco Shop"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <NavDropdown title="Products" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
-              <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
-              <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
+              <NavDropdown.Item href="/products/furniture">Furniture</NavDropdown.Item>
+              <NavDropdown.Item href="/products/homewares">Homewares</NavDropdown.Item>
+              <NavDropdown.Item href="/products/electrical-goods">Electrical Goods</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="Cart">Cart</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
             <Nav.Link href="/login">Login & Register</Nav.Link>
           </Nav>
         </Navbar.Collapse>

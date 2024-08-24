@@ -11,13 +11,16 @@ import Homewares from './components/Homewares';
 import Electricalgoods from './components/Electricalgoods';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext";  
-import { ProductContextProvider } from "./context/Productcontext";  
+import { ProductContextProvider } from "./context/Productcontext"; 
+import { CartContextProvider } from "./context/Cartcontext"; 
+import Cart from './components/Cart';
 
 
 function App() {
   return (
     <UserAuthContextProvider>
       <ProductContextProvider>
+        <CartContextProvider>
         <Container>
           <Row>
             <Col>
@@ -29,12 +32,15 @@ function App() {
                 <Route path="/Furnitures" element={<Furnitures/>} />
                 <Route path="/Homewares" element={<Homewares/>} />
                 <Route path="/Electricalgoods" element={<Electricalgoods/>} />
+                <Route path="/cart" element={<Cart/>} />
               </Routes>
             </Col>
           </Row>
         </Container>
+        </CartContextProvider>
       </ProductContextProvider>
     </UserAuthContextProvider>
+
   );
 }
 

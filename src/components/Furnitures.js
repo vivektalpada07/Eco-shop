@@ -3,10 +3,12 @@ import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Header from './Header';
 import Footer from './Footer';
+import { useCartContext } from '../context/Cartcontext';
 
 function Furnitures() {
   const [products, setProducts] = useState([]);
-
+  const { addToCart } = useCartContext();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchProducts = async () => {
       const q = query(collection(db, "products"), where("category", "==", "furniture"));
@@ -25,8 +27,10 @@ function Furnitures() {
 
   const handleAddToCart = (product) => {
     console.log("Adding product to cart:", product);
-    // Implement the logic for adding the product to the cart here
+    addToCart(product);  // Call the addToCart function to add the product to the cart
+    console.log("Adding product to cart:", product);
   };
+  
 
   return (
     <div className="wrapper">

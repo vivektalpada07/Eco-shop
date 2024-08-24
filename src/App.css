@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #f8f9fa;
@@ -7,88 +8,241 @@ body {
   box-sizing: border-box;
 }
 
+.Home {
+  padding-top: 75px;
+}
+
 /* Header */
+=======
+>>>>>>> Stashed changes
 .Header {
-  background-color: #28a745;
+  position: fixed; /* Fixed positioning keeps it at the top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it's above other content */
+<<<<<<< Updated upstream
+  background-color: #28a745; /* Example background */
+  color: white;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   padding: 10px 0;
-  position: fixed;
+=======
+  background-color: #282c34; /* Example background */
+  color: white;
+>>>>>>> Stashed changes
+}
+
+/* Adjust the container positioning */
+.fixed-top {
+  margin-top: 100px; /* Adjust if needed to prevent overlap with the header */
+}
+
+
+h3 {
+  text-align: center;
+  padding-left: 250px;
+  padding-top: 180px;
+}
+
+.Header-image {
+  width: 80px;
+  height: 80px;
+}
+
+.header .container {
+  justify-content: center; /* Center content inside the header */
+}
+
+/* Furniture container styling */
+.furniture-container {
+  padding-top: 20px; /* Minimal padding to ensure the content starts right below the header */
+  margin-top: 0;
+}
+
+.furniture-container .row {
   width: 100%;
-  top: 0;
-  z-index: 1000;
 }
 
-.Header .Header-image {
-  height: 50px;
+.furniture-container h2, 
+.furniture-container p {
+  margin-bottom: 20px;
 }
 
-.Navbar .nav-link {
-  color: white !important;
-  margin-right: 15px;
+/* Text and table styling */
+h3 {
+  text-align: center;
+  padding-left: 250px;
+  padding-top: 180px;
 }
 
-.Navbar .nav-link:hover {
-  color: #d4edda !important;
+.input-group-text {
+  background-color: #212529;
+  color: #fff;
+  font-weight: bold;
+}
+
+.edit,
+.delete {
+  padding: 0px 6px;
+  border-radius: 10px;
+}
+
+.edit {
+  margin-right: 10px;
+}
+
+table {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+/* Footer styling */
+footer {
+  background-color: #218559; /* Adjust with the extracted color */
+  padding: 10px 0;
+  text-align: center;
+  color: white; /* Ensures the text is readable on the green background */
+}
+
+
+/* Keyframes for spinning animation */
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Ensure the footer stays at the bottom */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+<<<<<<< Updated upstream
+/* Adjust the container positioning */
+.fixed-top {
+  margin-top: 100px; /* Adjust if needed to prevent overlap with the header */
+}
+
+h3 {
+  text-align: center;
+  padding-left: 50px;
+  padding-top: 5px;
 }
 
 /* Main Content Area */
+=======
+>>>>>>> Stashed changes
 .content {
-  margin-top: 70px; /* Adjusted to prevent overlap with header */
+  flex: 1;
+}
+
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+.image-section {
+  flex: 1;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
-  text-align: center;
 }
 
-/* Product Section */
-.product-section {
-  margin: 50px 0;
+.p-4.box {
+  max-width: 400px;
+  width: 100%;
 }
 
-.product-card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: none;
-  border-radius: 8px;
-  transition: transform 0.2s ease-in-out;
+.signup-link {
+  margin-top: 1rem;
 }
 
-.product-card:hover {
-  transform: translateY(-5px);
+.signup-container {
+  display: flex;
+  height: 100vh;
 }
 
-.product-card img {
-  border-radius: 8px 8px 0 0;
+.image-section {
+  flex: 1;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.product-card-body {
+.signup-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.form-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
 }
 
-/* Footer */
+.p-4.box {
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-link {
+  margin-top: 1rem;
+}
+
 .Footer {
-  background-color: #28a745;
+  background-color: #282c34;
   color: white;
-  padding: 20px 0;
+  padding: 20px;
   text-align: center;
-  margin-top: 50px;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
 }
 
-.Footer a {
-  color: #d4edda;
-  margin: 0 10px;
-  text-decoration: none;
-}
-
-.Footer a:hover {
-  color: white;
-}
-
-@media (max-width: 768px) {
-  /* Adjustments for smaller screens */
-  .content {
-    padding: 15px;
-    margin-top: 60px; /* Slightly reduce top margin on smaller screens */
-  }
-
-  .product-card-body {
-    padding: 15px;
-  }
-}

@@ -8,19 +8,22 @@ import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import Furnitures from './components/Furnitures';
 import Homewares from './components/Homewares';
+import Cart from './components/Cart';
 import Electricalgoods from './components/Electricalgoods';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext";  
+<<<<<<< Updated upstream
 import { ProductContextProvider } from "./context/Productcontext"; 
-import { CartContextProvider } from "./context/Cartcontext"; 
-import Cart from './components/Cart';
+import { CartContextProvider } from "./context/Cartcontext";
+=======
+import { ProductContextProvider } from "./context/Productcontext";  
+>>>>>>> Stashed changes
 
 
 function App() {
   return (
     <UserAuthContextProvider>
       <ProductContextProvider>
-        <CartContextProvider>
         <Container>
           <Row>
             <Col>
@@ -32,15 +35,17 @@ function App() {
                 <Route path="/Furnitures" element={<Furnitures/>} />
                 <Route path="/Homewares" element={<Homewares/>} />
                 <Route path="/Electricalgoods" element={<Electricalgoods/>} />
-                <Route path="/cart" element={<Cart/>} />
+<<<<<<< Updated upstream
+                <Route path="/cart" element={<Cart />} />
+
+=======
+>>>>>>> Stashed changes
               </Routes>
             </Col>
           </Row>
         </Container>
-        </CartContextProvider>
       </ProductContextProvider>
     </UserAuthContextProvider>
-
   );
 }
 

@@ -3,12 +3,18 @@ import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Header from './Header';
 import Footer from './Footer';
-import { useCartContext } from '../context/Cartcontext';
+<<<<<<< Updated upstream
+import { useCartContext } from '../context/Cartcontext';  // Import the useCartContext hook
 
 function Furnitures() {
   const [products, setProducts] = useState([]);
-  const { addToCart } = useCartContext();
-  const [loading, setLoading] = useState(true);
+  const { addToCart } = useCartContext();  // Destructure the addToCart function from the context
+=======
+
+function Furnitures() {
+  const [products, setProducts] = useState([]);
+>>>>>>> Stashed changes
+
   useEffect(() => {
     const fetchProducts = async () => {
       const q = query(collection(db, "products"), where("category", "==", "furniture"));
@@ -26,11 +32,14 @@ function Furnitures() {
   };
 
   const handleAddToCart = (product) => {
-    console.log("Adding product to cart:", product);
+<<<<<<< Updated upstream
     addToCart(product);  // Call the addToCart function to add the product to the cart
     console.log("Adding product to cart:", product);
+=======
+    console.log("Adding product to cart:", product);
+    // Implement the logic for adding the product to the cart here
+>>>>>>> Stashed changes
   };
-  
 
   return (
     <div className="wrapper">

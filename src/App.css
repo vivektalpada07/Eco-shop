@@ -1,6 +1,6 @@
-
 .Home {
   padding-top: 75px;
+}
 
 .Header {
   position: fixed; /* Fixed positioning keeps it at the top */
@@ -15,14 +15,12 @@
 /* Adjust the container positioning */
 .fixed-top {
   margin-top: 100px; /* Adjust if needed to prevent overlap with the header */
-
 }
 
-
-h3 {
+.description {
   text-align: center;
   padding-left: 50px;
-  padding-top: 5px;
+  padding-top: 150px;
 }
 
 .Header-image {
@@ -50,10 +48,21 @@ h3 {
 }
 
 /* Text and table styling */
-h3 {
+.Title {
+  padding-top: 5px;
+}
+
+.Shop {
+  padding-top: 15px;
+}
+
+.Paragraph {
+  padding-top: 15px;
+  font-weight: normal;
+}
+
+.AboutUs {
   text-align: center;
-  padding-left: 250px;
-  padding-top: 180px;
 }
 
 .input-group-text {

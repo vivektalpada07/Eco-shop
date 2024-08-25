@@ -3,16 +3,19 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA-63Q4LcX0Cvan3RowraBlX8Gd_XgH8fQ",
-  authDomain: "authfirebase-9d59f.firebaseapp.com",
-  projectId: "authfirebase-9d59f",
-  storageBucket: "authfirebase-9d59f.appspot.com",
-  messagingSenderId: "901481647082",
-  appId: "1:901481647082:web:2bae1d7fdf530b08930093"
+  apiKey: "AIzaSyA8rjGG3MIYtDjSnZRDaIKnCD6l46ybW-Y",
+  authDomain: "eco-shop-60df7.firebaseapp.com",
+  projectId: "eco-shop-60df7",
+  storageBucket: "eco-shop-60df7.appspot.com",
+  messagingSenderId: "292693377073",
+  appId: "1:292693377073:web:3a88b142c8a2889242d510"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
+// Initialize Firestore and get a reference to the service
 export const db = getFirestore(app);
 export default app;

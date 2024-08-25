@@ -5,13 +5,13 @@ import Header from './Header';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  // Import the useCartContext hook
 
-function Furnitures() {
+function Homewares() {
   const [products, setProducts] = useState([]);
   const { addToCart } = useCartContext();  // Destructure the addToCart function from the context
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const q = query(collection(db, "products"), where("category", "==", "furniture"));
+      const q = query(collection(db, "products"), where("category", "==", "homewares"));
       const querySnapshot = await getDocs(q);
       const productsArray = querySnapshot.docs.map(doc => doc.data());
       setProducts(productsArray);
@@ -34,7 +34,7 @@ function Furnitures() {
     <div className="wrapper">
       <Header />
       <div className="content">
-        <h2 className="text-center">Our Furniture Collection</h2>
+        <h2 className="text-center">Our Homewares Collection</h2>
         {products.length > 0 ? (
           <div className="row justify-content-center">
             {products.map((product, index) => (
@@ -62,7 +62,7 @@ function Furnitures() {
             ))}
           </div>
         ) : (
-          <p>No furniture products found.</p>
+          <p>No homewares products found.</p>
         )}
       </div>
       <Footer />
@@ -70,4 +70,4 @@ function Furnitures() {
   );
 }
 
-export default Furnitures;
+export default Homewares;

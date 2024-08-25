@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard";
 import Furnitures from './components/Furnitures';
 import ProtectedRoute from "./components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext";
+import ContactUs from './components/ContactUs';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/customer" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/Furnitures" element={<Furnitures/>} />
+              <Route path="/contactus" element={<ContactUs/>} />
             </Routes>
           </Col>
         </Row>

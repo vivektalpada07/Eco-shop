@@ -5,14 +5,14 @@ import '../App.css';
 
 function Footer() {
     return (
-      <Navbar bg='success' data-bs-theme='dark' style={{height:'80px'}}>
+      <Navbar data-bs-theme='dark' style={{height:'80px'}} className='Footer'>
         <Container className="d-flex flex-column align-items-center">
           <Nav className="mx-auto mb-3">
             <Nav.Item>
               <Nav.Link href="/aboutus">About Us</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="/r&rpolicy">Return & Refund Policy</Nav.Link>
+              <Nav.Link href="/return-refund-policy">Return & Refund Policy</Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link href="/contactus">Contact Us</Nav.Link>

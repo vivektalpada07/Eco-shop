@@ -7,7 +7,7 @@ import '../App.css';
 
 function Header() {
   return (
-    <Navbar bg='success' expand="lg" className='Header'>
+    <Navbar expand="lg" className='Header'>
       <Container className='w-100'>
         <Navbar.Brand href="/">
           <Image 

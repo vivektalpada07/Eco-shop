@@ -20,7 +20,7 @@ body {
 
 .content {
   flex: 1;
-  padding: 20px;
+  padding: 30px;
   text-align: center;
   margin-top: 70px; /* Adjusted to prevent overlap with header */
 }
@@ -102,4 +102,20 @@ body {
   .product-card-body {
     padding: 15px;
   }
+}
+
+.Return {
+  text-align: left;
+}
+
+.Description {
+  text-align: left;
+}
+
+.Refund {
+  text-align: left;
+}
+
+.Title {
+  padding-top: 5px;
 }

@@ -15,7 +15,8 @@ import { UserAuthContextProvider } from "./context/UserAuthContext";
 import { ProductContextProvider } from "./context/Productcontext";
 import { CartContextProvider } from "./context/Cartcontext";
 import AboutUs from './components/AboutUs';
-
+import ReturnAndRefundPolicy from './components/ReturnRefundPolicy';
+import ContactUs from './components/ContactUs';
 
 function App() {
   return (
@@ -35,6 +36,8 @@ function App() {
                 <Route path="/Homewares" element={<Homewares/>} />
                 <Route path="/Electricalgoods" element={<Electricalgoods/>} />
                 <Route path="/Cart" element={<Cart/>} />
+                <Route path="/return-refund-policy" element={<ReturnAndRefundPolicy/>} />
+                <Route path="/contactus" element={<ContactUs/>} />
               </Routes>
             </Col>
           </Row>

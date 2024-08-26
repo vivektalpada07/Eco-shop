@@ -93,6 +93,91 @@ body {
   color: white;
 }
 
+/* Product Card Styles */
+.product-card-body {
+  padding: 20px;
+}
+
+/* Wishlist Button Styling */
+.wishlist {
+  background-color: #f0ad4e; /* Gold */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.wishlist:hover {
+  background-color: #ec971f; /* Darker Gold */
+}
+
+/* Add to Cart Button Styling */
+.add-to-cart {
+  background-color: #28a745; /* Green */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-to-cart:hover {
+  background-color: #218838; /* Darker Green */
+}
+
+/* Optional: Align buttons within the product cards */
+.card .wishlist,
+.card .add-to-cart {
+  margin-top: 10px;
+  width: 100%;
+  display: block;
+}
+
+.card .add-to-cart {
+  margin-top: 0;
+}
+
+/* Success Message Styling */
+.alert {
+  margin-top: 20px;
+  font-size: 1rem;
+}
+.buy-now-button {
+  background-color: #007bff; /* Blue */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 5px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.buy-now-button:hover {
+  background-color: #0056b3; /* Darker blue */
+}
+/* Add this to your CSS file */
+
+.buy-now-button.selected {
+  background-color: #28a745; /* Change the background color when selected */
+  color: white;
+  border: 1px solid #28a745;
+}
+
+.buy-now-button.selected::after {
+  content: '✓';
+  margin-left: 8px;
+  font-size: 16px;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .content {
     padding: 15px;
@@ -104,15 +189,7 @@ body {
   }
 }
 
-.Return {
-  text-align: left;
-}
-
-.Description {
-  text-align: left;
-}
-
-.Refund {
+.Return, .Description, .Refund {
   text-align: left;
 }
 

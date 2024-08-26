@@ -12,19 +12,18 @@ export function ProductContextProvider({ children }) {
       try {
         const querySnapshot = await getDocs(collection(db, "products"));
         const productsArray = querySnapshot.docs.map(doc => ({
-          id: doc.id,
+          id: doc.id, // Store Firestore document ID as id
           ...doc.data()
         }));
-        console.log("Fetched Products:", productsArray); // Debugging line
+        console.log("Fetched Products:", productsArray);
         setProducts(productsArray);
       } catch (e) {
-        console.error("Error fetching products:", e); // Error handling
+        console.error("Error fetching products:", e);
       }
     };
   
     fetchProducts();
   }, []);
-  
 
   function addProduct(product) {
     setProducts((prevProducts) => [...prevProducts, product]);
@@ -33,14 +32,14 @@ export function ProductContextProvider({ children }) {
   function updateProduct(productId, updatedProduct) {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.productId === productId ? updatedProduct : product
+        product.id === productId ? { ...product, ...updatedProduct } : product // Compare with id instead of productId
       )
     );
   }
 
   function deleteProduct(productId) {
     setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.productId !== productId)
+      prevProducts.filter((product) => product.id !== productId) // Compare with id instead of productId
     );
   }
 

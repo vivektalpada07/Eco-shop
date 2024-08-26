@@ -3,11 +3,14 @@ import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import Header from './Header';
 import Footer from './Footer';
-import { useCartContext } from '../context/Cartcontext';  // Import the useCartContext hook
+import { useCartContext } from '../context/Cartcontext';  
+import { useWishlistContext } from '../context/Wishlistcontext'; 
 
 function Homewares() {
   const [products, setProducts] = useState([]);
-  const { addToCart } = useCartContext();  // Destructure the addToCart function from the context
+  const [message, setMessage] = useState('');  // State to hold the success message
+  const { addToCart } = useCartContext();  
+  const { addToWishlist } = useWishlistContext();  
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,14 +23,16 @@ function Homewares() {
     fetchProducts();
   }, []);
 
-  const handleBuyNow = (product) => {
-    console.log("Buying product:", product);
-    // Implement the logic for buying the product here
+  const handleAddToCart = (product) => {
+    addToCart(product);  
+    setMessage(`${product.productName} has been added to your cart.`);
+    setTimeout(() => setMessage(''), 3000); // Clear message after 3 seconds
   };
 
-  const handleAddToCart = (product) => {
-    addToCart(product);  // Call the addToCart function to add the product to the cart
-    console.log("Adding product to cart:", product);
+  const handleAddToWishlist = (product) => {
+    addToWishlist(product);  
+    setMessage(`${product.productName} has been added to your wishlist.`);
+    setTimeout(() => setMessage(''), 3000); // Clear message after 3 seconds
   };
 
   return (
@@ -35,6 +40,7 @@ function Homewares() {
       <Header />
       <div className="content">
         <h2 className="text-center">Our Homewares Collection</h2>
+        {message && <p className="text-center alert alert-success">{message}</p>}  {/* Display success message */}
         {products.length > 0 ? (
           <div className="row justify-content-center">
             {products.map((product, index) => (
@@ -45,13 +51,13 @@ function Homewares() {
                     <p className="card-text">{product.productDescription}</p>
                     <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
                     <button 
-                      className="btn btn-primary" 
-                      onClick={() => handleBuyNow(product)}
+                      className="btn wishlist" 
+                      onClick={() => handleAddToWishlist(product)}
                     >
-                      Buy Now
+                      Add to Wishlist
                     </button>
                     <button 
-                      className="btn btn-secondary ms-2" 
+                      className="btn add-to-cart ms-2" 
                       onClick={() => handleAddToCart(product)}
                     >
                       Add to Cart

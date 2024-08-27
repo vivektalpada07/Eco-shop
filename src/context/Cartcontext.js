@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const CartContext = createContext();
@@ -26,8 +26,28 @@ export function CartContextProvider({ children }) {
 
   async function addToCart(product) {
     try {
-      const docRef = await addDoc(collection(db, "cart"), product);
-      setCartItems((prevCartItems) => [...prevCartItems, { id: docRef.id, ...product }]);
+      const existingProduct = cartItems.find(item => item.productId === product.productId);
+      
+      if (existingProduct) {
+        // If product is already in the cart, update the quantity
+        const productRef = doc(db, "cart", existingProduct.id);
+        await updateDoc(productRef, {
+          quantity: existingProduct.quantity ? existingProduct.quantity + 1 : 2 // Update quantity
+        });
+        
+        // Update the cartItems state with the new quantity
+        setCartItems(prevCartItems =>
+          prevCartItems.map(item =>
+            item.productId === product.productId
+              ? { ...item, quantity: existingProduct.quantity ? existingProduct.quantity + 1 : 2 }
+              : item
+          )
+        );
+      } else {
+        // If product is not in the cart, add it as a new entry
+        const docRef = await addDoc(collection(db, "cart"), { ...product, quantity: 1 });
+        setCartItems(prevCartItems => [...prevCartItems, { id: docRef.id, ...product, quantity: 1 }]);
+      }
     } catch (e) {
       console.error("Error adding to cart:", e);
     }

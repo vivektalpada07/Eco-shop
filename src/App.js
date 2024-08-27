@@ -10,10 +10,12 @@ import AdminDashboard from "./components/AdminDashboard";
 import Furnitures from './components/Furnitures';
 import Homewares from './components/Homewares';
 import Cart from './components/Cart';
+import Wishlist from './components/Wishlist';
 import Electricalgoods from './components/Electricalgoods';
 import { UserAuthContextProvider } from "./context/UserAuthContext";  
 import { ProductContextProvider } from "./context/Productcontext";
 import { CartContextProvider } from "./context/Cartcontext";
+import { WishlistContextProvider } from './context/Wishlistcontext';
 import AboutUs from './components/AboutUs';
 import ReturnAndRefundPolicy from './components/ReturnRefundPolicy';
 import ContactUs from './components/ContactUs';
@@ -25,6 +27,7 @@ function App() {
     <UserAuthContextProvider>
       <ProductContextProvider>
         <CartContextProvider>
+          <WishlistContextProvider>
         <Container>
           <Row>
             <Col>
@@ -42,10 +45,12 @@ function App() {
                 <Route path="/return-refund-policy" element={<ReturnAndRefundPolicy/>} />
                 <Route path="/contactus" element={<ContactUs/>} />
                 <Route path="/addproduct" element={<SellerRoute><Addproducts/></SellerRoute>} />
+               <Route path="/Wishlist" element={<Wishlist/>} />
               </Routes>
             </Col>
           </Row>
         </Container>
+        </WishlistContextProvider>
         </CartContextProvider>
       </ProductContextProvider>
     </UserAuthContextProvider>

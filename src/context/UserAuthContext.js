@@ -8,13 +8,11 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth } from "../firebase";
-import FBDataService from "../context/FBService";
 
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
-  const [user, setUser] = useState(null); // Default to null instead of {}
-  const [role, setRole] = useState("");  // Initialize role as an empty string
+  const [user, setUser] = useState({});
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -31,21 +29,9 @@ export function UserAuthContextProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentuser) => {
-      if (currentuser) {
-        setUser(currentuser);
-
-        const userDoc = await FBDataService.getData(currentuser.uid);
-        if (userDoc.exists) {
-          setRole(userDoc.data().role);
-        } else {
-          setRole(null);
-          setUser(null);
-        }
-      } else {
-        setRole(null);
-        setUser(null);
-      }
+    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
+      console.log("Auth", currentuser);
+      setUser(currentuser);
     });
 
     return () => {
@@ -54,7 +40,9 @@ export function UserAuthContextProvider({ children }) {
   }, []);
 
   return (
-    <userAuthContext.Provider value={{ user, role, logIn, signUp, logOut, googleSignIn }}>
+    <userAuthContext.Provider
+      value={{ user, logIn, signUp, logOut, googleSignIn }}
+    >
       {children}
     </userAuthContext.Provider>
   );

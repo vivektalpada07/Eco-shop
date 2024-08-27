@@ -3,61 +3,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import FBDataService from "../context/FBService";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [name, setName] = useState("");
-  const [mobile, setMobile] = useState("");
-  const [username, setUsername] = useState("");
-  const [age, setAge] = useState("");
-  const [role] = useState("customer"); // Role is set to 'customer' by default
-
   const { signUp } = useUserAuth();
   let navigate = useNavigate();
-  let id = "";
-
-  const saveUser = async () => {
-    const createdAt = new Date().toISOString(); // Capture current time as ISO string
-    console.log('id :' + id + ' name  : ' + name + ' email : ' + email + ' Role ' + role);
-    const newData = {
-      id,
-      name,
-      email,
-      mobile,   // Include mobile number in the user data
-      username, // Include username in the user data
-      age,      // Include age in the user data
-      role,     // Assign the default role 'customer'
-      createdAt // Store the time when the user was created
-    };
-    try {
-      await FBDataService.setData(newData);
-      console.log("Data added");
-      navigate("/login");
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (password !== confirmPassword) {
-      setError("Passwords do not match!");
-      return;
-    }
     try {
-      await signUp(email, password).then((userCredential) => {
-        id = userCredential.user.uid;
-        console.log("user.uid", userCredential.user.uid);
-        console.log("user id", id);
-      });
-      saveUser();
+      await signUp(email, password);
       navigate("/login");
     } catch (err) {
       setError(err.message);
@@ -66,78 +26,44 @@ const Signup = () => {
 
   return (
     <>
-    <Header/>
-      <div className="p-4 box">
-        <h2 className="mb-3">Signup</h2>
-        {error && <Alert variant="danger">{error}</Alert>}
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicName">
-            <Form.Control
-              type="text"
-              placeholder="Name"
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicUsername">
-            <Form.Control
-              type="text"
-              placeholder="Username"
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicAge">
-            <Form.Control
-              type="number"
-              placeholder="Age"
-              onChange={(e) => setAge(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicMobile">
-            <Form.Control
-              type="text"
-              placeholder="Mobile Number"
-              onChange={(e) => setMobile(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control
-              type="email"
-              placeholder="Email address"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicConfirmPassword">
-            <Form.Control
-              type="password"
-              placeholder="Confirm Password"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <div className="d-grid gap-2">
-            <Button variant="primary" type="Submit">
-              Sign up
-            </Button>
+      <Header />
+      <div className="signup-container">
+        <div className="image-section">
+          <img src="/path-to-your-image.jpg" alt="Signup" className="signup-image" />
+        </div>
+        <div className="form-section">
+          <div className="p-4 box">
+            {error && <Alert variant="danger">{error}</Alert>}
+            <Form onSubmit={handleSubmit}>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Control
+                  type="email"
+                  placeholder="Email address"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Control
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </Form.Group>
+
+              <div className="d-grid gap-2">
+                <Button variant="primary" type="Submit">
+                  Sign up
+                </Button>
+              </div>
+              <div className="login-link mt-3 text-center">
+                Already have an account? <Link to="/login">Log In</Link>
+              </div>
+            </Form>
           </div>
-        </Form>
+        </div>
       </div>
-      <div className="p-4 box mt-3 text-center">
-        Already have an account? <Link to="/login">Log In</Link>
-      </div>
-    <Footer/>
+      <Footer />
     </>
   );
 };

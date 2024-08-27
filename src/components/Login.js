@@ -6,7 +6,6 @@ import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
 import Header from "./Header";
 import Footer from "./Footer";
-import FBDataService from "../context/FBService"; // Assuming you have a service to fetch user data
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,30 +14,12 @@ const Login = () => {
   const { logIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
 
-  const handleRoleBasedRedirect = async (uid) => {
-    const userDoc = await FBDataService.getData(uid);
-    if (userDoc.exists) {
-      const userRole = userDoc.data().role;
-      if (userRole === "admin") {
-        navigate("/admin");
-      } else if (userRole === "seller") {
-        navigate("/seller");
-      } else if (userRole === "customer") {
-        navigate("/customer");
-      } else {
-        setError("Role not recognized.");
-      }
-    } else {
-      setError("User data not found.");
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     try {
-      const userCredential = await logIn(email, password);
-      await handleRoleBasedRedirect(userCredential.user.uid);
+      await logIn(email, password);
+      navigate("/customer");
     } catch (err) {
       setError(err.message);
     }
@@ -47,16 +28,16 @@ const Login = () => {
   const handleGoogleSignIn = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await googleSignIn();
-      await handleRoleBasedRedirect(userCredential.user.uid);
+      await googleSignIn();
+      navigate("/customer");
     } catch (error) {
-      setError(error.message);
+      console.log(error.message);
     }
   };
 
   return (
     <>
-      <Header />
+    <Header />
       <div className="login-container">
         <div className="image-section">
           <img src="/path-to-your-image.jpg" alt="Login" className="login-image" />
@@ -101,7 +82,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer/>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const WishlistContext = createContext();
@@ -24,6 +24,16 @@ export function WishlistContextProvider({ children }) {
     fetchWishlist();
   }, []);
 
+  // Add the missing addToWishlist function
+  async function addToWishlist(product) {
+    try {
+      const docRef = await addDoc(collection(db, "wishlist"), product);
+      setWishlist(prevWishlist => [...prevWishlist, { productId: docRef.id, ...product }]);
+    } catch (e) {
+      console.error("Error adding to wishlist:", e);
+    }
+  }
+
   async function removeFromWishlist(productId) {
     try {
       await deleteDoc(doc(db, "wishlist", productId));
@@ -36,7 +46,7 @@ export function WishlistContextProvider({ children }) {
   }
 
   return (
-    <WishlistContext.Provider value={{ wishlist, removeFromWishlist }}>
+    <WishlistContext.Provider value={{ wishlist, addToWishlist, removeFromWishlist }}>
       {children}
     </WishlistContext.Provider>
   );

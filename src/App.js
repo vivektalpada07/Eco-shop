@@ -24,6 +24,7 @@ import ContactUs from './components/ContactUs';
 import Addproducts from './components/Addproducts';
 import ProtectedRoute, { AdminRoute, SellerRoute, CustomerRoute } from "./components/ProtectedRoute";
 import Checkout from './components/Checkout';
+import PaymentForm from './components/PaymentForm';
 function App() {
   return (
     <UserAuthContextProvider>
@@ -49,6 +50,7 @@ function App() {
                 <Route path="/addproduct" element={<SellerRoute><Addproducts/></SellerRoute>} />
                <Route path="/Wishlist" element={<Wishlist/>} />
                 <Route path="/checkout" element={<Checkout/>} />
+                <Route path="/payment" element={<PaymentForm/>} />
               </Routes>
             </Col>
           </Row>

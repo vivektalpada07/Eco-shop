@@ -3,6 +3,7 @@ import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import Header from "./Header";
 import Footer from "./Footer";
 import { useCartContext } from "../context/Cartcontext";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
     const [discount, setDiscount] = useState("");
@@ -11,6 +12,13 @@ function Checkout() {
     const handleSubmit = async (e) => {
         e.preventDefault();
     }
+
+    // This is a navigation hook
+    const navigate = useNavigate();
+
+    const handleCheckout = () => {
+    navigate('/payment');
+    };
 
     return (
         <div className="wrapper">
@@ -53,6 +61,7 @@ function Checkout() {
                         variant="success" 
                         size="lg" 
                         className="payment-button"
+                        onClick={handleCheckout}
                     >
                     Proceed To Pay    
                     </Button>

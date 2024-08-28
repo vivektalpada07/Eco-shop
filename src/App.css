@@ -467,3 +467,35 @@ form img {
 .Title {
   padding-top: 5px;
 }
+
+.form-box {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.form-container {
+  text-align: left;
+  display: flex;               
+  justify-content: space-between; 
+  max-width: 1500px;   
+  margin: 0 auto;     
+  padding: 0 20px;    
+}
+
+.leftside {
+  width: 48%;                   
+}
+
+.rightside {
+  width: 48%;                            
+}
+
+.align-items {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns: one for label, one for value */
+  justify-content: "space-between";
+  margin-bottom: "8px";
+}

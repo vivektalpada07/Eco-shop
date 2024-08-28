@@ -4,12 +4,11 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import Header from './Header';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
-import { useWishlistContext } from '../context/Wishlistcontext'; 
-import { getStorage } from 'firebase/storage';
+import { useWishlistContext } from '../context/Wishlistcontext';
 
 function Homewares() {
   const [products, setProducts] = useState([]);
-  const [message, setMessage] = useState('');  // State to hold the success message
+  const [message, setMessage] = useState('');  
   const { addToCart } = useCartContext();  
   const { addToWishlist } = useWishlistContext();  
 
@@ -27,13 +26,13 @@ function Homewares() {
   const handleAddToCart = (product) => {
     addToCart(product);  
     setMessage(`${product.productName} has been added to your cart.`);
-    setTimeout(() => setMessage(''), 3000); // Clear message after 3 seconds
+    setTimeout(() => setMessage(''), 3000); 
   };
 
   const handleAddToWishlist = (product) => {
     addToWishlist(product);  
     setMessage(`${product.productName} has been added to your wishlist.`);
-    setTimeout(() => setMessage(''), 3000); // Clear message after 3 seconds
+    setTimeout(() => setMessage(''), 3000); 
   };
 
   return (
@@ -41,13 +40,15 @@ function Homewares() {
       <Header />
       <div className="content">
         <h2 className="text-center">Our Homewares Collection</h2>
-        {message && <p className="text-center alert alert-success">{message}</p>}  {/* Display success message */}
+        {message && <p className="text-center alert alert-success">{message}</p>}  
         {products.length > 0 ? (
           <div className="row justify-content-center">
             {products.map((product, index) => (
               <div className="col-md-4" key={index}>
                 <div className="card text-center">
                   <div className="card-body">
+                    {/* Display Product Image */}
+                    {product.imageUrl && <img src={product.imageUrl} alt={product.productName} style={{ width: '100%', height: 'auto' }} />}
                     <h5 className="card-title">{product.productName}</h5>
                     <p className="card-text">{product.productDescription}</p>
                     <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>

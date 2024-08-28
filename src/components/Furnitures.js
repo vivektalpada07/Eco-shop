@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
+import { Modal, Button } from 'react-bootstrap';
 import Header from './Header';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
-import { getStorage } from 'firebase/storage';
-
 
 function Furnitures() {
   const [products, setProducts] = useState([]);
-  const [message, setMessage] = useState('');  
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [show, setShow] = useState(false);
   const { addToCart } = useCartContext();  
   const { addToWishlist } = useWishlistContext();  
 
@@ -25,16 +25,16 @@ function Furnitures() {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = (product) => {
-    addToCart(product);  
-    setMessage(`${product.productName} has been added to your cart.`);
-    setTimeout(() => setMessage(''), 3000); 
+  const handleShow = (product) => {
+    setSelectedProduct(product);
+    setShow(true);
   };
 
-  const handleAddToWishlist = (product) => {
-    addToWishlist(product);  
-    setMessage(`${product.productName} has been added to your wishlist.`);
-    setTimeout(() => setMessage(''), 3000); 
+  const handleClose = () => setShow(false);
+
+  const handleAddToCart = () => {
+    addToCart(selectedProduct);
+    handleClose();
   };
 
   return (
@@ -42,25 +42,26 @@ function Furnitures() {
       <Header />
       <div className="content">
         <h2 className="text-center">Our Furniture Collection</h2>
-        {message && <p className="text-center alert alert-success">{message}</p>}  
+
         {products.length > 0 ? (
           <div className="row justify-content-center">
             {products.map((product, index) => (
               <div className="col-md-4" key={index}>
-                <div className="card text-center">
+                <div className="card text-center" onClick={() => handleShow(product)}>
                   <div className="card-body">
+                    {product.imageUrl && <img src={product.imageUrl} alt={product.productName} style={{ width: '100%', height: 'auto' }} />}
                     <h5 className="card-title">{product.productName}</h5>
                     <p className="card-text">{product.productDescription}</p>
                     <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
                     <button 
                       className="btn wishlist" 
-                      onClick={() => handleAddToWishlist(product)}
+                      onClick={() => addToWishlist(product)}
                     >
                       Add to Wishlist
                     </button>
                     <button 
                       className="btn add-to-cart ms-2" 
-                      onClick={() => handleAddToCart(product)}
+                      onClick={() => addToCart(product)}
                     >
                       Add to Cart
                     </button>
@@ -74,6 +75,31 @@ function Furnitures() {
         )}
       </div>
       <Footer />
+
+      {/* Modal for Product Details */}
+      {selectedProduct && (
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedProduct.productName}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {selectedProduct.imageUrl && <img src={selectedProduct.imageUrl} alt={selectedProduct.productName} />}
+            <div className="product-details">
+              <p>{selectedProduct.productDescription}</p>
+              <p className="product-price">Price: ${selectedProduct.productPrice}</p>
+              <p className="product-description">{selectedProduct.productDetailedDescription}</p>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleAddToCart}>
+              Add to Cart
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 }

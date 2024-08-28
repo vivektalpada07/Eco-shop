@@ -8,11 +8,15 @@ import { useCartContext } from '../context/Cartcontext';
 import Header from './Header';
 import Footer from './Footer';
 import '../App.css';
+import { useNavigate } from 'react-router-dom';
 
 function Cart() {
   const { cartItems, removeFromCart } = useCartContext();
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+
+  // This is a navigation hook
+  const navigate = useNavigate();
 
   // Filter out duplicate items by their id
   const uniqueItems = cartItems.filter((item, index, self) =>
@@ -42,6 +46,10 @@ function Cart() {
         return [...prevSelectedProducts, product];
       }
     });
+  };
+
+  const handleCheckout = () => {
+    navigate('/checkout');
   };
 
   return (
@@ -87,7 +95,12 @@ function Cart() {
                 </div>
               )}
               <div className="text-center mt-3">
-                <Button variant="success" size="lg" className="checkout-button">
+                <Button 
+                  variant="success" 
+                  size="lg" 
+                  className="checkout-button"
+                  onClick={handleCheckout}
+                  >
                   Proceed to Checkout
                 </Button>
               </div>

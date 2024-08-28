@@ -1,52 +1,59 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import { useUserAuth } from '../context/UserAuthContext';
 
 const CartContext = createContext();
 
 export function CartContextProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const { user: currentUser } = useUserAuth();
 
   useEffect(() => {
     const fetchCartItems = async () => {
+      if (!currentUser) return;
+
       try {
-        const querySnapshot = await getDocs(collection(db, "cart"));
-        const cartArray = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setCartItems(cartArray);
+        const docRef = doc(db, "cart", currentUser.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setCartItems(docSnap.data().items || []);
+        } else {
+          console.log("No cart items found");
+        }
       } catch (e) {
         console.error("Error fetching cart items:", e);
       }
     };
 
     fetchCartItems();
-  }, []);
+  }, [currentUser]);
 
   async function addToCart(product) {
+    if (!currentUser) {
+      alert("You need to log in to add items to the cart.");
+      return;
+    }
+
+    const userName = currentUser.displayName || currentUser.email;
+    const newCartItem = { ...product, userName };
+
     try {
-      const existingProduct = cartItems.find(item => item.productId === product.productId);
-      
-      if (existingProduct) {
-        // If product is already in the cart, update the quantity
-        const productRef = doc(db, "cart", existingProduct.id);
-        await updateDoc(productRef, {
-          quantity: existingProduct.quantity ? existingProduct.quantity + 1 : 2 // Update quantity
-        });
-        
-        // Update the cartItems state with the new quantity
-        setCartItems(prevCartItems =>
-          prevCartItems.map(item =>
-            item.productId === product.productId
-              ? { ...item, quantity: existingProduct.quantity ? existingProduct.quantity + 1 : 2 }
-              : item
-          )
-        );
+      const docRef = doc(db, "cart", currentUser.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // User already has cart items, update the existing array
+        const existingItems = docSnap.data().items || [];
+        const updatedItems = [...existingItems, newCartItem];
+
+        await setDoc(docRef, { userId: currentUser.uid, userName, items: updatedItems });
+        setCartItems(updatedItems);
       } else {
-        // If product is not in the cart, add it as a new entry
-        const docRef = await addDoc(collection(db, "cart"), { ...product, quantity: 1 });
-        setCartItems(prevCartItems => [...prevCartItems, { id: docRef.id, ...product, quantity: 1 }]);
+        // New cart entry for this user
+        await setDoc(docRef, { userId: currentUser.uid, userName, items: [newCartItem] });
+        setCartItems([newCartItem]);
       }
     } catch (e) {
       console.error("Error adding to cart:", e);
@@ -55,10 +62,16 @@ export function CartContextProvider({ children }) {
 
   async function removeFromCart(productId) {
     try {
-      await deleteDoc(doc(db, "cart", productId));
-      setCartItems((prevCartItems) =>
-        prevCartItems.filter((item) => item.id !== productId)
-      );
+      const docRef = doc(db, "cart", currentUser.uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const existingItems = docSnap.data().items || [];
+        const updatedItems = existingItems.filter(item => item.productId !== productId);
+
+        await setDoc(docRef, { ...docSnap.data(), items: updatedItems });
+        setCartItems(updatedItems);
+      }
     } catch (e) {
       console.error("Error removing from cart:", e);
     }

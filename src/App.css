@@ -163,10 +163,9 @@ body {
 .buy-now-button:hover {
   background-color: #0056b3; /* Darker blue */
 }
-/* Add this to your CSS file */
 
 .buy-now-button.selected {
-  background-color: #28a745; /* Change the background color when selected */
+  background-color: #28a745; /* Green */
   color: white;
   border: 1px solid #28a745;
 }

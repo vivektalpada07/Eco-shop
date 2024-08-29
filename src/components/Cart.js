@@ -8,6 +8,7 @@ import { useCartContext } from '../context/Cartcontext';
 import { useUserAuth } from '../context/UserAuthContext'; 
 import Header from './Header';
 import Footer from './Footer';
+import '../css/Cart.css';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 

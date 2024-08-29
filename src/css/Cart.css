@@ -1,0 +1,31 @@
+.product-card-body {
+    padding: 15px; /* Adjusted padding for a more compact look */
+}
+
+/* Buy Now Button */
+.buy-now-button {
+    background-color: #007bff; /* Blue */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+  
+.buy-now-button:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+  
+.buy-now-button.selected {
+    background-color: #28a745; /* Green */
+    color: white;
+    border: 1px solid #28a745;
+}
+  
+.buy-now-button.selected::after {
+    content: '✓';
+    margin-left: 8px;
+    font-size: 16px;
+}

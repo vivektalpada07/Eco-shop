@@ -19,17 +19,17 @@ function Cart() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const selectedProducts = cartItems.filter(p => selectedProductIds.includes(p.productId));
+    const selectedProducts = cartItems.filter(p => selectedProductIds.includes(p.uniqueId));
     const total = selectedProducts.reduce((sum, product) => sum + product.productPrice, 0);
     setTotalPrice(total);
   }, [selectedProductIds, cartItems]);
 
-  const handleBuyNow = (productId) => {
+  const handleBuyNow = (uniqueId) => {
     setSelectedProductIds(prevSelected => {
-      if (prevSelected.includes(productId)) {
-        return prevSelected.filter(id => id !== productId);
+      if (prevSelected.includes(uniqueId)) {
+        return prevSelected.filter(id => id !== uniqueId);
       } else {
-        return [...prevSelected, productId];
+        return [...prevSelected, uniqueId];
       }
     });
   };
@@ -73,7 +73,7 @@ function Cart() {
             <>
               <Row className="justify-content-center">
                 {cartItems.map((product, index) => (
-                  <Col md={4} key={index}>
+                  <Col md={4} key={product.uniqueId}>
                     <Card className="mb-4 product-card">
                       <Card.Img variant="top" src={product.imageUrl} alt={product.productName} />
                       <Card.Body className="product-card-body">
@@ -81,15 +81,15 @@ function Cart() {
                         <Card.Text>{product.productDescription}</Card.Text>
                         <Card.Text><strong>Price: ${product.productPrice.toFixed(2)}</strong></Card.Text>
                         <Button 
-                          variant={selectedProductIds.includes(product.productId) ? "success" : "primary"}
-                          onClick={() => handleBuyNow(product.productId)}
-                          className={`buy-now-button ${selectedProductIds.includes(product.productId) ? 'selected' : ''}`}
+                          variant={selectedProductIds.includes(product.uniqueId) ? "success" : "primary"}
+                          onClick={() => handleBuyNow(product.uniqueId)}
+                          className={`buy-now-button ${selectedProductIds.includes(product.uniqueId) ? 'selected' : ''}`}
                         >
-                          {selectedProductIds.includes(product.productId) ? '✓ Selected' : 'Buy Now'}
+                          {selectedProductIds.includes(product.uniqueId) ? '✓ Selected' : 'Buy Now'}
                         </Button>
                         <Button 
                           variant="danger" 
-                          onClick={() => removeFromCart(product.productId)}
+                          onClick={() => removeFromCart(product.uniqueId)}
                           className="remove-cart-button"
                         >
                           Remove from Cart

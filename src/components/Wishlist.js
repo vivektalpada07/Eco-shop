@@ -12,12 +12,10 @@ import { useNavigate } from 'react-router-dom';
 
 function Wishlist() {
   const { wishlist, removeFromWishlist } = useWishlistContext();
+  const navigate = useNavigate();
 
   // Calculate the total price of all items in the wishlist
   const totalPrice = wishlist.reduce((total, item) => total + item.productPrice, 0);
-
-  // This is a navigation hook
-  const navigate = useNavigate();
 
   const handleCheckout = () => {
     navigate('/checkout');
@@ -33,7 +31,7 @@ function Wishlist() {
             <>
               <Row className="justify-content-center">
                 {wishlist.map((product, index) => (
-                  <Col md={4} key={index}>
+                  <Col md={4} key={product.productId}>
                     <Card className="mb-4 product-card">
                       {product.imageUrl && (
                         <Card.Img variant="top" src={product.imageUrl} alt={product.productName} />

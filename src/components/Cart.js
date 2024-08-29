@@ -14,30 +14,22 @@ import { useNavigate } from 'react-router-dom';
 function Cart() {
   const { cartItems, removeFromCart } = useCartContext();
   const { user: currentUser } = useUserAuth();
-  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    calculateTotalPrice(selectedProducts);
-  }, [selectedProducts]);
+    const selectedProducts = cartItems.filter(p => selectedProductIds.includes(p.productId));
+    const total = selectedProducts.reduce((sum, product) => sum + product.productPrice, 0);
+    setTotalPrice(total);
+  }, [selectedProductIds, cartItems]);
 
-  const calculateTotalPrice = (selectedProducts) => {
-    const total = selectedProducts.reduce((acc, product) => {
-      return acc + product.productPrice;
-    }, 0);
-    setTotalPrice(total.toFixed(2));
-  };
-
-  const handleBuyNow = (product) => {
-    setSelectedProducts(prevSelectedProducts => {
-      const isSelected = prevSelectedProducts.some(p => p.productId === product.productId);
-      if (isSelected) {
-        // If the product is already selected, remove it from the selection
-        return prevSelectedProducts.filter(p => p.productId !== product.productId);
+  const handleBuyNow = (productId) => {
+    setSelectedProductIds(prevSelected => {
+      if (prevSelected.includes(productId)) {
+        return prevSelected.filter(id => id !== productId);
       } else {
-        // Add the product to the selected list
-        return [...prevSelectedProducts, product];
+        return [...prevSelected, productId];
       }
     });
   };
@@ -45,6 +37,10 @@ function Cart() {
   const handleCheckout = () => {
     if (!currentUser) {
       alert("You need to log in to proceed to checkout.");
+      return;
+    }
+    if (selectedProductIds.length === 0) {
+      alert("Please select at least one product to proceed.");
       return;
     }
     navigate('/checkout');
@@ -85,11 +81,11 @@ function Cart() {
                         <Card.Text>{product.productDescription}</Card.Text>
                         <Card.Text><strong>Price: ${product.productPrice.toFixed(2)}</strong></Card.Text>
                         <Button 
-                          variant={selectedProducts.some(p => p.productId === product.productId) ? "success" : "primary"}
-                          onClick={() => handleBuyNow(product)}
-                          className={`buy-now-button ${selectedProducts.some(p => p.productId === product.productId) ? 'selected' : ''}`}
+                          variant={selectedProductIds.includes(product.productId) ? "success" : "primary"}
+                          onClick={() => handleBuyNow(product.productId)}
+                          className={`buy-now-button ${selectedProductIds.includes(product.productId) ? 'selected' : ''}`}
                         >
-                          {selectedProducts.some(p => p.productId === product.productId) ? '✓ Selected' : 'Buy Now'}
+                          {selectedProductIds.includes(product.productId) ? '✓ Selected' : 'Buy Now'}
                         </Button>
                         <Button 
                           variant="danger" 
@@ -105,7 +101,7 @@ function Cart() {
               </Row>
               {totalPrice > 0 && (
                 <div className="text-center mt-4">
-                  <h3>Total Price for Selected Products: ${totalPrice}</h3>
+                  <h3>Total Price for Selected Products: ${totalPrice.toFixed(2)}</h3>
                 </div>
               )}
               <div className="text-center mt-3">
@@ -114,6 +110,7 @@ function Cart() {
                   size="lg" 
                   className="checkout-button"
                   onClick={handleCheckout}
+                  disabled={selectedProductIds.length === 0}
                 >
                   Proceed to Checkout
                 </Button>

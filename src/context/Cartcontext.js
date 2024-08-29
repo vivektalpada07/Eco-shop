@@ -44,14 +44,12 @@ export function CartContextProvider({ children }) {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        // User already has cart items, update the existing array
         const existingItems = docSnap.data().items || [];
         const updatedItems = [...existingItems, newCartItem];
 
         await setDoc(docRef, { userId: currentUser.uid, userName, items: updatedItems });
         setCartItems(updatedItems);
       } else {
-        // New cart entry for this user
         await setDoc(docRef, { userId: currentUser.uid, userName, items: [newCartItem] });
         setCartItems([newCartItem]);
       }
@@ -87,3 +85,5 @@ export function CartContextProvider({ children }) {
 export function useCartContext() {
   return useContext(CartContext);
 }
+
+export default CartContextProvider;

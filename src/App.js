@@ -12,8 +12,6 @@ import Homewares from './components/Homewares';
 import Cart from './components/Cart';
 import Wishlist from './components/Wishlist';
 import Electricalgoods from './components/Electricalgoods';
-// import ProtectedRoute from "./components/ProtectedRoute";
-// import SellerRoute from "./components/ProtectedRoute";
 import { UserAuthContextProvider } from "./context/UserAuthContext";  
 import { ProductContextProvider } from "./context/Productcontext";
 import { CartContextProvider } from "./context/Cartcontext";
@@ -24,6 +22,10 @@ import ContactUs from './components/ContactUs';
 import Addproducts from './components/Addproducts';
 import ProtectedRoute, { AdminRoute, SellerRoute, CustomerRoute } from "./components/ProtectedRoute";
 import Checkout from './components/Checkout';
+import ManageUsers from './components/ManageUsers';
+import SellerDashboard from './components/SellerDashboard';
+import ManageProducts from './components/ManageProduct';
+import MyListings from './components/MyListing';
 function App() {
   return (
     <UserAuthContextProvider>
@@ -49,6 +51,11 @@ function App() {
                 <Route path="/addproduct" element={<SellerRoute><Addproducts/></SellerRoute>} />
                <Route path="/Wishlist" element={<Wishlist/>} />
                 <Route path="/checkout" element={<Checkout/>} />
+                <Route path="/Wishlist" element={<Wishlist/>} />
+                <Route path="/manageusers" element={<ManageUsers/>} />
+                <Route path="/seller" element={<SellerDashboard/>}/>
+                <Route path="/manageproduct" element={<ManageProducts/>}/>
+                <Route path="/mylistings" element={<MyListings/>}/>
               </Routes>
             </Col>
           </Row>

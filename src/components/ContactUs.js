@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Form, Alert, InputGroup, Button } from "react-bootstrap";
 import Contactusservice from "../context/Contactusservice"; // Adjust import as needed
+import Header from "./Header";
+import Footer from "./Footer";
 
 function ContactUs() {
   const [name, setName] = useState("");
@@ -41,6 +43,7 @@ function ContactUs() {
 
   return (
     <>
+    <Header/>
       <div className="p-4 box">
         {feedback.msg && (
           <Alert
@@ -106,6 +109,7 @@ function ContactUs() {
           </div>
         </Form>
       </div>
+    <Footer/>
     </>
   );
 }

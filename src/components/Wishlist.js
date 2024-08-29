@@ -7,7 +7,7 @@ import Card from 'react-bootstrap/Card';
 import { useWishlistContext } from '../context/Wishlistcontext';  
 import Header from './Header';
 import Footer from './Footer';
-import '../App.css';
+import '../css/Wishlist.css';
 import { useNavigate } from 'react-router-dom';
 
 function Wishlist() {

@@ -6,6 +6,7 @@ import Header from './Header';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
+import '../css/Furnitures.css';
 
 function Furnitures() {
   const [products, setProducts] = useState([]);

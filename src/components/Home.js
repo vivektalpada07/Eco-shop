@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Header from './Header';  
 import Footer from './Footer';  
 import { useProductcontext } from '../context/Productcontext'; // Import the ProductContext
-import '../App.css';
+import '../css/Home.css';
 
 function Home() {
   const { products } = useProductcontext(); // Get all products from context

@@ -1,7 +1,6 @@
 import Header from './Header';
 import Footer from './Footer';
-import '../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/AboutUs.css';
 import { Container, Row } from 'react-bootstrap';
 
 function AboutUs() {
@@ -14,11 +13,11 @@ function AboutUs() {
               <h3>About Us</h3>
             </Row>
 
-            <Row className='Shop'>
+            <Row>
               <h5>Discover our Eco Shop</h5>
             </Row>
       
-            <Row className='Paragraph'>
+            <Row>
               <p>
                 The Eco Shop is a second-hand deal platform where customers can buy as well as sell their products
                 <br></br> and the sellers can list their products to sell to the customers. We provide a variety of products 

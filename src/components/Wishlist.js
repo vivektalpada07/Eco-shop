@@ -7,13 +7,21 @@ import Card from 'react-bootstrap/Card';
 import { useWishlistContext } from '../context/Wishlistcontext';  
 import Header from './Header';
 import Footer from './Footer';
-import '../App.css';
+import '../css/Wishlist.css';
+import { useNavigate } from 'react-router-dom';
 
 function Wishlist() {
   const { wishlist, removeFromWishlist } = useWishlistContext();
 
   // Calculate the total price of all items in the wishlist
   const totalPrice = wishlist.reduce((total, item) => total + item.productPrice, 0);
+
+  // This is a navigation hook
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    navigate('/checkout');
+  };
 
   return (
     <div className="wrapper">
@@ -47,7 +55,12 @@ function Wishlist() {
               </Row>
               <h3 className="text-center mt-4">Total Price: ${totalPrice.toFixed(2)}</h3>
               <div className="text-center mt-3">
-                <Button variant="success" size="lg" className="checkout-button">
+                <Button 
+                  variant="success" 
+                  size="lg" 
+                  className="checkout-button"
+                  onClick={handleCheckout}
+                  >
                   Proceed to Checkout
                 </Button>
               </div>

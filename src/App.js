@@ -21,6 +21,7 @@ import ReturnAndRefundPolicy from './components/ReturnRefundPolicy';
 import ContactUs from './components/ContactUs';
 import Addproducts from './components/Addproducts';
 import ProtectedRoute, { AdminRoute, SellerRoute, CustomerRoute } from "./components/ProtectedRoute";
+import Checkout from './components/Checkout';
 import ManageUsers from './components/ManageUsers';
 import SellerDashboard from './components/SellerDashboard';
 import ManageProducts from './components/ManageProduct';
@@ -48,6 +49,8 @@ function App() {
                 <Route path="/return-refund-policy" element={<ReturnAndRefundPolicy/>} />
                 <Route path="/contactus" element={<ContactUs/>} />
                 <Route path="/addproduct" element={<SellerRoute><Addproducts/></SellerRoute>} />
+               <Route path="/Wishlist" element={<Wishlist/>} />
+                <Route path="/checkout" element={<Checkout/>} />
                 <Route path="/Wishlist" element={<Wishlist/>} />
                 <Route path="/manageusers" element={<ManageUsers/>} />
                 <Route path="/seller" element={<SellerDashboard/>}/>

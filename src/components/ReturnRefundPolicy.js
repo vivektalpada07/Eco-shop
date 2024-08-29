@@ -1,6 +1,6 @@
 import Header from './Header';
 import Footer from './Footer';
-import '../App.css';
+import '../css/ReturnRefundPolicy.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row } from 'react-bootstrap';
 

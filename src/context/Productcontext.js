@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const ProductContext = createContext();
@@ -25,30 +25,21 @@ export function ProductContextProvider({ children }) {
     fetchProducts();
   }, []);
 
-  async function addProduct(product) {
-    try {
-      const newProduct = {
-        ...product,
-        productId: products.length + 1,  // Simulate auto-increment
-      };
-      const docRef = await addDoc(collection(db, "products"), newProduct);
-      setProducts((prevProducts) => [...prevProducts, { id: docRef.id, ...newProduct }]);
-    } catch (e) {
-      console.error("Error adding product:", e);
-    }
+  function addProduct(product) {
+    setProducts((prevProducts) => [...prevProducts, product]);
   }
 
   function updateProduct(productId, updatedProduct) {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
-        product.id === productId ? { ...product, ...updatedProduct } : product
+        product.id === productId ? { ...product, ...updatedProduct } : product // Compare with id instead of productId
       )
     );
   }
 
   function deleteProduct(productId) {
     setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== productId)
+      prevProducts.filter((product) => product.id !== productId) // Compare with id instead of productId
     );
   }
 

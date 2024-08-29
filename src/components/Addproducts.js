@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { db, auth } from '../firebase'; // Ensure Firebase Auth is imported
+import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
@@ -49,11 +49,6 @@ function Addproducts() {
     e.preventDefault();
 
     try {
-      const user = auth.currentUser;
-      if (!user) {
-        throw new Error("User not authenticated");
-      }
-
       const docRef = await addDoc(collection(db, "products"), {
         productName,
         productDescription,
@@ -61,9 +56,6 @@ function Addproducts() {
         productPrice: Number(productPrice),
         category,
         imageUrl, // Save the image URL to Firestore
-        sellerId: user.uid, // Include the seller ID in the product document
-        sellerUsername: user.displayName || user.email.split('@')[0], // Save the seller's username
-        sellerEmail: user.email, // Save the seller's email as well
       });
       console.log("Document written with ID: ", docRef.id);
 

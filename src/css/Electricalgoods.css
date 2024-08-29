@@ -48,6 +48,7 @@
     cursor: pointer;
     border-radius: 5px;
     font-weight: bold;
+    margin-bottom: 10px; /* Added margin to create space between buttons */
 }
   
 .wishlist:hover {
@@ -85,5 +86,4 @@
 .alert {
     margin-top: 20px;
     font-size: 1rem;
-  }
-  
+}

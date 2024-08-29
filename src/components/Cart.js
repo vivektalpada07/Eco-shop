@@ -44,6 +44,9 @@ function Cart() {
       alert("Please select at least one product to proceed.");
       return;
     }
+
+    // Additional logic to handle saving both sellerId and sellerUsername to the database before checkout can be added here.
+
     navigate('/checkout');
   };
 
@@ -81,6 +84,7 @@ function Cart() {
                         <Card.Title>{product.productName}</Card.Title>
                         <Card.Text>{product.productDescription}</Card.Text>
                         <Card.Text><strong>Price: ${product.productPrice.toFixed(2)}</strong></Card.Text>
+                        <Card.Text>Seller: {product.sellerUsername}</Card.Text> {/* Display Seller's Username */}
                         <Button 
                           variant={selectedProductIds.includes(product.uniqueId) ? "success" : "primary"}
                           onClick={() => handleBuyNow(product.uniqueId)}

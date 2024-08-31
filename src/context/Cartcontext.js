@@ -45,6 +45,13 @@ export function CartContextProvider({ children }) {
 
       if (docSnap.exists()) {
         const existingItems = docSnap.data().items || [];
+        const isAlreadyInCart = existingItems.some(item => item.productId === product.productId);
+
+        if (isAlreadyInCart) {
+          alert("This product is already in your cart.");
+          return;
+        }
+
         const updatedItems = [...existingItems, newCartItem];
 
         await setDoc(docRef, { userId: currentUser.uid, userName, items: updatedItems });

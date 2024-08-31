@@ -13,32 +13,46 @@ import FBDataService from "../context/FBService";
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
-  const [user, setUser] = useState(null); // Default to null instead of {}
-  const [role, setRole] = useState("");  // Initialize role as an empty string
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState(""); 
+  const [loading, setLoading] = useState(true); // Loading state to handle auth initialization
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
   }
+
   function signUp(email, password) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
+
   function logOut() {
-    return signOut(auth);
+    return signOut(auth).then(() => {
+      setRole(null);
+      setUser(null);
+    });
   }
+
   function googleSignIn() {
     const googleAuthProvider = new GoogleAuthProvider();
     return signInWithPopup(auth, googleAuthProvider);
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentuser) => {
-      if (currentuser) {
-        setUser(currentuser);
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
 
-        const userDoc = await FBDataService.getData(currentuser.uid);
-        if (userDoc.exists) {
-          setRole(userDoc.data().role);
-        } else {
+        try {
+          const userDoc = await FBDataService.getData(currentUser.uid);
+          if (userDoc.exists()) {
+            setRole(userDoc.data().role || "");
+          } else {
+            console.error("User document does not exist");
+            setRole(null);
+            setUser(null);
+          }
+        } catch (error) {
+          console.error("Error fetching user role:", error);
           setRole(null);
           setUser(null);
         }
@@ -46,12 +60,17 @@ export function UserAuthContextProvider({ children }) {
         setRole(null);
         setUser(null);
       }
+      setLoading(false); // Stop loading when the user state is set
     });
 
     return () => {
       unsubscribe();
     };
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Loading indicator while the auth state is being determined
+  }
 
   return (
     <userAuthContext.Provider value={{ user, role, logIn, signUp, logOut, googleSignIn }}>

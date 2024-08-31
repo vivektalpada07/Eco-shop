@@ -10,9 +10,11 @@ import '../css/Electricalgoods.css';
 
 function Electricalgoods() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
-  const { addToCart } = useCartContext();  
+  const { cartItems, addToCart } = useCartContext();  
   const { addToWishlist } = useWishlistContext();  
   const currentUser = auth.currentUser;
 
@@ -22,10 +24,11 @@ function Electricalgoods() {
         const q = query(collection(db, "products"), where("category", "==", "electricalgoods"));
         const querySnapshot = await getDocs(q);
         const productsArray = querySnapshot.docs.map(doc => ({
-          productId: doc.id,  // Assuming Firestore document ID is used as product ID
+          productId: doc.id,  
           ...doc.data()
         }));
         setProducts(productsArray);
+        setFilteredProducts(productsArray);  // Initially display all products
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -33,6 +36,17 @@ function Electricalgoods() {
 
     fetchProducts();
   }, []);
+
+  const handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
+    setSearchTerm(value);
+    const filtered = products.filter(product =>
+      product.productName.toLowerCase().includes(value) ||
+      product.productDescription.toLowerCase().includes(value) ||
+      product.sellerUsername?.toLowerCase().includes(value)
+    );
+    setFilteredProducts(filtered);
+  };
 
   const handleShow = (product) => {
     setSelectedProduct(product);
@@ -47,7 +61,13 @@ function Electricalgoods() {
       return;
     }
 
-    addToCart({ ...product });
+    const isAlreadyInCart = cartItems.some(item => item.productId === product.productId);
+
+    if (isAlreadyInCart) {
+      alert("This product is already in your cart.");
+    } else {
+      addToCart({ ...product });
+    }
   };
 
   const handleAddToWishlist = () => {
@@ -70,9 +90,21 @@ function Electricalgoods() {
       <div className="content">
         <h2 className="text-center">Our Electrical Goods Collection</h2>
 
-        {products.length > 0 ? (
+        {/* Search Bar */}
+        <div className="search-bar text-center mb-4">
+          <input
+            type="text"
+            placeholder="Search for products..."
+            value={searchTerm}
+            onChange={handleSearch}
+            className="form-control"
+            style={{ maxWidth: '400px', margin: '0 auto' }}
+          />
+        </div>
+
+        {filteredProducts.length > 0 ? (
           <div className="row justify-content-center">
-            {products.map((product, index) => (
+            {filteredProducts.map((product, index) => (
               <div className="col-md-4" key={index}>
                 <div className="card text-center">
                   <div className="card-body">

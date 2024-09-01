@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
-import '../App.css';
+import '../css/Header.css';
 
 function SellerHeader() {
   const { logOut } = useUserAuth();

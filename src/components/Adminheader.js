@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
-import '../App.css';
+import '../css/Header.css';
 
 function AdminHeader() {
   const { logOut } = useUserAuth();
@@ -41,6 +41,7 @@ function AdminHeader() {
             <Nav.Link href="/manageusers">Manage Users</Nav.Link>
             <Nav.Link href="/manageproduct">Manage Products</Nav.Link>
             <Nav.Link href="/addproduct">Add Product</Nav.Link>
+            <Nav.Link href="/mylistings">My Listings</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>

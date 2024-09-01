@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Alert } from "react-bootstrap";
-import { Button } from "react-bootstrap";
+import { Form, Alert, Button } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -20,29 +19,6 @@ const Signup = () => {
 
   const { signUp } = useUserAuth();
   let navigate = useNavigate();
-  let id = "";
-
-  const saveUser = async () => {
-    const createdAt = new Date().toISOString(); // Capture current time as ISO string
-    console.log('id :' + id + ' name  : ' + name + ' email : ' + email + ' Role ' + role);
-    const newData = {
-      id,
-      name,
-      email,
-      mobile,   // Include mobile number in the user data
-      username, // Include username in the user data
-      age,      // Include age in the user data
-      role,     // Assign the default role 'customer'
-      createdAt // Store the time when the user was created
-    };
-    try {
-      await FBDataService.setData(newData);
-      console.log("Data added");
-      navigate("/login");
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,12 +28,25 @@ const Signup = () => {
       return;
     }
     try {
-      await signUp(email, password).then((userCredential) => {
-        id = userCredential.user.uid;
-        console.log("user.uid", userCredential.user.uid);
-        console.log("user id", id);
-      });
-      saveUser();
+      const userCredential = await signUp(email, password);
+      const user = userCredential.user;
+
+      const createdAt = new Date().toISOString(); // Capture current time as ISO string
+      const newData = {
+        id: user.uid,
+        name,
+        email,
+        mobile,   // Include mobile number in the user data
+        username, // Include username in the user data
+        age,      // Include age in the user data
+        role,     // Assign the default role 'customer'
+        createdAt // Store the time when the user was created
+      };
+
+      await FBDataService.setData(newData);
+      console.log("User profile created successfully");
+      
+      // Navigate to login only after successfully saving data
       navigate("/login");
     } catch (err) {
       setError(err.message);
@@ -66,7 +55,7 @@ const Signup = () => {
 
   return (
     <>
-    <Header/>
+      <Header/>
       <div className="p-4 box">
         <h2 className="mb-3">Signup</h2>
         {error && <Alert variant="danger">{error}</Alert>}
@@ -137,7 +126,7 @@ const Signup = () => {
       <div className="p-4 box mt-3 text-center">
         Already have an account? <Link to="/login">Log In</Link>
       </div>
-    <Footer/>
+      <Footer/>
     </>
   );
 };

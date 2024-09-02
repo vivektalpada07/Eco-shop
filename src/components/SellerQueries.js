@@ -59,7 +59,7 @@ const SellerQueries = () => {
 
   return (
     <div className="queries-container">
-      <AdminHeader/>
+      <AdminHeader />
       <h2>Seller Queries</h2>
       {queries.length > 0 ? (
         <Table striped bordered hover>
@@ -69,6 +69,7 @@ const SellerQueries = () => {
               <th>User Name</th>
               <th>Reason</th>
               <th>Submitted At</th>
+              <th>ID Image</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -79,6 +80,17 @@ const SellerQueries = () => {
                 <td>{query.userName}</td>
                 <td>{query.reason}</td>
                 <td>{new Date(query.submittedAt.seconds * 1000).toLocaleString()}</td>
+                <td>
+                  {query.imageUrl ? (
+                    <img
+                      src={query.imageUrl}
+                      alt="User ID"
+                      style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                    />
+                  ) : (
+                    "No Image"
+                  )}
+                </td>
                 <td>
                   <Button
                     variant="success"
@@ -100,7 +112,7 @@ const SellerQueries = () => {
       ) : (
         <p>No seller queries found.</p>
       )}
-      <Footer/>
+      <Footer />
     </div>
   );
 };

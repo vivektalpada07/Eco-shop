@@ -1,13 +1,13 @@
-import Header from './Header';
 import Footer from './Footer';
 import '../css/ReturnRefundPolicy.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row } from 'react-bootstrap';
+import HeaderSwitcher from './HeaderSwitcher';
 
 function ReturnAndRefundPolicy() {
   return (
     <div className='wrapper'>
-      <Header />
+      <HeaderSwitcher/>
         <div className='content'>
           <Container className='RRPolicy'>
             <Row className='Title'>

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
+
 import { Alert, Button, Form, InputGroup } from "react-bootstrap";
 import Header from "./Header";
+
+import { Alert, Button, Form, InputGroup, Modal } from "react-bootstrap";
+
 import Footer from "./Footer";
 import { useCartContext } from "../context/Cartcontext";
 import '../css/Checkout.css';
 import CheckoutService from "../context/CheckoutServices";
+import HeaderSwitcher from "./HeaderSwitcher";
 
 function Checkout() {
     const [discountCode, setDiscountCode] = useState("");
@@ -121,7 +126,7 @@ function Checkout() {
         <>
             <div className="p-4 box">
                 <div className="wrapper">
-                    <Header/>
+                    <HeaderSwitcher/>
                     <div className="content">
                         {message?.msg && (
                             <Alert

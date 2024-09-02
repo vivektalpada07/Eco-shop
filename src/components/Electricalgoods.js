@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';  
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Modal, Button } from 'react-bootstrap';
-import Header from './Header';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Electricalgoods.css';
+import HeaderSwitcher from './HeaderSwitcher';
 
 function Electricalgoods() {
   const [products, setProducts] = useState([]);
@@ -86,7 +86,7 @@ function Electricalgoods() {
 
   return (
     <div className="wrapper">
-      <Header />
+      <HeaderSwitcher/>
       <div className="content">
         <h2 className="text-center">Our Electrical Goods Collection</h2>
 

@@ -5,10 +5,10 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useWishlistContext } from '../context/Wishlistcontext';  
-import Header from './Header';
 import Footer from './Footer';
 import '../css/Wishlist.css';
 import { useNavigate } from 'react-router-dom';
+import HeaderSwitcher from './HeaderSwitcher';
 
 function Wishlist() {
   const { wishlist, removeFromWishlist } = useWishlistContext();
@@ -24,7 +24,7 @@ function Wishlist() {
   if (wishlist.length === 0) {
     return (
       <div className="wrapper">
-        <Header />
+        <HeaderSwitcher/>
         <div className="content">
           <Container>
             <p className="text-center">Your wishlist is empty.</p>
@@ -37,7 +37,7 @@ function Wishlist() {
 
   return (
     <div className="wrapper">
-      <Header />
+      <HeaderSwitcher/>
       <div className="content">
         <Container>
           <h2 className="text-center mb-4">Your Wishlist</h2>

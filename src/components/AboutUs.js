@@ -1,12 +1,12 @@
-import Header from './Header';
 import Footer from './Footer';
 import '../css/AboutUs.css';
 import { Container, Row } from 'react-bootstrap';
+import HeaderSwitcher from './HeaderSwitcher';
 
 function AboutUs() {
   return (
     <div className='wrapper'>
-      <Header />
+      <HeaderSwitcher/>
         <div className='content'>
           <Container className='AboutUs'>
             <Row className='Title'>

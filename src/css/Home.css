@@ -20,7 +20,16 @@
     max-height: 150px; /* Set a max height to make the box shorter */
     object-fit: cover;
   }
-  
+  /* Modal Image Styling */
+.modal-body .product-images img {
+  width: 100%; /* Ensure the image takes up the full width of the modal */
+  height: auto;
+  max-height: 300px; /* Control the height of the images */
+  object-fit: cover; /* Ensure the images cover the available space */
+  margin-bottom: 10px; /* Add space between images */
+  border-radius: 5px; /* Optional: Adds a slight rounded corner to the images */
+}
+
   
   
   /* Product Title and Description */

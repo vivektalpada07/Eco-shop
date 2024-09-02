@@ -8,7 +8,7 @@ function ReturnAndRefundPolicy() {
   return (
     <div className='wrapper'>
       <HeaderSwitcher/>
-        <div className='content'>
+        <div className='main-content'>
           <Container className='RRPolicy'>
             <Row className='Title'>
               <h3>Return & Refund Policy</h3>

@@ -7,7 +7,7 @@ import CustomerHeader from './Customerheader';
 
 function Dashboard() {
     return (
-      <div>
+      <div className='main-content'>
         <CustomerHeader/>
           <h2>Welcome to the Dashboard!</h2>
           <UserProfile/>

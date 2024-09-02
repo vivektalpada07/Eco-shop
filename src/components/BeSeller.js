@@ -47,7 +47,7 @@ const BeSeller = () => {
   };
 
   return (
-    <div className="seller-container">
+    <div className="main-content">
       <HeaderSwitcher />
       <h2>Become a Seller</h2>
       <Form onSubmit={handleSubmit}>

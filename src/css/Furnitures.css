@@ -110,3 +110,14 @@
     border: 1px solid #c3e6cb;
     border-radius: 5px;
 }
+.sub-images img {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 50px;
+    cursor: pointer;
+  }
+  
+  .sub-images img:hover {
+    border: 1px solid #777;
+  }

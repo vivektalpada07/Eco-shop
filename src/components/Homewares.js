@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';  
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Carousel } from 'react-bootstrap'; // Import Carousel
+import Header from './Header';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
@@ -108,7 +109,9 @@ function Homewares() {
               <div className="col-md-4" key={index}>
                 <div className="card text-center">
                   <div className="card-body">
-                    {product.imageUrl && <img src={product.imageUrl} alt={product.productName} style={{ width: '100%', height: 'auto' }} />}
+                    {product.imageUrls && product.imageUrls[0] && (
+                      <img src={product.imageUrls[0]} alt={product.productName} style={{ width: '100%', height: 'auto' }} />
+                    )}
                     <h5 className="card-title">{product.productName}</h5>
                     <p className="card-text">{product.productDescription}</p>
                     <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
@@ -143,7 +146,19 @@ function Homewares() {
             <Modal.Title>{selectedProduct.productName}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {selectedProduct.imageUrl && <img src={selectedProduct.imageUrl} alt={selectedProduct.productName} style={{ width: '100%' }} />}
+            {selectedProduct.imageUrls && selectedProduct.imageUrls.length > 0 && (
+              <Carousel>
+                {selectedProduct.imageUrls.map((url, index) => (
+                  <Carousel.Item key={index}>
+                    <img
+                      className="d-block w-100"
+                      src={url}
+                      alt={`Slide ${index}`}
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            )}
             <div className="product-details">
               <p>{selectedProduct.productDescription}</p>
               <p className="product-price">Price: ${selectedProduct.productPrice}</p>

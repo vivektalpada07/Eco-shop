@@ -24,7 +24,7 @@ function CustomerHeader() {
 
   return (
     <Navbar expand="lg" className='Header'>
-      <Container className='w-100'>
+      <Container className='Navbar'>
         <Navbar.Brand href="/">
           <Image 
             className='Header-image' 

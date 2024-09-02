@@ -6,9 +6,9 @@ import UserProfile from './UserProfile';
 
 function SellerDashboard() {
     return (
-      <div>
+      <div className="main-content">
         <SellerHeader/>
-          <h2>Welcome to the Admin Dashboard!</h2>
+          <h2>Welcome {UserProfile.username} to the Seller Dashboard!</h2>
           <UserProfile/>
           {/* <h4>Add New <Link to="/addproduct">Products</Link></h4> */}
         <Footer/>

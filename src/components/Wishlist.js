@@ -38,7 +38,7 @@ function Wishlist() {
   return (
     <div className="wrapper">
       <HeaderSwitcher/>
-      <div className="content">
+      <div className="main-content">
         <Container>
           <h2 className="text-center mb-4">Your Wishlist</h2>
           <Row className="justify-content-center">

@@ -93,15 +93,6 @@ const UserProfile = () => {
                     onChange={handleChange}
                   />
                 </Form.Group>
-                <Form.Group controlId="formUserEmail">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    name="email"
-                    value={updatedProfile.email || ""}
-                    onChange={handleChange}
-                  />
-                </Form.Group>
                 <Form.Group controlId="formUserMobile">
                   <Form.Label>Mobile</Form.Label>
                   <Form.Control

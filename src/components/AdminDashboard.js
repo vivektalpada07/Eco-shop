@@ -6,9 +6,9 @@ import UserProfile from './UserProfile';
 
 function AdminDashboard() {
     return (
-      <div>
+      <div className='main-content'>
         <AdminHeader/>
-          <h2 className='main-content'>Welcome to the Admin Dashboard!</h2>
+          <h2 >Welcome to the Admin Dashboard!</h2>
         <UserProfile/>
         <Footer/>
     </div>

@@ -24,7 +24,7 @@ function AdminHeader() {
 
   return (
     <Navbar expand="lg" className='Header'>
-      <Container className='w-100'>
+      <Container className='Navbar'>
         <Navbar.Brand href="/admin-dashboard">
           <Image 
             className='Header-image' 

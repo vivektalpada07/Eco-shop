@@ -57,7 +57,7 @@ const Login = () => {
   return (
     <>
       <Header />
-      <div className="login-container">
+      <div className="main-content">
         <div className="image-section">
           <img src="/path-to-your-image.jpg" alt="Login" className="login-image" />
         </div>

@@ -45,8 +45,9 @@ function Wishlist() {
             {wishlist.map((product, index) => (
               <Col md={4} key={product.productId}>
                 <Card className="mb-4 product-card">
-                  {product.imageUrl && (
-                    <Card.Img variant="top" src={product.imageUrl} alt={product.productName} />
+                  {/* Display the first image from imageUrls array */}
+                  {product.imageUrls && product.imageUrls.length > 0 && (
+                    <Card.Img variant="top" src={product.imageUrls[0]} alt={product.productName} />
                   )}
                   <Card.Body className="product-card-body">
                     <Card.Title>{product.productName}</Card.Title>

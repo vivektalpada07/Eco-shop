@@ -7,6 +7,7 @@ import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Electricalgoods.css';
+import HeaderSwitcher from './HeaderSwitcher';
 
 function Electricalgoods() {
   const [products, setProducts] = useState([]);
@@ -86,7 +87,7 @@ function Electricalgoods() {
 
   return (
     <div className="wrapper">
-      <Header />
+      <HeaderSwitcher/>
       <div className="content">
         <h2 className="text-center">Our Electrical Goods Collection</h2>
 

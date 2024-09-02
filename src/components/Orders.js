@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "react-bootstrap";
 import { useProductcontext } from "../context/Productcontext";
 import { useUserAuth } from "../context/UserAuthContext";
+import HeaderSwitcher from "./HeaderSwitcher";
 
 const Orders = () => {
   const { orders } = useProductcontext();
@@ -25,6 +26,7 @@ const Orders = () => {
 
   return (
     <div className="orders-container">
+        <HeaderSwitcher/>
       <h2>My Orders</h2>
       {sellerOrders.length > 0 ? (
         <Table striped bordered hover>

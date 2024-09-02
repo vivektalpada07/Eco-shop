@@ -6,11 +6,11 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useCartContext } from '../context/Cartcontext';
 import { useUserAuth } from '../context/UserAuthContext'; 
-import Header from './Header';
 import Footer from './Footer';
 import '../css/Cart.css';
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
+import HeaderSwitcher from './HeaderSwitcher';
 
 function Cart() {
   const { cartItems, removeFromCart } = useCartContext();
@@ -50,7 +50,7 @@ function Cart() {
   if (!currentUser) {
     return (
       <div className="wrapper">
-        <Header />
+        <HeaderSwitcher/>
         <div className="content">
           <Container>
             <p className="text-center">You need to log in to view your cart.</p>
@@ -66,7 +66,7 @@ function Cart() {
 
   return (
     <div className="wrapper">
-      <Header />
+      <HeaderSwitcher/>
       <div className="content">
         <Container>
           <h2 className="text-center mb-4">Your Cart</h2>

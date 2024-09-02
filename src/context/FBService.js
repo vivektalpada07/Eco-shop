@@ -1,5 +1,5 @@
 import { db } from "../firebase";
-import { collection, getDoc, addDoc, updateDoc, deleteDoc, doc, setDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, setDoc, getDoc } from "firebase/firestore";
 
 const collectionName = "users";
 
@@ -24,6 +24,12 @@ class FBDataService {
   deleteData = (id) => {
     const docRef = doc(db, collectionName, id);
     return deleteDoc(docRef);
+  };
+
+  // Fetching all user data
+  getAllData = async () => {
+    const usersCollection = collection(db, collectionName);
+    return await getDocs(usersCollection);
   };
 
   // Fetching single user data by document ID

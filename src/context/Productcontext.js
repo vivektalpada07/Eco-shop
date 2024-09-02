@@ -6,6 +6,7 @@ const ProductContext = createContext();
 
 export function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,8 +22,21 @@ export function ProductContextProvider({ children }) {
         console.error("Error fetching products:", e);
       }
     };
-  
+    const fetchOrders = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "cart")); // Assuming 'cart' is the collection name
+        const ordersArray = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setOrders(ordersArray);
+      } catch (e) {
+        console.error("Error fetching orders:", e);
+      }
+    };
+
     fetchProducts();
+    fetchOrders();
   }, []);
 
   async function addProduct(product) {
@@ -54,7 +68,7 @@ export function ProductContextProvider({ children }) {
 
   return (
     <ProductContext.Provider
-      value={{ products, addProduct, updateProduct, deleteProduct }}
+      value={{ products, addProduct, updateProduct, deleteProduct, orders }}
     >
       {children}
     </ProductContext.Provider>

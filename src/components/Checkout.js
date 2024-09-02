@@ -6,10 +6,14 @@ import Header from "./Header";
 import { Alert, Button, Form, InputGroup, Modal } from "react-bootstrap";
 
 import Footer from "./Footer";
-import { useCartContext } from "../context/Cartcontext";
+import {useCartContext} from "../context/Cartcontext";
 import '../css/Checkout.css';
 import CheckoutService from "../context/CheckoutServices";
+<<<<<<< Updated upstream
 import HeaderSwitcher from "./HeaderSwitcher";
+=======
+import { useNavigate } from "react-router-dom";
+>>>>>>> Stashed changes
 
 function Checkout() {
     const [discountCode, setDiscountCode] = useState("");
@@ -27,6 +31,8 @@ function Checkout() {
     const [totalCost, setTotalCost] = useState(0.00);
     const [paymentId, setPaymentId] = useState("");
     const { cartItems } = useCartContext();
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Calculate SubTotal when cartItems change
@@ -48,16 +54,27 @@ function Checkout() {
         setTotalCost(totalCost);
     }, [cartItems]);
     
-    const handleApplyDiscount = () => {
-        const discountPercentage = 0.20; // 20% discount
-        const discountValue = subTotal * discountPercentage;
-        const totalCost = subTotal - discountValue + tax + serverFee;
-        
-        setDiscount(discountValue);
-        setTotalCost(totalCost);
-        setDiscountCode('');
+    const discountCodes = {
+        "DISCOUNT50": 0.50, // 50% discount
+        "DISCOUNT20": 0.20, // 20% discount
+        "DISCOUNT15": 0.15, // 15% discount
+        "DISCOUNT10": 0.10  // 10% discount
+    };
 
-        setMessage({ error: false, msg: "Discount applied successfully!" });
+    const handleApplyDiscount = () => {
+        const discountPercentage = discountCodes[discountCode.toUpperCase()] || 0;
+        
+        if (discountPercentage > 0) {
+            const discountValue = subTotal * discountPercentage;
+            const newTotalCost = subTotal - discountValue + tax + serverFee;
+
+            setDiscount(discountValue);
+            setTotalCost(newTotalCost);
+            setDiscountCode('');
+            setMessage({ error: false, msg: "Discount applied successfully!" });
+        } else {
+            setMessage({ error: true, msg: "Invalid discount code!" });
+        }
     };
 
     const generateUniqueId = () => {
@@ -103,7 +120,8 @@ function Checkout() {
                 productName: item.productName,
                 productDescription: item.productDescription,
                 productPrice: item.productPrice,
-                imageUrl: item.imageUrl
+                imageUrl: item.imageUrl,
+                sellerId: item.sellerId, // Add sellerId for each item
             }))
         };
 
@@ -120,6 +138,8 @@ function Checkout() {
         setRegion("");
         setZipCode("");
         setCardNumber("");
+
+        navigate('/');
     };
 
     return (
@@ -172,7 +192,7 @@ function Checkout() {
                                             <Form.Control
                                                 type="text"
                                                 placeholder="Discount Code"
-                                                maxLength={8}
+                                                maxLength={10}
                                                 value={discountCode}
                                                 onChange={(e) => setDiscountCode(e.target.value)} 
                                             />
@@ -274,7 +294,7 @@ function Checkout() {
                                                 <span className="value">${subTotal.toFixed(2)}</span>
                                             </div>
                                             <div className="align-items">
-                                                <span className="label">Discount (20%):</span> 
+                                                <span className="label">Discount:</span> 
                                                 <span className="value">$-{discount.toFixed(2)}</span>
                                             </div>
                                             <div className="align-items">
@@ -298,6 +318,7 @@ function Checkout() {
                                             variant="success" 
                                             size="lg" 
                                             className="checkout-button"
+                                            onClick={handleSubmit}
                                             type="submit"
                                         >
                                             Pay Now    

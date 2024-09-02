@@ -1,21 +1,10 @@
 import React, { useState, useEffect } from "react";
-
 import { Alert, Button, Form, InputGroup } from "react-bootstrap";
-import Header from "./Header";
-
-import { Alert, Button, Form, InputGroup, Modal } from "react-bootstrap";
-
 import Footer from "./Footer";
 import {useCartContext} from "../context/Cartcontext";
 import '../css/Checkout.css';
 import CheckoutService from "../context/CheckoutServices";
-
-
 import HeaderSwitcher from "./HeaderSwitcher";
-
-import { useNavigate } from "react-router-dom";
-
-
 import { useNavigate } from "react-router-dom";
 
 

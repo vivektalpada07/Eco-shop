@@ -4,9 +4,10 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
-import '../App.css';
+import '../css/Header.css';
 
 function SellerHeader() {
   const { logOut } = useUserAuth();
@@ -40,6 +41,15 @@ function SellerHeader() {
             <Nav.Link href="/addproduct">Add Product</Nav.Link>
             <Nav.Link href="/mylistings">My Listings</Nav.Link>
             <Nav.Link href="/orders">Orders</Nav.Link>
+            
+            {/* Additional Options from Simple Header */}
+            <NavDropdown title="Products" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
+              <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
+              <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>

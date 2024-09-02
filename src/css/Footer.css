@@ -3,16 +3,18 @@
     color: white;
     padding: 20px 0;
     text-align: center;
-    margin-top: auto;
     width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
-  
+
 .Footer a {
     color: #d4edda;
     margin: 0 10px;
     text-decoration: none;
 }
-  
+
 .Footer a:hover {
     color: white;
 }

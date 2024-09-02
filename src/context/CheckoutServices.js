@@ -3,8 +3,8 @@ import { db } from "../firebase";
 import {
   collection,
   getDocs,
-  addDoc,
   doc,
+  setDoc, // Use setDoc to specify the document ID
   getDoc,
 } from "firebase/firestore";
 
@@ -12,8 +12,10 @@ const collectionName = "checkout";
 const checkoutCollectionRef = collection(db, collectionName);
 
 class CheckoutService {
-  addCheckout = (newCheckout) => {
-    return addDoc(checkoutCollectionRef, newCheckout);
+  // Use the paymentId as the document ID
+  addCheckout = (newCheckout, paymentId) => {
+    const checkoutDoc = doc(db, collectionName, paymentId);
+    return setDoc(checkoutDoc, newCheckout); // Use setDoc to set the document with the specific ID
   };
 
   getAllCheckouts = () => {

@@ -51,7 +51,7 @@ function Cart() {
     return (
       <div className="wrapper">
         <HeaderSwitcher/>
-        <div className="content">
+        <div className="main-content">
           <Container>
             <p className="text-center">You need to log in to view your cart.</p>
             <div className="text-center">

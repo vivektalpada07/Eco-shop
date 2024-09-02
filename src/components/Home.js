@@ -22,7 +22,7 @@ function Home() {
   return (
     <div className="wrapper">
       <Header />
-      <Container className='Home'>
+      <Container className='main-content'>
         <Row className="align-items-center mt-5">  {/* Kept the 'mt-5' for top margin */}
           <Col md={4} className='position-relative text-center'>
             <Image 

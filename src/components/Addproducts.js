@@ -91,7 +91,7 @@ function Addproducts() {
   };
 
   return (
-    <div>
+    <div className='main-content'>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Product Name:</label>

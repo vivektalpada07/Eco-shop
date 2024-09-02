@@ -106,7 +106,7 @@ function Checkout() {
             
                 <div className="wrapper">
                     <HeaderSwitcher/>
-                    <div className="content">
+                    <div className="main-content">
                             {message?.msg && (
                             <Alert
                                 variant={message?.error ? "danger" : "success"}

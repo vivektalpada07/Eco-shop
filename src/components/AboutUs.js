@@ -7,7 +7,7 @@ function AboutUs() {
   return (
     <div className='wrapper'>
       <HeaderSwitcher/>
-        <div className='content'>
+        <div className='main-content'>
           <Container className='AboutUs'>
             <Row className='Title'>
               <h3>About Us</h3>

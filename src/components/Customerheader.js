@@ -2,12 +2,26 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
+import Image from 'react-bootstrap/Image';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useNavigate } from 'react-router-dom';
+import { useUserAuth } from '../context/UserAuthContext';
 import '../css/Header.css';
 
-function Header() {
+function CustomerHeader() {
+  const { logOut } = useUserAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logOut();
+      navigate('/login');
+    } catch (error) {
+      console.log("Failed to logout: ", error);
+    }
+  };
+
   return (
     <Navbar expand="lg" className='Header'>
       <Container className='w-100'>
@@ -31,17 +45,7 @@ function Header() {
             </NavDropdown>
             <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
-            
-            <Nav.Link href="/login">
-              <Button variant="outline-light" className="login-button">
-                Login
-              </Button>
-            </Nav.Link>
-            <Nav.Link href="/signup">
-              <Button variant="light" className="signup-button">
-                Signup
-              </Button>
-            </Nav.Link>
+            <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -49,4 +53,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default CustomerHeader;

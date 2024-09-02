@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import FBDataService from "../context/FBService";
-import { Table, Form } from "react-bootstrap";
+import { Table, Form, InputGroup, FormControl } from "react-bootstrap";
 import AdminHeader from "./Adminheader";
 import Footer from "./Footer";
 
 const ManageUsers = () => {
   const [customers, setCustomers] = useState([]);
   const [sellers, setSellers] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -25,7 +26,7 @@ const ManageUsers = () => {
       const userToUpdate = customers.concat(sellers).find(user => user.id === id);
       if (userToUpdate) {
         await FBDataService.updateData(id, { ...userToUpdate, role: newRole });
-        
+
         // Update the local state to reflect the role change
         if (newRole === "customer") {
           setCustomers(prevCustomers => [...prevCustomers, { ...userToUpdate, role: newRole }]);
@@ -40,10 +41,28 @@ const ManageUsers = () => {
     }
   };
 
+  // Filter customers and sellers based on search query
+  const filteredCustomers = customers.filter((user) =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredSellers = sellers.filter((user) =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="manage-users-container">
-      <AdminHeader/>
+      <AdminHeader />
       <h2>Manage Users</h2>
+
+      {/* Search Input */}
+      <InputGroup className="mb-3">
+        <FormControl
+          placeholder="Search users by name"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </InputGroup>
 
       <h3>Customers</h3>
       <Table striped bordered hover>
@@ -56,7 +75,7 @@ const ManageUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {customers.map((user) => (
+          {filteredCustomers.map((user) => (
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.email}</td>
@@ -86,7 +105,7 @@ const ManageUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {sellers.map((user) => (
+          {filteredSellers.map((user) => (
             <tr key={user.id}>
               <td>{user.name}</td>
               <td>{user.email}</td>
@@ -105,7 +124,7 @@ const ManageUsers = () => {
           ))}
         </tbody>
       </Table>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

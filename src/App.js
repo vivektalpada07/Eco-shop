@@ -26,6 +26,9 @@ import ManageUsers from './components/ManageUsers';
 import SellerDashboard from './components/SellerDashboard';
 import ManageProducts from './components/ManageProduct';
 import MyListings from './components/MyListing';
+import Orders from './components/Orders';
+import SellerQueries from './components/SellerQueries';
+import BeSeller from './components/BeSeller';
 function App() {
   return (
     <UserAuthContextProvider>
@@ -49,13 +52,15 @@ function App() {
                 <Route path="/return-refund-policy" element={<ReturnAndRefundPolicy/>} />
                 <Route path="/contactus" element={<ContactUs/>} />
                 <Route path="/addproduct" element={<SellerRoute><Addproducts/></SellerRoute>} />
-               <Route path="/Wishlist" element={<Wishlist/>} />
-                <Route path="/checkout" element={<Checkout/>} />
                 <Route path="/Wishlist" element={<Wishlist/>} />
-                <Route path="/manageusers" element={<ManageUsers/>} />
-                <Route path="/seller" element={<SellerDashboard/>}/>
-                <Route path="/manageproduct" element={<ManageProducts/>}/>
-                <Route path="/mylistings" element={<MyListings/>}/>
+                <Route path="/checkout" element={<Checkout/>} />
+                <Route path="/manageusers" element={<AdminRoute><ManageUsers/></AdminRoute>} />
+                <Route path="/seller" element={<SellerRoute><SellerDashboard/></SellerRoute>}/>
+                <Route path="/manageproduct" element={<AdminRoute><ManageProducts/></AdminRoute>}/>
+                <Route path="/mylistings" element={<SellerRoute><MyListings/></SellerRoute>}/>
+                <Route path="/orders" element={<SellerRoute><Orders/></SellerRoute>}/>
+                <Route path="/sellerqueries" element={<AdminRoute><SellerQueries/></AdminRoute>}/>
+                <Route path="/beseller" element={<CustomerRoute><BeSeller/></CustomerRoute>}/>
               </Routes>
             </Col>
           </Row>

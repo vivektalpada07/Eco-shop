@@ -6,9 +6,15 @@
     position: relative;  /* Relative positioning */
     width: 100%;
     top: 0;
+    left: 0;
+    z-index: 1000;
+    height: 80px; /* Adjust as needed */
 }
 
-/* Header Image */
+.main-content {
+    padding-top: 90px; /* Same as header height */
+}
+
 .Header .Header-image {
     height: 50px;
     width: auto; /* Maintain aspect ratio */
@@ -21,7 +27,7 @@
     padding: 10px 15px; /* Adjust padding */
 }
 
-/* Navbar link hover effect */
+
 .Navbar .nav-link:hover {
     color: #d4edda !important;
     background-color: rgba(255, 255, 255, 0.2); /* Optional: add a background color on hover */
@@ -43,7 +49,6 @@
     border-radius: 5px; /* Add border radius for a rounded effect */
 }
 
-/* Dropdown item styling */
 .dropdown-item {
     color: white;
 }

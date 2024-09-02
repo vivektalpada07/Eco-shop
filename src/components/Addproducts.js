@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { db, auth } from '../firebase'; // Ensure Firebase Auth is imported
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 function Addproducts() {
@@ -9,40 +9,59 @@ function Addproducts() {
   const [productDetailedDescription, setProductDetailedDescription] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [category, setCategory] = useState('furniture');
-  const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState('');
+  const [images, setImages] = useState([]); // Updated to handle multiple images
+  const [imageUrls, setImageUrls] = useState([]);
   const [progress, setProgress] = useState(0);
   const [successMessage, setSuccessMessage] = useState('');
 
   const storage = getStorage();
 
   const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
+    if (e.target.files) {
+      setImages([...e.target.files]);
     }
   };
 
   const handleImageUpload = () => {
-    if (!image) return;
+    if (images.length === 0) {
+      alert("Please select images to upload.");
+      return;
+    }
 
-    const storageRef = ref(storage, `images/${image.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+    const uploadPromises = images.map((image) => {
+      const storageRef = ref(storage, `images/${productName}/${image.name}`); // Save images in a sub-folder
+      const uploadTask = uploadBytesResumable(storageRef, image);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        setProgress(progress);
-      },
-      (error) => {
-        console.error("Image upload failed: ", error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImageUrl(downloadURL);
-        });
-      }
-    );
+      return new Promise((resolve, reject) => {
+        uploadTask.on(
+          'state_changed',
+          (snapshot) => {
+            const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+            setProgress(progress);
+          },
+          (error) => {
+            console.error("Upload failed: ", error);
+            reject(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              setImageUrls((prev) => [...prev, downloadURL]);
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    });
+
+    Promise.all(uploadPromises)
+      .then((urls) => {
+        console.log('All images uploaded:', urls);
+        alert('Images uploaded successfully!');
+      })
+      .catch((error) => {
+        console.error('Error uploading images: ', error);
+        alert('Failed to upload images. Please try again.');
+      });
   };
 
   const handleSubmit = async (e) => {
@@ -60,7 +79,7 @@ function Addproducts() {
         productDetailedDescription,
         productPrice: Number(productPrice),
         category,
-        imageUrl, // Save the image URL to Firestore
+        imageUrls, // Save the image URLs to Firestore
         sellerId: user.uid, // Include the seller ID in the product document
         sellerUsername: user.displayName || user.email.split('@')[0], // Save the seller's username
         sellerEmail: user.email, // Save the seller's email as well
@@ -76,8 +95,8 @@ function Addproducts() {
       setProductDetailedDescription('');
       setProductPrice('');
       setCategory('furniture');
-      setImage(null);
-      setImageUrl('');
+      setImages([]);
+      setImageUrls([]);
       setProgress(0);
 
       // Remove the success message after 3 seconds
@@ -137,11 +156,13 @@ function Addproducts() {
           </select>
         </div>
         <div>
-          <label>Upload Image:</label>
-          <input type="file" onChange={handleImageChange} />
-          <button type="button" onClick={handleImageUpload}>Upload Image</button>
+          <label>Upload Images:</label>
+          <input type="file" onChange={handleImageChange} multiple />
+          <button type="button" onClick={handleImageUpload}>Upload Images</button>
           <progress value={progress} max="100" />
-          {imageUrl && <img src={imageUrl} alt="Uploaded" style={{ width: '100px', marginTop: '10px' }} />}
+          {imageUrls.length > 0 && imageUrls.map((url, index) => (
+            <img key={index} src={url} alt="Uploaded" style={{ width: '100px', marginTop: '10px' }} />
+          ))}
         </div>
         <button type="submit">Add Product</button>
       </form>

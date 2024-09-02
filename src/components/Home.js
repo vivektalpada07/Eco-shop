@@ -3,6 +3,9 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Carousel from 'react-bootstrap/Carousel';
 import Header from './Header';  
 import Footer from './Footer';  
 import { useProductcontext } from '../context/Productcontext'; // Import the ProductContext
@@ -11,6 +14,8 @@ import '../css/Home.css';
 function Home() {
   const { products } = useProductcontext(); // Get all products from context
   const [trendingProducts, setTrendingProducts] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (products.length > 0) {
@@ -18,6 +23,13 @@ function Home() {
       setTrendingProducts(shuffled.slice(0, 3)); // Select the first 3 products as trending
     }
   }, [products]);
+
+  const handleShow = (product) => {
+    setSelectedProduct(product);
+    setShow(true);
+  };
+
+  const handleClose = () => setShow(false);
 
   return (
     <div className="wrapper">
@@ -48,9 +60,27 @@ function Home() {
               <Col md={4} key={product.id} className="mb-4">
                 <div className="card text-center">
                   <div className="card-body">
-                    <h5 className="card-title">{product.productName}</h5>
+                    {product.imageUrls && product.imageUrls.length > 0 && (
+                      <img 
+                        src={product.imageUrls[0]} 
+                        alt={product.productName} 
+                        className="card-img-top" 
+                        style={{
+                          height: '200px',
+                          objectFit: 'cover',
+                          borderRadius: '5px'
+                        }}
+                      />
+                    )}
+                    <h5 className="card-title mt-3">{product.productName}</h5>
                     <p className="card-text">{product.productDescription}</p>
                     <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
+                    <Button 
+                      variant="warning"
+                      onClick={() => handleShow(product)}
+                    >
+                      View Details
+                    </Button>
                   </div>
                 </div>
               </Col>
@@ -59,6 +89,50 @@ function Home() {
         </Row>
       </Container>
       <Footer />
+
+      {/* Modal for Product Details */}
+      {selectedProduct && (
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>{selectedProduct.productName}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {selectedProduct.imageUrls && selectedProduct.imageUrls.length > 0 && (
+              <Carousel>
+                {selectedProduct.imageUrls.map((url, index) => (
+                  <Carousel.Item key={index}>
+                    <img 
+                      className="d-block w-100"
+                      src={url} 
+                      alt={`Product ${index + 1}`} 
+                      style={{
+                        height: '300px', 
+                        objectFit: 'cover', 
+                        borderRadius: '5px' 
+                      }} 
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            )}
+            <p>{selectedProduct.productDescription}</p>
+            <p className="product-price">Price: ${selectedProduct.productPrice}</p>
+            <p className="product-description">{selectedProduct.productDetailedDescription}</p>
+            <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="warning" onClick={() => console.log("Add to Wishlist clicked!")}>
+              Add to Wishlist
+            </Button>
+            <Button variant="primary" onClick={() => console.log("Add to Cart clicked!")}>
+              Add to Cart
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 }

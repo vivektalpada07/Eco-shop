@@ -76,7 +76,9 @@ function Cart() {
                 {cartItems.map((product) => (
                   <Col md={4} key={product.productId}>
                     <Card className="mb-4 product-card">
-                      <Card.Img variant="top" src={product.imageUrl} alt={product.productName} />
+                      {product.imageUrls && product.imageUrls.length > 0 && (
+                        <Card.Img variant="top" src={product.imageUrls[0]} alt={product.productName} />
+                      )}
                       <Card.Body className="product-card-body">
                         <Card.Title>{product.productName}</Card.Title>
                         <Card.Text>{product.productDescription}</Card.Text>

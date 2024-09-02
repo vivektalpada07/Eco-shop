@@ -9,11 +9,11 @@ import Footer from "./Footer";
 import {useCartContext} from "../context/Cartcontext";
 import '../css/Checkout.css';
 import CheckoutService from "../context/CheckoutServices";
-<<<<<<< Updated upstream
+
 import HeaderSwitcher from "./HeaderSwitcher";
-=======
+
 import { useNavigate } from "react-router-dom";
->>>>>>> Stashed changes
+
 
 function Checkout() {
     const [discountCode, setDiscountCode] = useState("");

@@ -17,6 +17,9 @@ function Footer() {
             <Nav.Item>
               <Nav.Link href="/contactus">Contact Us</Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/beseller">Be Seller</Nav.Link>
+            </Nav.Item>
           
           </Nav>
           <p className="Copyright">Copyright &copy; 2024 Eco Shop</p>

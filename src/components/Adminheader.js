@@ -4,6 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
 import '../css/Header.css';
@@ -37,11 +38,21 @@ function AdminHeader() {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="/admin">Dashboard</Nav.Link>
-            <Nav.Link href="/manageusers">Manage Users</Nav.Link>
-            <Nav.Link href="/manageproduct">Manage Products</Nav.Link>
-            <Nav.Link href="/addproduct">Add Product</Nav.Link>
-            <Nav.Link href="/mylistings">My Listings</Nav.Link>
+            {/* Admin Dashboard Group */}
+            <NavDropdown title="Dashboard" id="admin-dashboard-dropdown">
+              <NavDropdown.Item href="/admin">Dashboard</NavDropdown.Item>
+              <NavDropdown.Item href="/manageusers">Manage Users</NavDropdown.Item>
+              <NavDropdown.Item href="/sellerqueries">Seller Queries</NavDropdown.Item>
+            </NavDropdown>
+            
+            {/* Product Management Group */}
+            <NavDropdown title="Products" id="product-management-dropdown">
+              <NavDropdown.Item href="/manageproduct">Manage Products</NavDropdown.Item>
+              <NavDropdown.Item href="/addproduct">Add Product</NavDropdown.Item>
+              <NavDropdown.Item href="/mylistings">My Listings</NavDropdown.Item>
+            </NavDropdown>
+
+            <Nav.Link href="/orders">Orders</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>

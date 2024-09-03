@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Button, Form, InputGroup } from "react-bootstrap";
+import { Alert, Button, Form, InputGroup, Modal } from "react-bootstrap";
 import Footer from "./Footer";
-import {useCartContext} from "../context/Cartcontext";
 import '../css/Checkout.css';
 import CheckoutService from "../context/CheckoutServices";
 import HeaderSwitcher from "./HeaderSwitcher";
 import { useNavigate } from "react-router-dom";
-
+import { useLocation } from 'react-router-dom';
 
 function Checkout() {
     const [discountCode, setDiscountCode] = useState("");
@@ -19,33 +18,33 @@ function Checkout() {
     const [country, setCountry] = useState("");
     const [subTotal, setSubTotal] = useState(0.00);
     const [discount, setDiscount] = useState(0.00);
-    const [tax, setTax] = useState(0.00);
     const [serverFee, setServerFee] = useState(0.00);
     const [totalCost, setTotalCost] = useState(0.00);
-    const [paymentId, setPaymentId] = useState("");
-    const { cartItems } = useCartContext();
+    const [showModal, setShowModal] = useState(false);
+    const [showErrorModal, setShowErrorModal] = useState(false);
+    const [missingFields, setMissingFields] = useState([]);
+    
+    // Inside the Checkout function
+    const location = useLocation();
+    const selectedProducts = location.state?.selectedProducts || [];
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Calculate SubTotal when cartItems change
-        let subtotal = cartItems.reduce((acc, item) => acc + item.productPrice, 0);
+        // Calculate SubTotal when selectedProducts change
+        let subtotal = selectedProducts.reduce((acc, item) => acc + item.productPrice, 0);
         setSubTotal(subtotal);
-    
-        // Calculate Tax
-        const taxPercentage = 0.30; // 30% tax
-        const taxValue = subtotal * taxPercentage;
-        setTax(taxValue);
-    
+      
         // Calculate Server Fee
         const serverPercentage = 0.15; // 15% server fee
         const serverValue = subtotal * serverPercentage;
         setServerFee(serverValue);
-    
+      
         // Calculate Total Cost without discount
-        const totalCost = subtotal + taxValue + serverValue;
+        const totalCost = subtotal + serverValue;
         setTotalCost(totalCost);
-    }, [cartItems]);
+      }, [selectedProducts]);
+      
     
     const discountCodes = {
         "DISCOUNT50": 0.50, // 50% discount
@@ -59,7 +58,7 @@ function Checkout() {
         
         if (discountPercentage > 0) {
             const discountValue = subTotal * discountPercentage;
-            const newTotalCost = subTotal - discountValue + tax + serverFee;
+            const newTotalCost = subTotal - discountValue + serverFee;
 
             setDiscount(discountValue);
             setTotalCost(newTotalCost);
@@ -89,38 +88,49 @@ function Checkout() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage("");
-        if (address === "" || city === "" || region === "" || zipCode === "" || country === "" || cardNumber === "") {
-            setMessage({ error: true, msg: "All fields are mandatory!" });
+        setMissingFields([]);  // Reset missing fields
+
+        // Track missing fields
+        let missingFields = [];
+
+        if (address === "") missingFields.push("Street Address");
+        if (city === "") missingFields.push("City");
+        if (region === "") missingFields.push("State/Province/Region");
+        if (zipCode === "") missingFields.push("Zip/Postal Code");
+        if (country === "") missingFields.push("Country");
+        if (cardNumber === "") missingFields.push("Card Number");
+
+        if (missingFields.length > 0) {
+            setMissingFields(missingFields);  // Set the missing fields to the state
+            setShowErrorModal(true);  // Show the error modal
             return;
         }
 
         const encryptedCardNumber = simpleEncrypt(cardNumber);// This will store the encrypted card number
 
-        const generatedPaymentId = generateUniqueId();// Generate a unique payment ID
-        setPaymentId(generatedPaymentId);
-
         const checkoutData = {
-            paymentId: generatedPaymentId, // This will be used as both payment ID and document ID
-            cardNumber: encryptedCardNumber,
-            address,
-            city,
-            region,
-            zipCode,
-            country,
+            paymentId: "", // Provide a default empty string or some fallback value
+            cardNumber: encryptedCardNumber || "",
+            address: address || "",
+            city: city || "",
+            region: region || "",
+            zipCode: zipCode || "",
+            country: country || "",
             serverFee: serverFee.toFixed(2),
             totalCost: totalCost.toFixed(2),
-            items: cartItems.map(item => ({
-                productName: item.productName,
-                productDescription: item.productDescription,
-                productPrice: item.productPrice,
-                imageUrl: item.imageUrl,
-                sellerId: item.sellerId, // Add sellerId for each item
+            items: selectedProducts.map(item => ({
+                productName: item.productName || "Unknown Product",
+                productDescription: item.productDescription || "",
+                productPrice: item.productPrice || 0,
+                imageUrls: item.imageUrls || "", // Use a placeholder URL or empty string if missing
+                sellerId: item.sellerId || "Unknown Seller", // Ensure sellerId is provided
             }))
         };
-
+        
         try {
-            await CheckoutService.addCheckout(checkoutData, generatedPaymentId);
+            await CheckoutService.addCheckout(checkoutData);
             setMessage({ error: false, msg: "Payment successful!" });
+            setShowModal(true); // Show the modal when payment is successful
         } catch (err) {
             setMessage({ error: true, msg: err.message });
         }
@@ -131,8 +141,6 @@ function Checkout() {
         setRegion("");
         setZipCode("");
         setCardNumber("");
-
-        navigate('/');
     };
 
     return (
@@ -140,8 +148,8 @@ function Checkout() {
             <div className="p-4 box">
                 <div className="wrapper">
                     <HeaderSwitcher/>
-                    <div className="main-content">
-                            {message?.msg && (
+                    <div className="content">
+                        {message?.msg && (
                             <Alert
                                 variant={message?.error ? "danger" : "success"}
                                 dismissible
@@ -152,29 +160,31 @@ function Checkout() {
                         )}
                         <h2 className="text-center mb-4">Checkout</h2>
                         <h4>Products History</h4>
-                        {cartItems.length > 0 ? (
-                            <div className="row justify-content-center">
-                                {cartItems.map((item, index) => (
-                                    <div className="col-md-4" key={index}>
-                                        <div className="card text-center">
-                                            <div className="card-body">
-                                                {item.imageUrl && (
-                                                    <img 
-                                                        src={item.imageUrl} 
-                                                        alt={item.productName} 
-                                                        className="card-img-top"
-                                                    />
-                                                )}
-                                                <h5 className="card-title">{item.productName}</h5>
-                                                <p className="card-text">{item.productDescription}</p>
-                                                <p className="card-text"><strong>Price: ${item.productPrice}</strong></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
+                        {selectedProducts.length > 0 ? (
+                        <div className="row justify-content-center">
+                            {selectedProducts.map((item, index) => (
+                            <div className="col-md-4" key={index}>
+                                <div className="card text-center">
+                                <div className="card-body">
+                                    {item.imageUrls && (
+                                    <>
+                                        <img 
+                                        src={item.imageUrls[0]} 
+                                        alt={item.productName} 
+                                        className="card-img-top"
+                                        />
+                                    </>
+                                    )}
+                                    <h5 className="card-title">{item.productName}</h5>
+                                    <p className="card-text">{item.productDescription}</p>
+                                    <p className="card-text"><strong>Price: ${item.productPrice}</strong></p>
+                                </div>
+                                </div>
                             </div>
+                            ))}
+                        </div>
                         ) : (
-                            <p>Your cart is empty.</p>
+                        <p>Your cart is empty.</p>
                         )}
                         <br/>
                         <Form onSubmit={handleSubmit}>
@@ -291,10 +301,6 @@ function Checkout() {
                                                 <span className="value">$-{discount.toFixed(2)}</span>
                                             </div>
                                             <div className="align-items">
-                                                <span className="label">Tax (30%):</span> 
-                                                <span className="value">${tax.toFixed(2)}</span>
-                                            </div>
-                                            <div className="align-items">
                                                 <span className="label">Server Fee (15%):</span> 
                                                 <span className="value">${serverFee.toFixed(2)}</span>
                                             </div>
@@ -324,6 +330,40 @@ function Checkout() {
                     <Footer/>
                 </div> 
             </div>
+            {/* Success Modal */}
+            <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Header closeButton>
+                <Modal.Title>Payment Successful</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Your payment was processed successfully!</Modal.Body>
+            <Modal.Footer>
+                <Button variant="success" onClick={() => {
+                    setShowModal(false);
+                    navigate('/Cart');
+                }}>
+                    Close
+                </Button>
+            </Modal.Footer>
+            </Modal>
+            {/* Error Modal */}
+            <Modal show={showErrorModal} onHide={() => setShowErrorModal(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Missing Information</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Please fill in the following mandatory fields: 
+                    <ul>
+                        {missingFields.map((field, index) => (
+                            <li key={index}>{field}</li>
+                        ))}
+                    </ul>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="danger" onClick={() => setShowErrorModal(false)}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </> 
     );
 }

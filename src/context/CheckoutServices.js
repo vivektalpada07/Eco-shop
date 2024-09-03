@@ -1,21 +1,32 @@
-import { db } from "../firebase"; 
-
+import { db } from "../firebase";
 import {
   collection,
   getDocs,
   doc,
-  setDoc, // Use setDoc to specify the document ID
   getDoc,
+  addDoc,
+  updateDoc,
 } from "firebase/firestore";
 
-const collectionName = "checkout"; 
+const collectionName = "checkout";
 const checkoutCollectionRef = collection(db, collectionName);
 
 class CheckoutService {
-  // Use the paymentId as the document ID
-  addCheckout = (newCheckout, paymentId) => {
-    const checkoutDoc = doc(db, collectionName, paymentId);
-    return setDoc(checkoutDoc, newCheckout); // Use setDoc to set the document with the specific ID
+  // Use addDoc to add a new document with an auto-generated ID
+  addCheckout = async (newCheckout) => {
+    try {
+      // First, add the document without the paymentId
+      const docRef = await addDoc(checkoutCollectionRef, newCheckout);
+
+      // Then, update the document to set the paymentId to the document ID
+      await updateDoc(docRef, {
+        paymentId: docRef.id,
+      });
+
+      console.log("Document written with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding checkout: ", error);
+    }
   };
 
   getAllCheckouts = () => {

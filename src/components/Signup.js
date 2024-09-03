@@ -54,7 +54,7 @@ const Signup = () => {
   };
 
   return (
-    <>
+    <div className="main-content">
       <Header/>
       <div className="p-4 box">
         <h2 className="mb-3">Signup</h2>
@@ -127,7 +127,7 @@ const Signup = () => {
         Already have an account? <Link to="/login">Log In</Link>
       </div>
       <Footer/>
-    </>
+    </div>
   );
 };
 

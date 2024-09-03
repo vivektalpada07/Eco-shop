@@ -51,7 +51,7 @@ const ManageUsers = () => {
   );
 
   return (
-    <div className="manage-users-container">
+    <div className="main-content">
       <AdminHeader />
       <h2>Manage Users</h2>
 

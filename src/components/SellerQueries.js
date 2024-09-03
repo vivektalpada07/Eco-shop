@@ -58,7 +58,7 @@ const SellerQueries = () => {
   };
 
   return (
-    <div className="queries-container">
+    <div className="main-content">
       <AdminHeader />
       <h2>Seller Queries</h2>
       {queries.length > 0 ? (

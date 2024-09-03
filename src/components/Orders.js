@@ -25,30 +25,42 @@ const Orders = () => {
   }, [orders, user]);
 
   return (
-    <div className="orders-container">
-        <HeaderSwitcher/>
+    <div className="main-content">
+      <HeaderSwitcher/>
       <h2>My Orders</h2>
       {sellerOrders.length > 0 ? (
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Order ID</th>
               <th>Product Name</th>
+              <th>Description</th>
+              <th>Price</th>
               <th>Quantity</th>
-              <th>Total Price</th>
-              <th>Customer Name</th>
-              <th>Customer Email</th>
+              <th>Total Cost</th>
+              <th>Payment ID</th>
+              <th>Region</th>
+              <th>Zip Code</th>
+              <th>Server Fee</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>Country</th>
             </tr>
           </thead>
           <tbody>
-            {sellerOrders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
-                <td>{order.productName}</td>
-                <td>{order.quantity}</td>
-                <td>{order.totalPrice}</td>
-                <td>{order.customerName}</td>
-                <td>{order.customerEmail}</td>
+            {sellerOrders.map((order, index) => (
+              <tr key={index}>
+                <td>{order.items[0]?.productName}</td>
+                <td>{order.items[0]?.productDescription}</td>
+                <td>{order.items[0]?.productPrice}</td>
+                <td>{order.items.length}</td> {/* Assuming quantity is the number of items */}
+                <td>{order.totalCost}</td>
+                <td>{order.paymentId}</td>
+                <td>{order.region}</td>
+                <td>{order.zipCode}</td>
+                <td>{order.serverFee}</td>
+                <td>{order.address}</td>
+                <td>{order.city}</td>
+                <td>{order.country}</td>
               </tr>
             ))}
           </tbody>
@@ -61,4 +73,3 @@ const Orders = () => {
 };
 
 export default Orders;
-

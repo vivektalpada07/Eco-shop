@@ -140,8 +140,8 @@ function Checkout() {
             <div className="p-4 box">
                 <div className="wrapper">
                     <HeaderSwitcher/>
-                    <div className="content">
-                        {message?.msg && (
+                    <div className="main-content">
+                            {message?.msg && (
                             <Alert
                                 variant={message?.error ? "danger" : "success"}
                                 dismissible

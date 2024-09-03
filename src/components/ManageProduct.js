@@ -37,7 +37,7 @@ const ManageProducts = () => {
   };
 
   return (
-    <div className="manage-products-container">
+    <div className="main-content">
       <AdminHeader />
       <h2>Manage Products</h2>
       <Table striped bordered hover>

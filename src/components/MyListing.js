@@ -55,7 +55,7 @@ const MyListings = () => {
   };
 
   return (
-    <div className="my-listings-container">
+    <div className="main-content">
       {role === "admin" && <AdminHeader />}
       {role === "seller" && <SellerHeader />}
 

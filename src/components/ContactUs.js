@@ -42,7 +42,7 @@ function ContactUs() {
   };
 
   return (
-    <>
+    <div className="main-content">
     <HeaderSwitcher/>
       <div className="p-4 box">
         {feedback.msg && (
@@ -110,7 +110,7 @@ function ContactUs() {
         </Form>
       </div>
     <Footer/>
-    </>
+    </div>
   );
 }
 

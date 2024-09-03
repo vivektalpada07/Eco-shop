@@ -88,7 +88,7 @@ function Electricalgoods() {
   return (
     <div className="wrapper">
       <HeaderSwitcher/>
-      <div className="content">
+      <div className="main-content">
         <h2 className="text-center">Our Electrical Goods Collection</h2>
 
         {/* Search Bar */}

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { db, auth } from '../firebase'; // Ensure Firebase Auth is imported
 import { collection, addDoc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import '../css/Header.css';
+import '../css/Addproduct.css';
+import HeaderSwitcher from './HeaderSwitcher';
 
 function Addproducts() {
   const [productName, setProductName] = useState('');
@@ -111,6 +114,7 @@ function Addproducts() {
 
   return (
     <div className='main-content'>
+      <HeaderSwitcher/>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Product Name:</label>

@@ -140,7 +140,7 @@ function Cart() {
           )}
         </Container>
       </div>
-      <Footer />
+
     </div>
   );
 }

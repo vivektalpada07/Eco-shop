@@ -12,6 +12,7 @@ import HeaderSwitcher from './HeaderSwitcher';
 function Furnitures() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [similarProducts, setSimilarProducts] = useState([]); // Store similar products
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
@@ -52,6 +53,7 @@ function Furnitures() {
   const handleShow = (product) => {
     setSelectedProduct(product);
     setShow(true);
+    fetchSimilarProducts(product.category);  // Fetch similar products when modal opens
   };
 
   const handleClose = () => setShow(false);
@@ -83,6 +85,27 @@ function Furnitures() {
     } else {
       console.error("No product selected or product data is incomplete.");
     }
+  };
+
+  // Fetch similar products based on the category of the selected product
+  const fetchSimilarProducts = async (category) => {
+    try {
+      const q = query(collection(db, "products"), where("category", "==", category));
+      const querySnapshot = await getDocs(q);
+      const productsArray = querySnapshot.docs.map(doc => ({
+        productId: doc.id,  
+        ...doc.data()
+      }));
+      setSimilarProducts(productsArray);  // Store similar products
+    } catch (error) {
+      console.error("Error fetching similar products:", error);
+    }
+  };
+
+  // Handle clicking on a similar product (update modal)
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);  // Update modal with the clicked product details
+    fetchSimilarProducts(product.category);  // Update similar products as well
   };
 
   return (
@@ -123,7 +146,8 @@ function Furnitures() {
                       Add to Cart
                     </button>
                     <button 
-                      className="btn wishlist" 
+                      className="btn view-details" 
+                      style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%' }} // Set the color outside modal
                       onClick={() => handleShow(product)}
                     >
                       View Details
@@ -141,7 +165,7 @@ function Furnitures() {
 
       {/* Modal for Product Details */}
       {selectedProduct && (
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={show} onHide={handleClose} scrollable={true}> {/* Enable scrolling */}
           <Modal.Header closeButton>
             <Modal.Title>{selectedProduct.productName}</Modal.Title>
           </Modal.Header>
@@ -165,18 +189,50 @@ function Furnitures() {
               <p className="product-description">{selectedProduct.productDetailedDescription}</p>
               <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
             </div>
+
+            {/* Buttons */}
+            <div className="product-buttons">
+              <Button variant="warning" className="mb-3" onClick={handleAddToWishlist}>
+                Add to Wishlist
+              </Button>
+              <Button variant="primary" className="mb-3" onClick={() => handleAddToCart(selectedProduct)}>
+                Add to Cart
+              </Button>
+              <Button variant="secondary" className="mb-3" onClick={handleClose}>
+                Close
+              </Button>
+            </div>
+
+            {/* Display Similar Products */}
+            <div className="similar-products">
+              <h5>Similar Products</h5>
+              <div className="row">
+                {similarProducts.map((product, index) => (
+                  <div className="col-4" key={index}>
+                    <div className="card text-center"> 
+                      <img
+                        src={product.imageUrls[0]}
+                        alt={product.productName}
+                        style={{ width: '100%', height: 'auto' }}
+                      />
+                      <div className="card-body">
+                        <h6>{product.productName}</h6>
+                        <p>Price: ${product.productPrice}</p>
+                        <button 
+                          className="btn view-details" 
+                          style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
+                          onClick={() => handleShow(product)}
+                        >
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="warning" onClick={handleAddToWishlist}>
-              Add to Wishlist
-            </Button>
-            <Button variant="primary" onClick={() => handleAddToCart(selectedProduct)}>
-              Add to Cart
-            </Button>
-          </Modal.Footer>
         </Modal>
       )}
     </div>

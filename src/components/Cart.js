@@ -44,14 +44,29 @@ function Cart() {
       alert("Please select at least one product to proceed.");
       return;
     }
-    navigate('/checkout');
+  
+    const selectedProducts = cartItems
+      .filter(item => selectedProductIds.includes(item.productId))
+      .map(product => ({
+        productId: product.productId,
+        productName: product.productName,
+        productPrice: product.productPrice,
+        productDescription: product.productDescription,
+        sellerUsername: product.sellerUsername,
+        sellerId: product.sellerId,
+        imageUrls: product.imageUrls,  // Ensure imageUrls are included
+      }));
+  
+    navigate('/checkout', { state: { selectedProducts } });
   };
+  
+  
 
   if (!currentUser) {
     return (
       <div className="wrapper">
         <HeaderSwitcher/>
-        <div className="main-content">
+        <div className="content">
           <Container>
             <p className="text-center">You need to log in to view your cart.</p>
             <div className="text-center">

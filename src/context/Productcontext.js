@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore'; // Import deleteDoc and doc
 import { db } from '../firebase';
 
 const ProductContext = createContext();
@@ -24,7 +24,7 @@ export function ProductContextProvider({ children }) {
     };
     const fetchOrders = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "cart")); // Assuming 'cart' is the collection name
+        const querySnapshot = await getDocs(collection(db, "checkout"));
         const ordersArray = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
@@ -60,10 +60,15 @@ export function ProductContextProvider({ children }) {
     );
   }
 
-  function deleteProduct(productId) {
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== productId)
-    );
+  async function deleteProduct(productId) {
+    try {
+      await deleteDoc(doc(db, "products", productId)); // Delete product from Firestore
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product.id !== productId)
+      );
+    } catch (e) {
+      console.error("Error deleting product:", e);
+    }
   }
 
   return (

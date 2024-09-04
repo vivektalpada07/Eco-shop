@@ -147,11 +147,11 @@ function Furnitures() {
                       Add to Cart
                     </button>
                     <button 
-                      className="btn view-details" 
-                      style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%' }} 
-                      onClick={() => handleShow(product)}
+                    className="btn view-details" 
+                    style={{ backgroundColor: '#ff8c00' }} 
+                     onClick={() => handleShow(product)}
                     >
-                      View Details
+                     View Details
                     </button>
                   </div>
                 </div>
@@ -195,12 +195,13 @@ function Furnitures() {
                 ))}
               </Carousel>
             )}
-            <div className="product-details">
-              <p>{selectedProduct.productDescription}</p>
-              <p className="product-price">Price: ${selectedProduct.productPrice}</p>
-              <p className="product-description">{selectedProduct.productDetailedDescription}</p>
-              <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
+               <div className="product-details">
+            <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
+            <p>{selectedProduct.productDescription}</p>
+            <p className="product-description">{selectedProduct.productDetailedDescription}</p>
+            <p className="product-price">Price: ${selectedProduct.productPrice}</p>
             </div>
+
 
             {/* Buttons */}
             <div className="product-buttons">

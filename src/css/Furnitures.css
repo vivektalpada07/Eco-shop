@@ -1,123 +1,167 @@
-/* Search Input Styling */
-.search-input {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    margin: 20px auto;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s ease;
+/* General Page Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8f9fa;
 }
 
-.search-input:focus {
-    border-color: #28a745;
-    outline: none;
+h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Centering the search bar */
+.search-bar {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.search-bar input {
+    border-radius: 20px;
+    border: 2px solid #ddd;
+    padding: 10px;
+    width: 300px;
+    transition: all 0.3s ease;
+}
+
+.search-bar input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
 }
 
 /* Product Card Styles */
 .card {
     border: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-bottom: 30px;
-    max-width: 320px; /* Slightly wider for more content */
-    border-radius: 10px; /* Rounded corners for a modern look */
-    overflow: hidden; /* Ensures the rounded corners apply to images as well */
+    padding: 20px;
+    border-radius: 15px;
+    background-color: white;
 }
 
 .card:hover {
-    transform: translateY(-7px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card img {
+    border-radius: 10px;
     width: 100%;
     height: auto;
-    max-height: 180px; /* Increased height for better visual appeal */
+    max-height: 200px;
     object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-/* Product Title and Description */
+.card img:hover {
+    transform: scale(1.05);
+}
+
+/* Typography */
 .card-title {
     font-size: 1.5rem;
-    margin-bottom: 12px;
-    font-weight: bold; /* Bolder font for emphasis */
+    font-weight: bold;
+    margin-bottom: 10px;
     color: #333;
 }
 
 .card-text {
     font-size: 1rem;
-    margin-bottom: 12px;
     color: #666;
+    margin-bottom: 10px;
 }
 
-/* Price Styling */
-.card-text strong {
-    font-size: 1.2rem;
-    color: #000;
+.product-seller-username {
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 600;
 }
 
-/* Wishlist Button Styling */
-.wishlist {
-    background-color: #f0ad4e;
-    color: white;
-    border: none;
-    padding: 10px 15px; /* Adjusted padding for better button size */
-    cursor: pointer;
-    border-radius: 5px;
+/* Price Styling - Now at the bottom */
+.product-price {
+    font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 12px; /* Increased space between buttons */
-    transition: background-color 0.3s ease;
+    color: #28a745;
+    margin-bottom: 20px;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    transition: color 0.3s ease;
 }
 
-.wishlist:hover {
-    background-color: #ec971f;
+/* Button Styling */
+.btn {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-/* Add to Cart Button Styling */
 .add-to-cart {
     background-color: #28a745;
     color: white;
     border: none;
-    padding: 10px 15px; /* Adjusted padding for better button size */
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
 }
 
 .add-to-cart:hover {
     background-color: #218838;
+    transform: scale(1.05);
 }
 
-/* Align buttons within the product cards */
-.card .wishlist,
-.card .add-to-cart {
-    margin-top: 8px; /* Increased margin for better spacing */
+/* View Details Button Styling */
+.view-details {
+    background-color: transparent !important; /* No background */
+    color: #000 !important; /* Black text */
+    border: none !important; /* No border */
+    text-decoration: none !important; /* No underline initially */
+    font-weight: normal !important; /* Normal font weight */
+    padding: 0 !important; /* Remove padding */
+    text-align: center !important; /* Center align */
+    display: block !important; /* Make sure it behaves like a block element */
+    margin-top: 10px !important;
+    font-size: 1rem !important; /* Adjust font size if needed */
+    cursor: pointer !important;
+}
+
+.view-details:hover {
+    text-decoration: underline !important; /* Add underline on hover */
+    color: #000 !important; /* Keep the text color black */
+    cursor: pointer !important; /* Pointer cursor on hover */
+} /* Pointer cursor on hover */
+
+/* Button Transition Effect */
+.add-to-cart, .view-details {
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.add-to-cart:active, .view-details:active {
+    transform: scale(0.98); /* Slight shrinking effect on click */
+}
+
+/* Button Placement for Consistency */
+.card .view-details, .card .add-to-cart {
+    margin-top: 10px;
     width: 100%;
     display: block;
 }
 
-/* Success Message Styling */
-.alert {
-    margin-top: 20px;
-    font-size: 1.1rem;
-    padding: 15px;
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    border-radius: 5px;
+/* Footer Styles */
+footer {
+    background-color: #28a745;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9rem;
 }
-.sub-images img {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 5px;
-    width: 50px;
-    cursor: pointer;
-  }
-  
-  .sub-images img:hover {
-    border: 1px solid #777;
-  }
+
+footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}

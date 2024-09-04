@@ -5,10 +5,10 @@ import { useUserAuth } from "../context/UserAuthContext";
 import SellerHeader from "./SellerHeader";
 import AdminHeader from "./Adminheader";
 import Footer from "./Footer";
-import FBDataService from "../context/FBService"; // Import your service to interact with the database
+import FBDataService from "../context/FBService"
 
 const MyListings = () => {
-  const { products } = useProductcontext();
+  const { products, deleteProduct } = useProductcontext();
   const { user, role } = useUserAuth();
   const [sellerProducts, setSellerProducts] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -30,7 +30,7 @@ const MyListings = () => {
 
   const handleDeleteClick = async (productId) => {
     try {
-      await FBDataService.deleteData(productId); // Use your service to delete the product from the database
+      await deleteProduct(productId); // Using the deleteProduct function from context
       setSellerProducts(sellerProducts.filter((product) => product.id !== productId));
     } catch (err) {
       console.error("Error deleting product:", err);
@@ -142,7 +142,7 @@ const MyListings = () => {
                 <Form.Label>Category</Form.Label>
                 <Form.Control
                   type="text"
-                  name="productCategory"
+                  name="category"
                   value={currentProduct.category}
                   onChange={handleChange}
                 />
@@ -151,7 +151,7 @@ const MyListings = () => {
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                   type="text"
-                  name="Username"
+                  name="sellerUsername"
                   value={currentProduct.sellerUsername}
                   onChange={handleChange}
                 />
@@ -169,7 +169,7 @@ const MyListings = () => {
         </Modal.Footer>
       </Modal>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';  
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { Modal, Button, Carousel } from 'react-bootstrap'; // Import Carousel
+import { Modal, Button, Carousel } from 'react-bootstrap';
+import ReactImageMagnify from 'react-image-magnify';  // Import the magnify component
 import Header from './Header';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
@@ -147,7 +148,7 @@ function Furnitures() {
                     </button>
                     <button 
                       className="btn view-details" 
-                      style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%' }} // Set the color outside modal
+                      style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%' }} 
                       onClick={() => handleShow(product)}
                     >
                       View Details
@@ -165,19 +166,30 @@ function Furnitures() {
 
       {/* Modal for Product Details */}
       {selectedProduct && (
-        <Modal show={show} onHide={handleClose} scrollable={true}> {/* Enable scrolling */}
+        <Modal show={show} onHide={handleClose} scrollable={true}> 
           <Modal.Header closeButton>
             <Modal.Title>{selectedProduct.productName}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body style={{ maxHeight: '500px', overflowY: 'auto' }}>
             {selectedProduct.imageUrls && selectedProduct.imageUrls.length > 0 && (
               <Carousel>
                 {selectedProduct.imageUrls.map((url, index) => (
                   <Carousel.Item key={index}>
-                    <img
-                      className="d-block w-100"
-                      src={url}
-                      alt={`Slide ${index}`}
+                    <ReactImageMagnify
+                      {...{
+                        smallImage: {
+                          alt: selectedProduct.productName,
+                          isFluidWidth: true,
+                          src: url
+                        },
+                        largeImage: {
+                          src: url,
+                          width: 1200,
+                          height: 1200
+                        },
+                        enlargedImagePosition: "beside",
+                        isHintEnabled: true
+                      }}
                     />
                   </Carousel.Item>
                 ))}

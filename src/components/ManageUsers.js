@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FBDataService from "../context/FBService";
-import { Table, Form, InputGroup, FormControl } from "react-bootstrap";
+import { Table, Form, InputGroup, FormControl, Button } from "react-bootstrap";
 import AdminHeader from "./Adminheader";
 import Footer from "./Footer";
 
@@ -41,6 +41,18 @@ const ManageUsers = () => {
     }
   };
 
+  const handleDeleteUser = async (id) => {
+    try {
+      await FBDataService.deleteData(id);
+      
+      // Remove user from local state
+      setCustomers(prevCustomers => prevCustomers.filter(user => user.id !== id));
+      setSellers(prevSellers => prevSellers.filter(user => user.id !== id));
+    } catch (err) {
+      console.error("Error deleting user:", err);
+    }
+  };
+
   // Filter customers and sellers based on search query
   const filteredCustomers = customers.filter((user) =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -72,6 +84,7 @@ const ManageUsers = () => {
             <th>Email</th>
             <th>Mobile</th>
             <th>Role</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -89,6 +102,11 @@ const ManageUsers = () => {
                   <option value="seller">Seller</option>
                 </Form.Select>
               </td>
+              <td>
+                <Button variant="danger" onClick={() => handleDeleteUser(user.id)}>
+                  Delete
+                </Button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -102,6 +120,7 @@ const ManageUsers = () => {
             <th>Email</th>
             <th>Mobile</th>
             <th>Role</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -117,8 +136,12 @@ const ManageUsers = () => {
                 >
                   <option value="seller">Seller</option>
                   <option value="customer">Customer</option>
-                  <option value="admin">Admin</option>
                 </Form.Select>
+              </td>
+              <td>
+                <Button variant="danger" onClick={() => handleDeleteUser(user.id)}>
+                  Delete
+                </Button>
               </td>
             </tr>
           ))}

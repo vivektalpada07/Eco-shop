@@ -10,23 +10,23 @@ const Orders = () => {
   const [sellerOrders, setSellerOrders] = useState([]);
 
   useEffect(() => {
-    if (user) {
+    if (user && user.uid) {
       console.log("Current User UID:", user.uid); // Debugging line
-    }
 
-    if (orders.length > 0) {
-      console.log("Fetched Orders:", orders); // Debugging line
-      const filteredOrders = orders.filter(
-        (order) => (order.sellerId || "").trim() === (user.uid || "").trim()
-      );
-      console.log("Filtered Orders:", filteredOrders); // Debugging line
+      // Filter orders to only include items sold by the current seller
+      const filteredOrders = orders.map((order) => ({
+        ...order,
+        items: order.items ? order.items.filter((item) => (item.sellerId || "").trim() === (user.uid || "").trim()) : []
+      })).filter((order) => order.items.length > 0);
+
+      console.log("Filtered Orders with Seller Items:", filteredOrders); // Debugging line
       setSellerOrders(filteredOrders);
     }
   }, [orders, user]);
 
   return (
     <div className="main-content">
-      <HeaderSwitcher/>
+      <HeaderSwitcher />
       <h2>My Orders</h2>
       {sellerOrders.length > 0 ? (
         <Table striped bordered hover>
@@ -35,33 +35,31 @@ const Orders = () => {
               <th>Product Name</th>
               <th>Description</th>
               <th>Price</th>
-              <th>Quantity</th>
-              <th>Total Cost</th>
               <th>Payment ID</th>
-              <th>Region</th>
-              <th>Zip Code</th>
               <th>Server Fee</th>
               <th>Address</th>
+              <th>Region</th>
+              <th>Zip Code</th>
               <th>City</th>
               <th>Country</th>
             </tr>
           </thead>
           <tbody>
             {sellerOrders.map((order, index) => (
-              <tr key={index}>
-                <td>{order.items[0]?.productName}</td>
-                <td>{order.items[0]?.productDescription}</td>
-                <td>{order.items[0]?.productPrice}</td>
-                <td>{order.items.length}</td> {/* Assuming quantity is the number of items */}
-                <td>{order.totalCost}</td>
-                <td>{order.paymentId}</td>
-                <td>{order.region}</td>
-                <td>{order.zipCode}</td>
-                <td>{order.serverFee}</td>
-                <td>{order.address}</td>
-                <td>{order.city}</td>
-                <td>{order.country}</td>
-              </tr>
+              order.items.map((item, itemIndex) => (
+                <tr key={itemIndex}>
+                  <td>{item.productName}</td>
+                  <td>{item.productDescription}</td>
+                  <td>{item.productPrice}</td>
+                  <td>{order.paymentId}</td>
+                  <td>{order.serverFee}</td>
+                  <td>{order.address}</td>
+                  <td>{order.region}</td>
+                  <td>{order.zipCode}</td>
+                  <td>{order.city}</td>
+                  <td>{order.country}</td>
+                </tr>
+              ))
             ))}
           </tbody>
         </Table>

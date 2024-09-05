@@ -14,7 +14,6 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [username, setUsername] = useState("");
-  const [age, setAge] = useState("");
   const [role] = useState("customer"); // Role is set to 'customer' by default
 
   const { signUp } = useUserAuth();
@@ -38,7 +37,6 @@ const Signup = () => {
         email,
         mobile,   // Include mobile number in the user data
         username, // Include username in the user data
-        age,      // Include age in the user data
         role,     // Assign the default role 'customer'
         createdAt // Store the time when the user was created
       };
@@ -73,14 +71,6 @@ const Signup = () => {
               type="text"
               placeholder="Username"
               onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicAge">
-            <Form.Control
-              type="number"
-              placeholder="Age"
-              onChange={(e) => setAge(e.target.value)}
               required
             />
           </Form.Group>

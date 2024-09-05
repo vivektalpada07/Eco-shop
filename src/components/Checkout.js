@@ -6,6 +6,7 @@ import CheckoutService from "../context/CheckoutServices";
 import HeaderSwitcher from "./HeaderSwitcher";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+import { getAuth } from "firebase/auth"; //This will import the authentication from firebase
 
 function Checkout() {
     const [discountCode, setDiscountCode] = useState("");
@@ -69,10 +70,6 @@ function Checkout() {
         }
     };
 
-    const generateUniqueId = () => {
-        return Date.now().toString(36) + Math.random().toString(36).substring(2);
-    };
-
     const handleCardNumberChange = (e) => {
         const { value } = e.target; // Safely access value from event target
         let formattedValue = value.replace(/\D/g, ''); // Remove all non-digit characters
@@ -87,6 +84,17 @@ function Checkout() {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Fetch the logged-in user's ID
+        const auth = getAuth();
+        const user = auth.currentUser;
+        const userId = user ? user.uid : null;
+
+        if (!userId) {
+            setMessage({ error: true, msg: "User not logged in!" });
+            return;
+        }
+
         setMessage("");
         setMissingFields([]);  // Reset missing fields
 
@@ -110,6 +118,7 @@ function Checkout() {
 
         const checkoutData = {
             paymentId: "", // Provide a default empty string or some fallback value
+            userId: userId,  // Set the user ID here
             cardNumber: encryptedCardNumber || "",
             address: address || "",
             city: city || "",
@@ -159,7 +168,10 @@ function Checkout() {
                             </Alert>
                         )}
                         <h2 className="text-center mb-4">Checkout</h2>
+                        <div className="products-history">
                         <h4>Products History</h4>
+                        </div>
+                        <br/>
                         {selectedProducts.length > 0 ? (
                         <div className="row justify-content-center">
                             {selectedProducts.map((item, index) => (
@@ -316,7 +328,7 @@ function Checkout() {
                                         <Button
                                             variant="success" 
                                             size="lg" 
-                                            className="checkout-button"
+                                            className="paynow-button"
                                             onClick={handleSubmit}
                                             type="submit"
                                         >

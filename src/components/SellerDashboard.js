@@ -11,7 +11,6 @@ function SellerDashboard() {
           <h2>Welcome {UserProfile.username} to the Seller Dashboard!</h2>
           <UserProfile/>
           {/* <h4>Add New <Link to="/addproduct">Products</Link></h4> */}
-        <Footer/>
     </div>
     );
 }

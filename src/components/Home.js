@@ -88,9 +88,10 @@ function Home() {
                   ))}
                 </Slider>
                 <div className="card-body">
+                <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
                   <h5 className="card-title mt-3">{product.productName}</h5>
-                  <p className="card-text">{product.productDescription}</p>
-                  <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
+                 <p className="card-text">{product.productDescription}</p>
+                 
                   <Button 
                     variant="warning"
                     onClick={() => handleShow(product)}

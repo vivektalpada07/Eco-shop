@@ -29,3 +29,15 @@
     margin-left: 8px;
     font-size: 16px;
 }
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 100px; /* Increase the margin to move the cart page further down */
+    padding-bottom: 50px;
+}
+
+.checkout-button {
+    width: 50px; 
+  }

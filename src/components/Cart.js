@@ -8,7 +8,6 @@ import { useCartContext } from '../context/Cartcontext';
 import { useUserAuth } from '../context/UserAuthContext'; 
 import Footer from './Footer';
 import '../css/Cart.css';
-import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import HeaderSwitcher from './HeaderSwitcher';
 
@@ -119,7 +118,7 @@ function Cart() {
                 ))}
               </Row>
               {totalPrice > 0 && (
-                <div className="text-center mt-4">
+                <div className="text-center mt-3">
                   <h3>Total Price for Selected Products: ${totalPrice.toFixed(2)}</h3>
                 </div>
               )}

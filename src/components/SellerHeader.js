@@ -36,16 +36,16 @@ function SellerHeader() {
           <Nav className="ms-auto">
             <Nav.Link href="/addproduct">Add Product</Nav.Link>
             <Nav.Link href="/mylistings">My Listings</Nav.Link>
-            <Nav.Link href="/orders">Orders</Nav.Link>
+            <Nav.Link href="/orders" style={{ marginTop: '10px' }}>Orders</Nav.Link>
             
             {/* Additional Options from Simple Header */}
-            <NavDropdown title="Products" id="basic-nav-dropdown">
+            <NavDropdown title="Products" id="basic-nav-dropdown" style={{ marginTop: '10px' }}>
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
-            <Nav.Link href="/cart">Cart</Nav.Link>
+            <Nav.Link href='/Wishlist' style={{ marginTop: '10px' }}>Wishlist</Nav.Link>
+            <Nav.Link href="/cart" style={{ marginTop: '10px' }}>Cart</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>

@@ -11,7 +11,6 @@ function Dashboard() {
         <CustomerHeader/>
           <h2>Welcome to the Dashboard!</h2>
           <UserProfile/>
-        <Footer/>
     </div>
     );
 }

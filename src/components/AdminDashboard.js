@@ -10,7 +10,6 @@ function AdminDashboard() {
         <AdminHeader/>
           <h2 >Welcome to the Admin Dashboard!</h2>
         <UserProfile/>
-        <Footer/>
     </div>
     );
 }

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore'; // Import deleteDoc and doc
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'; // Import updateDoc
 import { db } from '../firebase';
 
 const ProductContext = createContext();
@@ -22,6 +22,7 @@ export function ProductContextProvider({ children }) {
         console.error("Error fetching products:", e);
       }
     };
+
     const fetchOrders = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "checkout"));
@@ -71,9 +72,23 @@ export function ProductContextProvider({ children }) {
     }
   }
 
+  async function updateOrderStatus(orderId, status) {
+    try {
+      const orderRef = doc(db, "checkout", orderId);
+      await updateDoc(orderRef, { status });
+      setOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === orderId ? { ...order, status } : order
+        )
+      );
+    } catch (e) {
+      console.error("Error updating order status:", e);
+    }
+  }
+
   return (
     <ProductContext.Provider
-      value={{ products, addProduct, updateProduct, deleteProduct, orders }}
+      value={{ products, addProduct, updateProduct, deleteProduct, orders, updateOrderStatus }}
     >
       {children}
     </ProductContext.Provider>

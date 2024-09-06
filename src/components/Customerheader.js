@@ -57,15 +57,13 @@ function CustomerHeader() {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <NavDropdown title="Products" id="basic-nav-dropdown">
+            <NavDropdown title="Products" id="basic-nav-dropdown" style={{ marginTop: '15px' }}>
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
-            <Nav.Link href="/cart">Cart</Nav.Link>
-
-
+            <Nav.Link href='/Wishlist' style={{ marginTop: '15px' }}>Wishlist</Nav.Link>
+            <Nav.Link href="/cart" style={{ marginTop: '15px' }}>Cart</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>

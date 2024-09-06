@@ -5,6 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useWishlistContext } from '../context/Wishlistcontext';  
+import { useCartContext } from '../context/Cartcontext'; // Import cart context
+import { useUserAuth } from '../context/UserAuthContext'; // Import auth context
 import Footer from './Footer';
 import '../css/Wishlist.css';
 import { useNavigate } from 'react-router-dom';
@@ -12,28 +14,27 @@ import HeaderSwitcher from './HeaderSwitcher';
 
 function Wishlist() {
   const { wishlist, removeFromWishlist } = useWishlistContext();
+  const { cartItems, addToCart } = useCartContext(); // Use cart context
+  const { user: currentUser } = useUserAuth();
   const navigate = useNavigate();
 
   // Calculate the total price of all items in the wishlist
   const totalPrice = wishlist.reduce((total, item) => total + item.productPrice, 0);
 
-  const handleCheckout = () => {
-    navigate('/checkout');
-  };
+  const handleAddToCart = (product) => {
+    if (!currentUser) {
+      alert("Please log in to add items to the cart.");
+      return;
+    }
 
-  if (wishlist.length === 0) {
-    return (
-      <div className="wrapper">
-        <HeaderSwitcher/>
-        <div className="content">
-          <Container>
-            <p className="text-center">Your wishlist is empty.</p>
-          </Container>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
+    const isAlreadyInCart = cartItems.some(item => item.productId === product.productId);
+
+    if (isAlreadyInCart) {
+      alert("This product is already in your cart.");
+    } else {
+      addToCart({ ...product });
+    }
+  };
 
   return (
     <div className="wrapper">
@@ -45,7 +46,6 @@ function Wishlist() {
             {wishlist.map((product, index) => (
               <Col md={4} key={product.productId}>
                 <Card className="mb-4 product-card">
-                  {/* Display the first image from imageUrls array */}
                   {product.imageUrls && product.imageUrls.length > 0 && (
                     <Card.Img variant="top" src={product.imageUrls[0]} alt={product.productName} />
                   )}
@@ -53,29 +53,25 @@ function Wishlist() {
                     <Card.Title>{product.productName}</Card.Title>
                     <Card.Text>{product.productDescription}</Card.Text>
                     <Card.Text><strong>Price: ${product.productPrice.toFixed(2)}</strong></Card.Text>
-                    <Card.Text>Seller: {product.sellerUsername}</Card.Text> {/* Display Seller's Username */}
+                    <Card.Text>Seller: {product.sellerUsername}</Card.Text>
                     <Button 
                       variant="danger" 
                       onClick={() => removeFromWishlist(product.productId)}
                     >
                       Remove from Wishlist
                     </Button>
+                    <button 
+                      className="btn add-to-cart mb-2 mt-2" 
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
                   </Card.Body>
                 </Card>
               </Col>
             ))}
           </Row>
           <h3 className="text-center mt-4">Total Price: ${totalPrice.toFixed(2)}</h3>
-          <div className="text-center mt-3">
-            <Button 
-              variant="success" 
-              size="lg" 
-              className="checkout-button"
-              onClick={handleCheckout}
-            >
-              Proceed to Checkout
-            </Button>
-          </div>
         </Container>
       </div>
       <Footer />

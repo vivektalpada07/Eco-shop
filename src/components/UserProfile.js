@@ -69,7 +69,7 @@ const UserProfile = () => {
       {error && <Alert variant="danger">{error}</Alert>}
       {userProfile ? (
         <div>
-          <h2>User Profile</h2>
+          <h2><strong>User Profile</strong></h2>
           <p>Name: {userProfile.name}</p>
           <p>Email: {userProfile.email}</p>
           <p>Mobile: {userProfile.mobile}</p>

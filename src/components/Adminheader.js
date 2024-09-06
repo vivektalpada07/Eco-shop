@@ -2,7 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import Image from 'react-bootstrap/Image';
+// import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
@@ -49,6 +49,14 @@ function AdminHeader() {
             </NavDropdown>
 
             <Nav.Link href="/orders">Orders</Nav.Link>
+
+            <NavDropdown title="Products" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
+              <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
+              <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
+            </NavDropdown>
+            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>

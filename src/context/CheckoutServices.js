@@ -13,21 +13,25 @@ const checkoutCollectionRef = collection(db, collectionName);
 
 class CheckoutService {
   // Use addDoc to add a new document with an auto-generated ID
-  addCheckout = async (newCheckout) => {
+  addCheckout = async (newCheckout, userId) => {
     try {
-      // First, add the document without the paymentId
-      const docRef = await addDoc(checkoutCollectionRef, newCheckout);
+        // First, add the document without the paymentId
+        const docRef = await addDoc(checkoutCollectionRef, {
+            ...newCheckout,
+            userId, // Ensure userId is added to the document
+        });
 
-      // Then, update the document to set the paymentId to the document ID
-      await updateDoc(docRef, {
-        paymentId: docRef.id,
-      });
+        // Then, update the document to set the paymentId to the document ID
+        await updateDoc(docRef, {
+            paymentId: docRef.id,
+        });
 
-      console.log("Document written with ID: ", docRef.id);
+        console.log("Document written with ID: ", docRef.id);
     } catch (error) {
-      console.error("Error adding checkout: ", error);
+        console.error("Error adding checkout: ", error);
     }
   };
+
 
   getAllCheckouts = () => {
     return getDocs(checkoutCollectionRef);

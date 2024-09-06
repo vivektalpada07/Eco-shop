@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import Image from 'react-bootstrap/Image';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import { useNavigate } from 'react-router-dom';
 import { useUserAuth } from '../context/UserAuthContext';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db } from '../firebase'; // Ensure you're importing the Firebase db instance
 import '../css/Header.css';
 
 function CustomerHeader() {
-  const { logOut } = useUserAuth();
+  const { logOut, user } = useUserAuth();
   const navigate = useNavigate();
+  const [purchasedProducts, setPurchasedProducts] = useState([]);
 
   const handleLogout = async () => {
     try {
@@ -22,10 +24,31 @@ function CustomerHeader() {
     }
   };
 
+  // Fetch purchased products by the customer
+  useEffect(() => {
+    const fetchPurchasedProducts = async () => {
+      if (user) {
+        try {
+          const q = query(collection(db, 'orders'), where('userId', '==', user.uid));
+          const querySnapshot = await getDocs(q);
+          const productsArray = querySnapshot.docs.map(doc => ({
+            id: doc.id, 
+            ...doc.data()
+          }));
+          setPurchasedProducts(productsArray);
+        } catch (error) {
+          console.error("Error fetching purchased products: ", error);
+        }
+      }
+    };
+    
+    fetchPurchasedProducts();
+  }, [user]);
+
   return (
     <Navbar expand="lg" className='Header'>
       <Container className='Navbar'>
-      <Navbar.Brand href="/customer" className="protest-guerrilla-regular">
+        <Navbar.Brand href="/customer" className="protest-guerrilla-regular">
           Eco Shop
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'rgba(255, 255, 255, 0.5)' }}>

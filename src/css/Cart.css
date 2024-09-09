@@ -141,6 +141,7 @@ h2 {
 
 /* Checkout Button */
 .checkout-button {
+    max-width: 15%;
     padding: 15px 30px;
     font-size: 1.2rem;
     font-weight: bold;

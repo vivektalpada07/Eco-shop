@@ -2,7 +2,7 @@
 .Header {
   background-color: #28a745;
   box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
-  padding: 10px 0;
+  height: 100px; /* Set a fixed height */
   position: fixed;
   width: 100%;
   top: 0;
@@ -17,6 +17,13 @@
 .Header .Header-image {
   height: 50px;
 }
+
+/* Ensure all nav items (including buttons) are vertically centered */
+.Navbar .nav {
+  display: flex;
+  align-items: center;
+}
+
 
 .Navbar .nav-link {
   color: #ffffff !important;
@@ -50,4 +57,17 @@
 .dropdown-item:hover {
   background-color: rgb(249, 249, 249);
   color: #28a745;
+}
+
+/* Move the login and signup buttons up */
+.login-button, .signup-button {
+  margin-top: -25px; /* Adjust as needed to move them higher */
+}
+
+.protest-guerrilla-regular {
+  font-family: "Protest Guerrilla", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: white !important;
+  margin-top: -35px;
 }

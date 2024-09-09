@@ -35,14 +35,14 @@ function AdminHeader() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {/* Admin Dashboard Group */}
-            <NavDropdown title="Dashboard" id="admin-dashboard-dropdown" style={{ marginTop: '15px' }}>
+            <NavDropdown title="Dashboard" id="admin-dashboard-dropdown">
               <NavDropdown.Item href="/admin">Dashboard</NavDropdown.Item>
               <NavDropdown.Item href="/manageusers">Manage Users</NavDropdown.Item>
               <NavDropdown.Item href="/sellerqueries">Seller Queries</NavDropdown.Item>
             </NavDropdown>
             
             {/* Product Management Group */}
-            <NavDropdown title="Products" id="product-management-dropdown" style={{ marginTop: '15px' }}>
+            <NavDropdown title="Products" id="product-management-dropdown">
               <NavDropdown.Item href="/manageproduct">Manage Products</NavDropdown.Item>
               <NavDropdown.Item href="/addproduct">Add Product</NavDropdown.Item>
               <NavDropdown.Item href="/mylistings">My Listings</NavDropdown.Item>

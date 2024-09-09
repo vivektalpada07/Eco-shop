@@ -9,7 +9,8 @@ import { useLocation } from 'react-router-dom';
 import { getAuth } from "firebase/auth"; //This will import the authentication from firebase
 
 function Checkout() {
-    const [discountCode, setDiscountCode] = useState("");
+    const [discountCode, setDiscountCode] = useState([]);
+    const [appliedDiscount, setAppliedDiscount] = useState(null);
     const [cardNumber, setCardNumber] = useState("");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
@@ -55,21 +56,30 @@ function Checkout() {
     };
 
     const handleApplyDiscount = () => {
-        const discountPercentage = discountCodes[discountCode.toUpperCase()] || 0;
+        const selectedDiscount = discountCodes[discountCode];
         
-        if (discountPercentage > 0) {
-            const discountValue = subTotal * discountPercentage;
+        if (selectedDiscount) {
+            const discountValue = subTotal * selectedDiscount;
             const newTotalCost = subTotal - discountValue + serverFee;
-
+    
             setDiscount(discountValue);
             setTotalCost(newTotalCost);
-            setDiscountCode('');
+            setAppliedDiscount(null);  // Clear applied discount
+            setDiscountCode(""); // Reset discount code dropdown to default
             setMessage({ error: false, msg: "Discount applied successfully!" });
         } else {
             setMessage({ error: true, msg: "Invalid discount code!" });
         }
-    };
+    };    
 
+    const handleRemoveDiscount = () => {
+        const newTotalCost = subTotal + serverFee; // Remove the discount from total cost
+        setDiscount(0);
+        setTotalCost(newTotalCost);
+        setAppliedDiscount(null); // Clear applied discount
+        setMessage({ error: false, msg: "Discount removed successfully!" });
+    };
+    
     const handleCardNumberChange = (e) => {
         const { value } = e.target; // Safely access value from event target
         let formattedValue = value.replace(/\D/g, ''); // Remove all non-digit characters
@@ -137,7 +147,7 @@ function Checkout() {
         };
         
         try {
-            await CheckoutService.addCheckout(checkoutData);
+            await CheckoutService.addCheckout(checkoutData, userId);
             setMessage({ error: false, msg: "Payment successful!" });
             setShowModal(true); // Show the modal when payment is successful
         } catch (err) {
@@ -157,7 +167,7 @@ function Checkout() {
             <div className="p-4 box">
                 <div className="wrapper">
                     <HeaderSwitcher/>
-                    <div className="content">
+                    <div className="main-content">
                         {message?.msg && (
                             <Alert
                                 variant={message?.error ? "danger" : "success"}
@@ -203,15 +213,19 @@ function Checkout() {
                             <div className="form-container">
                                 <div className="form-box">
                                     <div className="flex-container">
-                                        <InputGroup className="input-width">
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Discount Code"
-                                                maxLength={10}
-                                                value={discountCode}
-                                                onChange={(e) => setDiscountCode(e.target.value)} 
-                                            />
-                                        </InputGroup>
+                                    <Form.Group controlId="discountSelect">
+                                        <Form.Select
+                                        value={discountCode}
+                                        onChange={(e) => setDiscountCode(e.target.value)}
+                                        >
+                                        <option value="">Select a discount code</option>
+                                        {Object.keys(discountCodes).map((code, index) => (
+                                            <option key={index} value={code}>
+                                                {code} - {discountCodes[code] * 100}% off
+                                            </option>
+                                        ))}
+                                        </Form.Select>
+                                    </Form.Group>
                                         <Button
                                             variant="success" 
                                             size="md" 
@@ -220,6 +234,15 @@ function Checkout() {
                                         >
                                             Apply    
                                         </Button>
+                                        <Button
+                                            variant="danger"
+                                            size="md"
+                                            className="remove-button"
+                                            onClick={handleRemoveDiscount}
+                                        >
+                                            Remove
+                                        </Button>
+                                        
                                     </div> 
                                     <Form.Group className="mb-3" controlId="formCardNumber">
                                         <InputGroup>

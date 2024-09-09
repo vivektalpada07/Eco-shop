@@ -16,7 +16,6 @@
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="navbar-toggler">
             <span className="navbar-toggler-icon"></span>
           </Navbar.Toggle>
-
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
               <NavDropdown title="Products" id="basic-nav-dropdown">
@@ -43,5 +42,4 @@
       </Navbar>
     );
   }
-
-  export default Header;
+export default Header;

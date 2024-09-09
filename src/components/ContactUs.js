@@ -54,7 +54,7 @@ function ContactUs() {
             {feedback.msg}
           </Alert>
         )}
-
+        <h2>Contact Us</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formContactName">
             <InputGroup>

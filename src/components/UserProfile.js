@@ -74,7 +74,7 @@ const UserProfile = () => {
           <p>Email: {userProfile.email}</p>
           <p>Mobile: {userProfile.mobile}</p>
           <p>Username: {userProfile.username}</p>
-          <Button variant="primary" onClick={handleEdit}>
+          <Button variant="primary" onClick={handleEdit} style={{ width: '150px' }}>
             Edit Profile
           </Button>
 

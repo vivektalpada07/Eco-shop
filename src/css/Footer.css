@@ -1,7 +1,7 @@
 .Footer {
     background-color: #28a745;
     color: white;
-    padding: 20px 0;
+    padding: 10px 0px 35px 0px;
     text-align: center;
     width: 100%;
     position: fixed;
@@ -18,3 +18,10 @@
 .Footer a:hover {
     color: white;
 }
+  
+  .Copyright {
+    color: #fff; /* Customize as per your design */
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  

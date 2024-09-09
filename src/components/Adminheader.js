@@ -33,7 +33,7 @@ function AdminHeader() {
         </Navbar.Toggle>
 
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+          <Nav className="ms-auto" style={{ marginTop: '-25px' }}>
             {/* Admin Dashboard Group */}
             <NavDropdown title="Dashboard" id="admin-dashboard-dropdown">
               <NavDropdown.Item href="/admin">Dashboard</NavDropdown.Item>
@@ -57,7 +57,7 @@ function AdminHeader() {
             </NavDropdown>
             <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
-            <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
+            <Button variant="outline-light" onClick={handleLogout} style={{ marginTop: '-5px' }}>Logout</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>

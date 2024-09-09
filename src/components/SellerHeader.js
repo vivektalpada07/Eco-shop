@@ -33,7 +33,7 @@ function SellerHeader() {
         </Navbar.Toggle>
 
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
+          <Nav className="ms-auto" style={{ marginTop: '-35px' }}>
             <Nav.Link href="/addproduct">Add Product</Nav.Link>
             <Nav.Link href="/mylistings">My Listings</Nav.Link>
             <Nav.Link href="/orders" style={{ marginTop: '10px' }}>Orders</Nav.Link>

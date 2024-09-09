@@ -56,21 +56,20 @@ function Checkout() {
     };
 
     const handleApplyDiscount = () => {
-        const selectedDiscount = discountCodes[discountCode];
+        const discountPercentage = discountCodes[discountCode.toUpperCase()] || 0;
         
-        if (selectedDiscount) {
-            const discountValue = subTotal * selectedDiscount;
+        if (discountPercentage > 0) {
+            const discountValue = subTotal * discountPercentage;
             const newTotalCost = subTotal - discountValue + serverFee;
-    
+
             setDiscount(discountValue);
             setTotalCost(newTotalCost);
-            setAppliedDiscount(null);  // Clear applied discount
-            setDiscountCode(""); // Reset discount code dropdown to default
+            setDiscountCode('');
             setMessage({ error: false, msg: "Discount applied successfully!" });
         } else {
             setMessage({ error: true, msg: "Invalid discount code!" });
         }
-    };    
+    }; 
 
     const handleRemoveDiscount = () => {
         const newTotalCost = subTotal + serverFee; // Remove the discount from total cost
@@ -213,19 +212,15 @@ function Checkout() {
                             <div className="form-container">
                                 <div className="form-box">
                                     <div className="flex-container">
-                                    <Form.Group controlId="discountSelect">
-                                        <Form.Select
-                                        value={discountCode}
-                                        onChange={(e) => setDiscountCode(e.target.value)}
-                                        >
-                                        <option value="">Select a discount code</option>
-                                        {Object.keys(discountCodes).map((code, index) => (
-                                            <option key={index} value={code}>
-                                                {code} - {discountCodes[code] * 100}% off
-                                            </option>
-                                        ))}
-                                        </Form.Select>
-                                    </Form.Group>
+                                        <InputGroup className="input-width">
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Discount Code"
+                                                maxLength={10}
+                                                value={discountCode}
+                                                onChange={(e) => setDiscountCode(e.target.value)} 
+                                            />
+                                        </InputGroup>
                                         <Button
                                             variant="success" 
                                             size="md" 
@@ -242,7 +237,6 @@ function Checkout() {
                                         >
                                             Remove
                                         </Button>
-                                        
                                     </div> 
                                     <Form.Group className="mb-3" controlId="formCardNumber">
                                         <InputGroup>

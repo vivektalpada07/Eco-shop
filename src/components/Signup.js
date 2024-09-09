@@ -5,6 +5,7 @@ import { useUserAuth } from "../context/UserAuthContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import FBDataService from "../context/FBService";
+import '../css/Signup.css';
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -112,9 +113,9 @@ const Signup = () => {
             </Button>
           </div>
         </Form>
-      </div>
       <div className="p-4 box mt-3 text-center">
         Already have an account? <Link to="/login">Log In</Link>
+      </div>
       </div>
       <Footer/>
     </div>

@@ -19,13 +19,13 @@ function Header() {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <NavDropdown title="Products" id="basic-nav-dropdown" style={{ marginTop: '20px' }}>
+            <NavDropdown title="Products" id="basic-nav-dropdown" style={{ marginTop: '-15px' }}>
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href='/Wishlist' style={{ marginTop: '20px' }}>Wishlist</Nav.Link>
-            <Nav.Link href="/cart" style={{ marginTop: '20px' }}>Cart</Nav.Link>
+            <Nav.Link href='/Wishlist' style={{ marginTop: '-15px' }}>Wishlist</Nav.Link>
+            <Nav.Link href="/cart" style={{ marginTop: '-15px' }}>Cart</Nav.Link>
             
             <Nav.Link href="/login">
               <Button variant="outline-light" className="login-button">

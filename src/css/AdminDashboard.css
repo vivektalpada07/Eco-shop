@@ -20,29 +20,28 @@ body {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  gap: 80px;
+  gap: 20px;
 }
 
 .user-profile {
-  flex: 1;
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   font-weight: bold;
-  width: 20%;
+  width: 30%; /* 40% width for user profile */
 }
 
 .dashboard-summary {
   display: flex;
   margin-top: 10px;
+  justify-content: center; 
   flex-direction: row;
   align-items: center;
-  flex: 1;
-  margin-left: -250px;
+  width: 70%; /* 60% width for dashboard summary */
 }
 
-.text{
+.text {
   font-size: large;
 }
 
@@ -52,9 +51,7 @@ body {
   background-color: rgb(58, 139, 58);
   color: white;
   font-size: 40px;
-  padding: 70px; 
-  content: 50px;
+  padding: 70px;
   margin: 20px;
-  margin-left: 30px;
   border-radius: 15%;
 }

@@ -5,13 +5,14 @@ import { useUserAuth } from "../context/UserAuthContext";
 import SellerHeader from "./SellerHeader";
 import AdminHeader from "./Adminheader";
 import Footer from "./Footer";
-import FBDataService from "../context/FBService"
+import FBDataService from "../context/FBService";
 
 const MyListings = () => {
   const { products, deleteProduct } = useProductcontext();
   const { user, role } = useUserAuth();
   const [sellerProducts, setSellerProducts] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [currentProduct, setCurrentProduct] = useState(null);
 
   useEffect(() => {
@@ -25,7 +26,7 @@ const MyListings = () => {
 
   const handleEditClick = (product) => {
     setCurrentProduct(product);
-    setShowModal(true);
+    setShowEditModal(true);
   };
 
   const handleDeleteClick = async (productId) => {
@@ -43,7 +44,7 @@ const MyListings = () => {
       setSellerProducts(sellerProducts.map((product) =>
         product.id === currentProduct.id ? currentProduct : product
       ));
-      setShowModal(false);
+      setShowEditModal(false);
     } catch (err) {
       console.error("Error updating product:", err);
     }
@@ -52,6 +53,11 @@ const MyListings = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCurrentProduct({ ...currentProduct, [name]: value });
+  };
+
+  const handleProductDetailsClick = (product) => {
+    setCurrentProduct(product);
+    setShowDetailsModal(true);
   };
 
   return (
@@ -66,20 +72,21 @@ const MyListings = () => {
             <tr>
               <th>Name</th>
               <th>Price</th>
-              <th>Description</th>
-              <th>Category</th>
               <th>Actions</th>
-              <th>Username</th>
             </tr>
           </thead>
           <tbody>
             {sellerProducts.map((product) => (
               <tr key={product.id}>
-                <td>{product.productName}</td>
+                <td>
+                  <Button
+                    variant="link"
+                    onClick={() => handleProductDetailsClick(product)}
+                  >
+                    {product.productName}
+                  </Button>
+                </td>
                 <td>{product.productPrice}</td>
-                <td>{product.productDescription}</td>
-                <td>{product.category}</td>
-                <td>{product.sellerUsername}</td>
                 <td>
                   <Button
                     variant="warning"
@@ -103,7 +110,7 @@ const MyListings = () => {
       )}
 
       {/* Modal for Editing Product */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Product</Modal.Title>
         </Modal.Header>
@@ -160,13 +167,33 @@ const MyListings = () => {
           )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
+          <Button variant="secondary" onClick={() => setShowEditModal(false)}>
             Close
           </Button>
           <Button variant="primary" onClick={handleSaveChanges}>
             Save Changes
           </Button>
         </Modal.Footer>
+      </Modal>
+
+      {/* Modal for Product Details */}
+      <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Product Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {currentProduct ? (
+            <>
+              <p><strong>Name:</strong> {currentProduct.productName}</p>
+              <p><strong>Price:</strong> {currentProduct.productPrice}</p>
+              <p><strong>Description:</strong> {currentProduct.productDescription}</p>
+              <p><strong>Category:</strong> {currentProduct.category}</p>
+              <p><strong>Username:</strong> {currentProduct.sellerUsername}</p>
+            </>
+          ) : (
+            <p>No product details available.</p>
+          )}
+        </Modal.Body>
       </Modal>
 
       {/* <Footer /> */}

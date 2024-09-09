@@ -5,6 +5,7 @@ import UserProfile from './UserProfile';
 import { useUserAuth } from '../context/UserAuthContext';
 import FBDataService from '../context/FBService';
 import CheckoutService from '../context/CheckoutServices'; // Import CheckoutService
+import '../css/Dashboard.css';
 
 function SellerDashboard() {
     const { user } = useUserAuth(); // Get user from context

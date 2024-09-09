@@ -39,9 +39,28 @@
 
 .apply-button {
     width: 100px; 
+    margin-left: 20px;
 }
   
 .products-history {
-    margin-left: 220px; /* Pushes the element to the right */
-    
+    text-align: left;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .main-content {
+    flex: 1;
+    padding: 30px;
+    text-align: center;
+    margin-top: 20px; /* Adjusted to prevent overlap with header */
+    margin-bottom: 10px;
+  }
+
+  .remove-button {
+    margin-left: 10px;
+    width: 100px;
 }

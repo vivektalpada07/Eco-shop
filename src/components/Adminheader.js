@@ -46,6 +46,7 @@ function AdminHeader() {
               <NavDropdown.Item href="/manageproduct">Manage Products</NavDropdown.Item>
               <NavDropdown.Item href="/addproduct">Add Product</NavDropdown.Item>
               <NavDropdown.Item href="/mylistings">My Listings</NavDropdown.Item>
+              <NavDropdown.Item href="/admin-reviews">Customer review</NavDropdown.Item>
             </NavDropdown>
 
             <Nav.Link href="/orders">Orders</Nav.Link>
@@ -55,6 +56,7 @@ function AdminHeader() {
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
             </NavDropdown>
+            
             <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout} style={{ marginTop: '-5px' }}>Logout</Button>

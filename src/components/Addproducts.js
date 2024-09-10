@@ -115,6 +115,7 @@ function Addproducts() {
   return (
     <div className='main-content'>
       <HeaderSwitcher/>
+      <h2>Add Product</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Product Name:</label>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
-import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -13,12 +12,17 @@ import Slider from 'react-slick'; // Import Slick Carousel
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../css/Home.css';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 function Home() {
   const { products } = useProductcontext(); // Get all products from context
   const [trendingProducts, setTrendingProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
+  const [image, setImage] = useState("");
+
+  // Initialize Firebase Storage
+  const storage = getStorage();
 
   useEffect(() => {
     if (products.length > 0) {
@@ -26,6 +30,26 @@ function Home() {
       setTrendingProducts(shuffled.slice(0, 3)); // Select the first 3 products as trending
     }
   }, [products]);
+
+  useEffect(() => {
+    // Fetch image URL from Firebase Storage
+    const fetchImage = async () => {
+      try {
+        // Create a reference to the file in Firebase Storage
+        const imageRef = ref(storage, "images/EcoShop.png"); // Provide the correct path
+
+        // Get the download URL
+        const url = await getDownloadURL(imageRef);
+
+        // Set the image URL to state
+        setImage(url);
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
 
   const handleShow = (product) => {
     setSelectedProduct(product);
@@ -49,12 +73,14 @@ function Home() {
       <Header />
       <Container className='Home'>
         <Row className="align-items-center mt-5">
-          <Col md={4} className='position-relative text-center'>
-            <Image 
-              src="https://s3-alpha-sig.figma.com/img/2d29/9193/c4ab0f5295631483e5e5d09c8ec15261?Expires=1724630400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=M29zRkDIfqTgGA9NSjGakftnhgawC~b~J-NfH-9Sbbj3PZuV3qqh8ZezhbFrL7QBznunmbbeBswz30w7853yH7feeVA9UQ4sUoRKukYIRvIe1a7dSbO7IPUlSf5d4Wwav~jBZtd4bypwh-g7dtstYe4yhqh5qfJK-GlZEwQ8qfLnJG3jjo6LMJpJDw75vPN0BNpSzP5J1BB3-HwF2ztfEczzQ8L3y80W3hMwzp~kicAlkVqZvyyUsKhhcXZB3xOPRoj5AdhpsAa6zO-3dXz~BaR9K2LaEwABdsV1HSid6OfUZp7a8LaHe54n88IMtYSW-a2BObwSBT1-iLFJFT8l3w__"
-              className='image' fluid 
-            />
-          </Col>
+          <div className="image-section">
+            {/* Display the fetched image */}
+            {image ? (
+              <img src={image} alt="EcoShop" className="image" />
+            ): (
+              <p>Loading Image...</p>
+            )}
+          </div>
           <Col md={8} className='d-flex align-items-center justify-content-center'>
             <h3 className="text-end">
               If you're ever in the market for any furniture, 

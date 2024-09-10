@@ -26,7 +26,7 @@ const Login = () => {
     const fetchImage = async () => {
       try {
         // Create a reference to the file in Firebase Storage
-        const imageRef = ref(storage, "images/login.jpg"); // Provide the correct path
+        const imageRef = ref(storage, "images/login.png"); 
 
         // Get the download URL
         const url = await getDownloadURL(imageRef);

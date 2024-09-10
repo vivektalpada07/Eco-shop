@@ -69,7 +69,7 @@ function Cart() {
           <Container>
             <p className="text-center">You need to log in to view your cart.</p>
             <div className="text-center">
-              <Button variant="primary" onClick={() => navigate('/login')}>Log In</Button>
+              <Button variant="primary" onClick={() => navigate('/login')} style={{ width: '150px' }}>Log In</Button>
             </div>
           </Container>
         </div>

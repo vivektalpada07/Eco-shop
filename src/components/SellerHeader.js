@@ -45,7 +45,8 @@ function SellerHeader() {
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
               <NavDropdown.Item href="/Otherproducts">OtherProducts</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown>        
+            <Nav.Link href="/customer-orders">Purchase Orders</Nav.Link> 
             <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>

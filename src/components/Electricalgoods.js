@@ -10,17 +10,18 @@ import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Electricalgoods.css';
 
 function Electricalgoods() {
-  const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [similarProducts, setSimilarProducts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const [show, setShow] = useState(false);
-  const [sortOrder, setSortOrder] = useState('asc'); // For sorting
-  const { cartItems, addToCart } = useCartContext();
-  const { addToWishlist } = useWishlistContext();
-  const currentUser = auth.currentUser;
+  const [products, setProducts] = useState([]); // State to hold all products
+  const [filteredProducts, setFilteredProducts] = useState([]); // State to hold products after filtering and sorting
+  const [similarProducts, setSimilarProducts] = useState([]); // State to hold similar products
+  const [searchTerm, setSearchTerm] = useState(''); // State to hold the search input
+  const [selectedProduct, setSelectedProduct] = useState(null); // State to hold the currently selected product for detail view
+  const [show, setShow] = useState(false); // State to control the visibility of the product detail modal
+  const [sortOrder, setSortOrder] = useState('asc'); // State to control the sorting order
+  const { cartItems, addToCart } = useCartContext(); // Cart context for managing cart items
+  const { addToWishlist } = useWishlistContext(); // Wishlist context for managing wishlist items
+  const currentUser = auth.currentUser; // Get the currently authenticated user
 
+  // Fetch products from Firestore when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -30,16 +31,17 @@ function Electricalgoods() {
           productId: doc.id,
           ...doc.data()
         }));
-        setProducts(productsArray);
-        setFilteredProducts(productsArray);
+        setProducts(productsArray); // Set the fetched products to state
+        setFilteredProducts(productsArray); // Initialize filtered products with all fetched products
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching products:", error); // Log any errors
       }
     };
 
     fetchProducts();
   }, []);
 
+  // Sort products based on the selected sort order
   useEffect(() => {
     const sortProducts = (products) => {
       return [...products].sort((a, b) => {
@@ -48,9 +50,10 @@ function Electricalgoods() {
           : b.productPrice - a.productPrice;
       });
     };
-    setFilteredProducts(sortProducts(filteredProducts));
+    setFilteredProducts(sortProducts(filteredProducts)); // Update filtered products after sorting
   }, [sortOrder]);
 
+  // Handle search input and filter products accordingly
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
@@ -59,46 +62,51 @@ function Electricalgoods() {
       product.productDescription.toLowerCase().includes(value) ||
       product.sellerUsername?.toLowerCase().includes(value)
     );
-    setFilteredProducts(filtered);
+    setFilteredProducts(filtered); // Update filtered products based on the search term
   };
 
+  // Show the modal with product details and fetch similar products
   const handleShow = (product) => {
     setSelectedProduct(product);
     setShow(true);
-    fetchSimilarProducts(product.category);
+    fetchSimilarProducts(product.category); // Fetch similar products based on the selected product's category
   };
 
+  // Close the product detail modal
   const handleClose = () => setShow(false);
 
+  // Add product to cart
   const handleAddToCart = (product) => {
     if (!currentUser) {
-      alert("Please log in to add items to the cart.");
+      alert("Please log in to add items to the cart."); // Prompt user to log in if not authenticated
       return;
     }
 
     const isAlreadyInCart = cartItems.some(item => item.productId === product.productId);
 
     if (isAlreadyInCart) {
-      alert("This product is already in your cart.");
+      alert("This product is already in your cart."); // Alert if product is already in the cart
     } else {
-      addToCart({ ...product });
+      addToCart({ ...product }); // Add the product to the cart
     }
   };
 
+  // Add selected product to wishlist
   const handleAddToWishlist = () => {
     if (!currentUser) {
-      alert("Please log in to add items to your wishlist.");
+      alert("Please log in to add items to your wishlist."); // Prompt user to log in if not authenticated
       return;
     }
 
     if (selectedProduct) {
-      addToWishlist({ ...selectedProduct });
-      handleClose();
+      addToWishlist({ ...selectedProduct }); // Add the selected product to the wishlist
+      handleClose(); // Close the modal after adding to wishlist
     } else {
-      console.error("No product selected or product data is incomplete.");
+      console.error("No product selected or product data is incomplete."); // Log error if no product is selected
     }
   };
 
+  // Fetch similar products based on category
   const fetchSimilarProducts = async (category) => {
     try {
       const q = query(collection(db, "products"), where("category", "==", category));
@@ -107,20 +115,21 @@ function Electricalgoods() {
         productId: doc.id,
         ...doc.data()
       }));
-      setSimilarProducts(productsArray);
+      setSimilarProducts(productsArray); // Update similar products state
     } catch (error) {
-      console.error("Error fetching similar products:", error);
+      console.error("Error fetching similar products:", error); // Log any errors
     }
   };
 
+  // Handle changes in sort order
   const handleSortChange = (event) => {
-    setSortOrder(event.target.value);
+    setSortOrder(event.target.value); // Update sort order state
   };
 
   return (
     <div className="wrapper">
-      <HeaderSwitcher />
-      <div className="main-content">
+      <HeaderSwitcher /> {/* Render the header switcher component */}
+      <div className="main-content" style={{marginTop: 80}}>
         <h2 className="text-center">Our Electrical Goods Collection</h2>
 
         {/* Search Bar */}
@@ -184,7 +193,7 @@ function Electricalgoods() {
           <p>No electrical goods products found.</p>
         )}
       </div>
-      <Footer />
+      <Footer /> {/* Render the footer component */}
 
       {/* Modal for Product Details */}
       {selectedProduct && (
@@ -220,53 +229,11 @@ function Electricalgoods() {
             <div className="product-details">
               <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
               <p>{selectedProduct.productDescription}</p>
-              <p className="product-description">{selectedProduct.productDetailedDescription}</p>
-              <p className="product-price">Price: ${selectedProduct.productPrice}</p>
+              <p className="product-description">{selectedProduct.productDescription}</p>
+              <p><strong>Price: ${selectedProduct.productPrice}</strong></p>
             </div>
-
-            {/* Buttons */}
-            <div className="product-buttons">
-              <Button variant="warning" className="mb-3" onClick={handleAddToWishlist}>
-                Add to Wishlist
-              </Button>
-              <Button variant="primary" className="mb-3" onClick={() => handleAddToCart(selectedProduct)}>
-                Add to Cart
-              </Button>
-              <Button variant="secondary" className="mb-3" onClick={handleClose}>
-                Close
-              </Button>
-            </div>
-
-            {/* Display Similar Products */}
-            <div className="similar-products">
-              <h5>Similar Products</h5>
-              <div className="row">
-                {similarProducts.map((product) => (
-                  <div className="col-md-4" key={product.productId}>
-                    <div className="card text-center">
-                      {product.imageUrls && product.imageUrls[0] && (
-                        <img
-                          src={product.imageUrls[0]}
-                          alt={product.productName}
-                          style={{ width: '100%', height: 'auto' }}
-                        />
-                      )}
-                      <div className="card-body">
-                        <h6>{product.productName}</h6>
-                        <p>Price: ${product.productPrice}</p>
-                        <button 
-                          className="btn view-details"
-                          style={{ backgroundColor: '#ff8c00' }}
-                          onClick={() => handleShow(product)}
-                        >
-                          View Details
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <Button variant="primary" onClick={handleAddToCart(selectedProduct)}>Add to Cart</Button>
+            <Button variant="secondary" onClick={handleAddToWishlist}>Add to Wishlist</Button>
           </Modal.Body>
         </Modal>
       )}

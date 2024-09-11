@@ -12,26 +12,29 @@ import { useNavigate } from 'react-router-dom';
 import HeaderSwitcher from './HeaderSwitcher';
 
 function Cart() {
+  // Accessing cart items and removeFromCart function from Cartcontext
   const { cartItems, removeFromCart } = useCartContext();
+  // Accessing current user information from UserAuthContext
   const { user: currentUser } = useUserAuth();
+  // State to keep track of selected product IDs and total price
   const [selectedProductIds, setSelectedProductIds] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  // Hook to navigate programmatically
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Calculate total price of selected products
     const selectedProducts = cartItems.filter(p => selectedProductIds.includes(p.productId));
     const total = selectedProducts.reduce((sum, product) => sum + product.productPrice, 0);
     setTotalPrice(total);
   }, [selectedProductIds, cartItems]);
 
   const handleBuyNow = (productId) => {
-    setSelectedProductIds(prevSelected => {
-      if (prevSelected.includes(productId)) {
-        return prevSelected.filter(id => id !== productId);
-      } else {
-        return [...prevSelected, productId];
-      }
-    });
+    setSelectedProductIds(prevSelected => 
+      prevSelected.includes(productId)
+        ? prevSelected.filter(id => id !== productId)
+        : [...prevSelected, productId]
+    );
   };
 
   const handleCheckout = () => {
@@ -44,6 +47,7 @@ function Cart() {
       return;
     }
   
+    // Prepare data for checkout
     const selectedProducts = cartItems
       .filter(item => selectedProductIds.includes(item.productId))
       .map(product => ({
@@ -53,18 +57,17 @@ function Cart() {
         productDescription: product.productDescription,
         sellerUsername: product.sellerUsername,
         sellerId: product.sellerId,
-        imageUrls: product.imageUrls,  // Ensure imageUrls are included
+        imageUrls: product.imageUrls,  // Ensure image URLs are included
       }));
   
+    // Navigate to checkout page with selected products
     navigate('/checkout', { state: { selectedProducts } });
   };
-  
-  
 
   if (!currentUser) {
     return (
       <div className="wrapper">
-        <HeaderSwitcher/>
+        <HeaderSwitcher />
         <div className="content">
           <Container>
             <p className="text-center">You need to log in to view your cart.</p>
@@ -80,8 +83,8 @@ function Cart() {
 
   return (
     <div className="wrapper">
-      <HeaderSwitcher/>
-      <div className="content">
+      <HeaderSwitcher />
+      <div className="content" style={{ marginTop: 80 }}>
         <Container>
           <h2 className="text-center mb-4">Your Cart</h2>
           {cartItems.length > 0 ? (
@@ -139,7 +142,6 @@ function Cart() {
           )}
         </Container>
       </div>
-
     </div>
   );
 }

@@ -4,11 +4,11 @@ import SellerHeader from './SellerHeader';
 import UserProfile from './UserProfile';
 import { useUserAuth } from '../context/UserAuthContext';
 import FBDataService from '../context/FBService';
-import CheckoutService from '../context/CheckoutServices'; // Import CheckoutService
+import CheckoutService from '../context/CheckoutServices'; 
 import '../css/SellerDashboard.css';
 
 function SellerDashboard() {
-    const { user } = useUserAuth(); // Get user from context
+    const { user } = useUserAuth(); 
     const [username, setUsername] = useState('');
     const [totalEarnings, setTotalEarnings] = useState(0); // State to store total earnings
 
@@ -28,7 +28,7 @@ function SellerDashboard() {
 
             const fetchEarningsData = async () => {
                 try {
-                    const querySnapshot = await CheckoutService.getAllCheckouts(); // Fetch all checkouts
+                    const querySnapshot = await CheckoutService.getAllCheckouts(); 
                     let total = 0;
                     
                     querySnapshot.docs.forEach(doc => {
@@ -51,7 +51,7 @@ function SellerDashboard() {
             };
 
             fetchUserData();
-            fetchEarningsData(); // Fetch earnings data when component mounts
+            fetchEarningsData(); 
         }
     }, [user]);
 

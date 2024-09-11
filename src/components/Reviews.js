@@ -6,12 +6,12 @@ import { useUserAuth } from '../context/UserAuthContext';
 const Reviews = () => {
   const { reviews, fetchAllReviews } = useContext(ReviewContext); // Access all reviews from context
   const { user } = useUserAuth(); // Access authenticated user (admin)
-  const [showReviews, setShowReviews] = useState(false); // Toggle reviews display
+  const [showReviews, setShowReviews] = useState(false); //show all review
 
   // Fetch all reviews when the component is mounted
   useEffect(() => {
     if (user && user.role === 'admin') {
-      fetchAllReviews(); // Fetch all reviews if the user is an admin
+      fetchAllReviews();
     }
   }, [user, fetchAllReviews]);
 
@@ -19,7 +19,7 @@ const Reviews = () => {
     <div>
       <h2>All Product Reviews (Admin)</h2>
 
-      {/* Button to toggle review display */}
+      {/* Button to show review */}
       <Button size='md' onClick={() => setShowReviews(!showReviews)}>
         {showReviews ? 'Hide Reviews' : 'Show All Reviews'}
       </Button>
@@ -38,12 +38,12 @@ const Reviews = () => {
           <tbody>
             {reviews.map((review) => (
               <tr key={review.id}>
-                <td>{review.productName || "Unknown"}</td> {/* Product Name */}
-                <td>{review.content || "No content"}</td> {/* Review content */}
-                <td>{review.customerName || "Anonymous"}</td> {/* Customer name */}
+                <td>{review.productName || "Unknown"}</td> 
+                <td>{review.content || "No content"}</td> 
+                <td>{review.customerName || "Anonymous"}</td> 
                 <td>{review.createdAt && review.createdAt.seconds 
                       ? new Date(review.createdAt.seconds * 1000).toLocaleDateString() 
-                      : "N/A"} {/* Date */}
+                      : "N/A"}
                 </td>
               </tr>
             ))}

@@ -5,8 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useWishlistContext } from '../context/Wishlistcontext';  
-import { useCartContext } from '../context/Cartcontext'; // Import cart context
-import { useUserAuth } from '../context/UserAuthContext'; // Import auth context
+import { useCartContext } from '../context/Cartcontext'; 
+import { useUserAuth } from '../context/UserAuthContext'; 
 import Footer from './Footer';
 import '../css/Wishlist.css';
 import { useNavigate } from 'react-router-dom';
@@ -14,13 +14,14 @@ import HeaderSwitcher from './HeaderSwitcher';
 
 function Wishlist() {
   const { wishlist, removeFromWishlist } = useWishlistContext();
-  const { cartItems, addToCart } = useCartContext(); // Use cart context
+  const { cartItems, addToCart } = useCartContext(); 
   const { user: currentUser } = useUserAuth();
   const navigate = useNavigate();
 
-  // Calculate the total price of all items in the wishlist
+  // Calculate total price of items in the wishlist
   const totalPrice = wishlist.reduce((total, item) => total + item.productPrice, 0);
 
+  // Handle adding product to the cart
   const handleAddToCart = (product) => {
     if (!currentUser) {
       alert("Please log in to add items to the cart.");
@@ -35,6 +36,23 @@ function Wishlist() {
       addToCart({ ...product });
     }
   };
+
+  if (!currentUser) {
+    return (
+      <div className="wrapper">
+        <HeaderSwitcher/>
+        <div className="content">
+          <Container>
+            <p className="text-center">You need to log in to view your wishlist.</p>
+            <div className="text-center">
+              <Button variant="primary" onClick={() => navigate('/login')} style={{ width: '150px' }}>Log In</Button>
+            </div>
+          </Container>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="wrapper">

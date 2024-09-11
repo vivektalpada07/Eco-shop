@@ -4,7 +4,7 @@ body {
 }
 
 .main-content {
-  width: 100%; /* Use full width */
+  width: 100%; 
   padding: 20px;
   box-sizing: border-box;
 }
@@ -29,7 +29,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   font-weight: bold;
-  width: 30%; /* 40% width for user profile */
+  width: 30%; 
 }
 
 .dashboard-summary {
@@ -38,7 +38,7 @@ body {
   justify-content: center; 
   flex-direction: row;
   align-items: center;
-  width: 70%; /* 60% width for dashboard summary */
+  width: 70%; 
 }
 
 .text {

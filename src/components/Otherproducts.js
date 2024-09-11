@@ -15,7 +15,7 @@ function OtherProducts() {
   const [similarProducts, setSimilarProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
-  const [sortOption, setSortOption] = useState('default');  // New state for sorting option
+  const [sortOption, setSortOption] = useState('default');  
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;

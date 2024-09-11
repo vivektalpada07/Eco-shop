@@ -122,7 +122,7 @@ function Addproducts() {
   };
 
   return (
-    <div className='main-content'>
+    <div className='main-content' style={{marginTop: -70}}>
       {/* Dynamic header switching based on the user type */}
       <HeaderSwitcher/>
       <h2>Add Product</h2>

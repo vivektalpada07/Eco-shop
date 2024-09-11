@@ -48,7 +48,7 @@ function ContactUs() {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{marginTop: -110}}>
       <HeaderSwitcher />
       <div className="p-4 box">
         {/* Display feedback message if any */}
@@ -121,7 +121,6 @@ function ContactUs() {
           </div>
         </Form>
       </div>
-      <Footer />
     </div>
   );
 }

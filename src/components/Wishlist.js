@@ -57,7 +57,7 @@ function Wishlist() {
   return (
     <div className="wrapper">
       <HeaderSwitcher/>
-      <div className="main-content">
+      <div className="main-content" style={{marginTop: -50}}>
         <Container>
           <h2 className="text-center mb-4">Your Wishlist</h2>
           <Row className="justify-content-center">

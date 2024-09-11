@@ -53,7 +53,7 @@ const BeSeller = () => {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{marginTop: -70}}>
       <HeaderSwitcher />  {/* Header component that switches based on user role */}
       <h2>Become a Seller</h2>
       <Form onSubmit={handleSubmit}>

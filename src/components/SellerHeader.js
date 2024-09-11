@@ -24,9 +24,9 @@ function SellerHeader() {
 
   return (
     <Navbar expand="lg" className='Header'>
-      <Container className='Navbar'>
+      <Container className='Navbar' style={{marginTop: 20}}>
         {/* Brand logo that links back to the seller's homepage */}
-        <Navbar.Brand href="/seller" className="protest-guerrilla-regular">
+        <Navbar.Brand href="/seller" className="protest-guerrilla-regular" style={{marginTop: 5}}>
           Eco Shop
         </Navbar.Brand>
 
@@ -36,10 +36,10 @@ function SellerHeader() {
         </Navbar.Toggle>
 
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto" style={{ marginTop: '-25px' }}>
+          <Nav className="ms-auto">
             <Nav.Link href="/addproduct">Add Product</Nav.Link>
             <Nav.Link href="/mylistings">My Listings</Nav.Link>
-            <Nav.Link href="/orders" style={{ marginTop: '-5px' }}>Orders</Nav.Link>
+            <Nav.Link href="/orders">Orders</Nav.Link>
 
             {/* Dropdown for product categories */}
             <NavDropdown title="Category" id="basic-nav-dropdown">

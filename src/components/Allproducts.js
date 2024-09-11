@@ -138,7 +138,7 @@ function AllProducts() {
         {/* Sort Dropdown */}
         <div className="sort-options text-center mb-4">
           <select value={sortOption} onChange={handleSortChange} className="form-control" style={{ maxWidth: '200px', margin: '0 auto' }}>
-            <option value="default">Sort by Price</option>
+            <option value="default">Price</option>
             <option value="priceLowToHigh">Price: Low to High</option>
             <option value="priceHighToLow">Price: High to Low</option>
           </select>

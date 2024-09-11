@@ -1,42 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import Footer from './Footer';
-import UserProfile from './UserProfile';
-import CustomerHeader from './Customerheader';
-import { useUserAuth } from '../context/UserAuthContext';
-import FBDataService from '../context/FBService';
-import '../css/Dashboard.css'
+import Footer from './Footer'; // Import the Footer component
+import UserProfile from './UserProfile'; // Import the UserProfile component
+import CustomerHeader from './Customerheader'; // Import the CustomerHeader component
+import { useUserAuth } from '../context/UserAuthContext'; // Import user authentication context
+import FBDataService from '../context/FBService'; // Import service for fetching data from Firestore
+import '../css/Dashboard.css'; // Import CSS for dashboard styling
 
 function Dashboard() {
-    const { user } = useUserAuth();
-    const [userName, setUserName] = useState('');
+    const { user } = useUserAuth(); // Access the currently authenticated user from context
+    const [userName, setUserName] = useState(''); // State to hold the user's name
 
-    // Fetch user name
+    // Fetch the user's name when the component mounts
     useEffect(() => {
-      const fetchUserName = async () => {
-          if (user) {
-              try {
-                  const userDoc = await FBDataService.getData(user.uid); // Fetch user data using UID
-                  if (userDoc.exists()) {
-                      const userData = userDoc.data();
-                      setUserName(userData.name); // Set the user's name
-                  } else {
-                      console.log("No such user!");
-                  }
-              } catch (error) {
-                  console.error('Error fetching user data: ', error);
-              }
-          }
-      };
+        const fetchUserName = async () => {
+            if (user) {
+                try {
+                    // Get user data from Firestore using the user's UID
+                    const userDoc = await FBDataService.getData(user.uid);
+                    if (userDoc.exists()) {
+                        const userData = userDoc.data();
+                        setUserName(userData.name); // Update state with the user's name
+                    } else {
+                        console.log("No such user!"); // Log if no user document is found
+                    }
+                } catch (error) {
+                    console.error('Error fetching user data: ', error); // Log any errors that occur during fetch
+                }
+            }
+        };
 
-      fetchUserName(); // Fetch the user's name when the component mounts
-  }, [user]);
+        fetchUserName(); // Call the function to fetch the user's name
+    }, [user]); // Re-run this effect if the user changes
 
     return (
         <div className='main-content'>
-            <CustomerHeader />
-            {/* Display the user's name in the welcome message */}
+            <CustomerHeader /> {/* Render the header for the customer */}
+            {/* Display a personalized welcome message with the user's name */}
             <h2 className='welcome-message'>Welcome to the Dashboard, {userName}!</h2>
-            <div className='user-profile'><UserProfile /></div>
+            <div className='user-profile'>
+                <UserProfile /> {/* Render the user's profile component */}
+            </div>
+            <Footer /> {/* Render the footer */}
         </div>
     );
 }

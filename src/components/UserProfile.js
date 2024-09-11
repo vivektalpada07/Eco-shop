@@ -11,6 +11,7 @@ const UserProfile = () => {
   const [updatedProfile, setUpdatedProfile] = useState({});
   const [error, setError] = useState("");
 
+  // Fetch the current user's profile when the component mounts
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!user) {
@@ -20,17 +21,13 @@ const UserProfile = () => {
       }
 
       try {
-        console.log("Fetching user profile for UID:", user.uid);
         const userDoc = await FBDataService.getData(user.uid);
         if (userDoc.exists()) {
-          console.log("User data found:", userDoc.data());
           setUserProfile(userDoc.data());
         } else {
-          console.error("User not found in Firestore");
           setError("User not found.");
         }
       } catch (err) {
-        console.error("Error fetching user profile:", err);
         setError("Error fetching user data.");
       } finally {
         setLoading(false);
@@ -40,20 +37,23 @@ const UserProfile = () => {
     fetchUserProfile();
   }, [user]);
 
+  // Handle opening the edit profile modal
   const handleEdit = () => {
     setUpdatedProfile(userProfile);
     setShowModal(true);
   };
 
+  // Update profile data as the user edits fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUpdatedProfile({ ...updatedProfile, [name]: value });
   };
 
+  // Save updated profile data to Firestore
   const handleSave = async () => {
     try {
       await FBDataService.updateData(user.uid, updatedProfile);
-      setUserProfile(updatedProfile);
+      setUserProfile(updatedProfile); // Update UI with new profile data
       setShowModal(false);
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -106,7 +106,7 @@ const UserProfile = () => {
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     type="text"
-                    name="Username"
+                    name="username"
                     value={updatedProfile.username || ""}
                     onChange={handleChange}
                   />

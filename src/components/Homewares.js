@@ -152,9 +152,8 @@ function Homewares() {
             className="form-control"
             style={{ maxWidth: '200px', margin: '0 auto' }}
           >
-            <option value="default">Sort by Price</option>
-            <option value="asc">Price: Low to High</option>
-            <option value="desc">Price: High to Low</option>
+            <option value="asc">Sort by Price: Low to High</option>
+            <option value="desc">Sort by Price: High to Low</option>
           </select>
         </div>
 

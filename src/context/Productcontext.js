@@ -8,13 +8,12 @@ export function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
-  // Fetch products and orders from Firestore
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "products"));
         const productsArray = querySnapshot.docs.map(doc => ({
-          id: doc.id, // Firestore document ID as the unique product ID
+          id: doc.id,
           ...doc.data()
         }));
         console.log("Fetched Products:", productsArray);
@@ -41,12 +40,11 @@ export function ProductContextProvider({ children }) {
     fetchOrders();
   }, []);
 
-  // Add a new product
   async function addProduct(product) {
     try {
-      const docRef = await addDoc(collection(db, "products"), product); // Add product to Firestore
+      const docRef = await addDoc(collection(db, "products"), product);
       const newProduct = {
-        id: docRef.id, // Firestore document ID is used as the unique product ID
+        id: docRef.id,
         ...product,
       };
       setProducts((prevProducts) => [...prevProducts, newProduct]);
@@ -55,7 +53,6 @@ export function ProductContextProvider({ children }) {
     }
   }
 
-  // Update product
   function updateProduct(productId, updatedProduct) {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -64,10 +61,9 @@ export function ProductContextProvider({ children }) {
     );
   }
 
-  // Delete product by productId
   async function deleteProduct(productId) {
     try {
-      await deleteDoc(doc(db, "products", productId)); // Delete product from Firestore
+      await deleteDoc(doc(db, "products", productId));
       setProducts((prevProducts) =>
         prevProducts.filter((product) => product.id !== productId)
       );
@@ -76,7 +72,6 @@ export function ProductContextProvider({ children }) {
     }
   }
 
-  // Update order status by orderId
   async function updateOrderStatus(orderId, status) {
     try {
       const orderRef = doc(db, "checkout", orderId);
@@ -100,7 +95,6 @@ export function ProductContextProvider({ children }) {
   );
 }
 
-// Hook to use the Product context
 export function useProductcontext() {
   return useContext(ProductContext);
 }

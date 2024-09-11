@@ -15,7 +15,7 @@ const userAuthContext = createContext();
 export function UserAuthContextProvider({ children }) {
   const [user, setUser] = useState(null);
   const [role, setRole] = useState(""); 
-  const [loading, setLoading] = useState(true); // Loading state to handle auth initialization
+  const [loading, setLoading] = useState(true);
 
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -60,7 +60,7 @@ export function UserAuthContextProvider({ children }) {
         setRole(null);
         setUser(null);
       }
-      setLoading(false); // Stop loading when the user state is set
+      setLoading(false);
     });
 
     return () => {
@@ -69,7 +69,7 @@ export function UserAuthContextProvider({ children }) {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Loading indicator while the auth state is being determined
+    return <div>Loading...</div>;
   }
 
   return (

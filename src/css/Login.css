@@ -2,40 +2,40 @@
     flex: 1;
     padding: 30px;
     text-align: center;
-    margin-top: 20px; /* Adjusted to prevent overlap with header */
+    margin-top: 20px; 
     margin-bottom: 20px;
   }
 
   .login-container {
     display: flex;
-    justify-content: space-between; /* Distributes space between the image and form */
-    align-items: flex-start; /* Aligns the items at the top */
+    justify-content: space-between; 
+    align-items: flex-start; 
   }
 
   .image-section {
     flex: 1;
     display: flex;
-    justify-content: flex-start; /* Moves image to the left */
+    justify-content: flex-start; 
     
   }
   
   .image-section img {
     width: 100%; 
-    height: auto; /* Maintains aspect ratio */
+    height: auto; 
     max-width: 450px; 
   }
   
   .form-section {
     flex: 1;
     display: flex;
-    justify-content: flex-end; /* This moves the form to the right */
-    align-items: flex-start; /* Moves the form up */
+    justify-content: flex-end;
+    align-items: flex-start;
     margin-top: -80px;
   }
   
   .form-section .box {
-    width: 100%; /* Makes the form container take full width */
-    max-width: 500px; /* Adjust the max-width to control the width of the form */
+    width: 100%; 
+    max-width: 500px; 
   }
 
   

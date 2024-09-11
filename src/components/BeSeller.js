@@ -65,7 +65,7 @@ const BeSeller = () => {
           <Form.Label>Upload ID Image</Form.Label>
           <Form.Control type="file" accept="image/*" onChange={handleImageChange} required />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="success" type="submit">
           Submit
         </Button>
       </Form>

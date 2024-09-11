@@ -67,7 +67,6 @@ function AdminDashboard() {
         <h2 className='welcome-message'>Welcome to the Admin Dashboard, {userName}!</h2>
         <div className="content">
           <div className="user-profile"><UserProfile/></div>
-          <Reviews/> {/* The updated Reviews component */}
           <div className="dashboard-summary">
             <h3 className='summary-box'>
               <p className="text">Total Server Fees </p>${totalServerFees}
@@ -77,6 +76,7 @@ function AdminDashboard() {
             </h3>
           </div>
         </div>
+        <Reviews/> {/* The updated Reviews component */}
       </div>
     );
 }

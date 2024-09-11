@@ -37,8 +37,8 @@ function SellerDashboard() {
                             checkoutData.items.forEach(item => {
                                 if (item.sellerId === user.uid) {
                                     const price = parseFloat(item.productPrice || 0);
-                                    const serverFee = parseFloat(checkoutData.serverFee || 0);
-                                    total += (price - serverFee); // Deduct service fee
+                                    // const serverFee = parseFloat(checkoutData.serverFee || 0);
+                                    total += (price*0.85); // Deduct service fee
                                 }
                             });
                         }

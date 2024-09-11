@@ -132,7 +132,6 @@ const ManageProducts = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Footer />
     </div>
   );
 };

@@ -76,7 +76,6 @@ function AdminDashboard() {
             </h3>
           </div>
         </div>
-        <Footer/>
       </div>
     );
 }

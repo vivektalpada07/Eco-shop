@@ -8,9 +8,9 @@
 
   function Header() {
     return (
-      <Navbar expand="lg" className='Header'>
+      <Navbar expand="lg" className='Header' style={{marginTop: -35}}>
         <Container className='Navbar'>
-          <Navbar.Brand href="/" className="protest-guerrilla-regular">
+          <Navbar.Brand href="/" className="protest-guerrilla-regular" style={{marginTop: 8}}>
             Eco Shop
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" className="navbar-toggler">
@@ -18,7 +18,7 @@
           </Navbar.Toggle>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">
-              <NavDropdown title="Products" id="basic-nav-dropdown">
+              <NavDropdown title="Category" id="basic-nav-dropdown">
                 <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
                 <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
                 <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>

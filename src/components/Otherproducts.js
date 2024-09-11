@@ -15,7 +15,7 @@ function OtherProducts() {
   const [similarProducts, setSimilarProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
-  const [sortOption, setSortOption] = useState('default');  
+  const [sortOption, setSortOption] = useState('default');  // New state for sorting option
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
@@ -126,7 +126,7 @@ function OtherProducts() {
   return (
     <div className="wrapper">
       <HeaderSwitcher />
-      <div className="main-content" style={{marginTop: 80}}>
+      <div className="main-content">
         <h2 className="text-center">Other Products</h2>
 
         {/* Search Bar */}

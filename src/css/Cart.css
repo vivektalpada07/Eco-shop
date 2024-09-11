@@ -1,22 +1,19 @@
-
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
-    margin-top: 20px;
+    margin: 0;
+    padding-top: 60px; /* Adjust this value to the height of your header */
 }
 
 h2 {
     font-size: 2rem;
     color: #333;
     margin-bottom: 30px;
-    margin-top: 20px;
 }
-
 
 .container {
-    margin-top: 40px;
+    margin-top: 20px; /* Adjust if needed */
 }
-
 
 .product-card {
     border: none;
@@ -46,7 +43,6 @@ h2 {
     transform: scale(1.05);
 }
 
-
 .product-card-body {
     padding: 20px;
     text-align: center;
@@ -55,7 +51,6 @@ h2 {
 .product-card-body h5, .product-card-body p {
     margin-bottom: 10px;
 }
-
 
 .card-title {
     font-size: 1.5rem;
@@ -79,13 +74,11 @@ h2 {
     transition: color 0.3s ease;
 }
 
-
 .button-container {
     display: flex;
     flex-direction: column;
-    gap: 5px; 
+    gap: 5px;
 }
-
 
 .buy-now-button {
     background-color: #007bff;
@@ -105,7 +98,6 @@ h2 {
     color: white;
     border: 1px solid #28a745;
 }
-
 
 .buy-now-button:hover {
     background-color: #0056b3;
@@ -137,7 +129,6 @@ h2 {
     text-align: center;
 }
 
-/* Checkout Button */
 .checkout-button {
     max-width: 15%;
     padding: 15px 30px;
@@ -160,7 +151,6 @@ h2 {
     cursor: not-allowed;
 }
 
-/* Footer Styles */
 footer {
     background-color: #28a745;
     color: white;

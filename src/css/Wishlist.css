@@ -1,21 +1,19 @@
-
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
+    margin: 0;
+    padding-top: 60px; /* Adjust this value to the height of your header */
 }
 
 h2 {
     font-size: 2rem;
     color: #333;
     margin-bottom: 30px;
-    margin-top: 20px;
 }
-
 
 .container {
-    margin-top: 40px;
+    margin-top: 20px; /* Adjust if needed */
 }
-
 
 .product-card {
     border: none;
@@ -45,7 +43,6 @@ h2 {
     transform: scale(1.05);
 }
 
-
 .product-card-body {
     padding: 20px;
     text-align: center;
@@ -54,7 +51,6 @@ h2 {
 .product-card-body h5, .product-card-body p {
     margin-bottom: 10px;
 }
-
 
 .card-title {
     font-size: 1.5rem;
@@ -78,13 +74,11 @@ h2 {
     transition: color 0.3s ease;
 }
 
-
 .button-container {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
-
 
 .buy-now-button {
     background-color: #007bff;
@@ -109,7 +103,6 @@ h2 {
     background-color: #0056b3;
 }
 
-
 .remove-cart-button {
     background-color: #dc3545;
     color: white;
@@ -127,7 +120,6 @@ h2 {
     background-color: #c82333;
 }
 
-
 .total-price {
     font-size: 1.5rem;
     font-weight: bold;
@@ -137,8 +129,8 @@ h2 {
     text-align: center;
 }
 
-
 .checkout-button {
+    max-width: 15%;
     padding: 15px 30px;
     font-size: 1.2rem;
     font-weight: bold;
@@ -159,7 +151,6 @@ h2 {
     cursor: not-allowed;
 }
 
-
 footer {
     background-color: #28a745;
     color: white;
@@ -179,4 +170,3 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
-

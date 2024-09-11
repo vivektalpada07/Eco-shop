@@ -1,15 +1,20 @@
-
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
+    padding-top: 80px;
+}
+
+header {
+    position: relative;
+    z-index: 1000;
 }
 
 h2 {
     font-size: 2rem;
     color: #333;
     margin-bottom: 30px;
+    margin-top: 80px;
 }
-
 
 .search-sort-container {
     display: flex;
@@ -19,7 +24,7 @@ h2 {
 }
 
 .search-bar {
-    flex: 1; /* Allow the search bar to take up available space */
+    flex: 1; 
 }
 
 .search-bar input {
@@ -35,11 +40,9 @@ h2 {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
 }
 
-
 .sort-dropdown {
-    margin-left: 20px; 
+    margin-left: 20px;
 }
-
 
 .card {
     border: none;
@@ -69,7 +72,6 @@ h2 {
     transform: scale(1.05);
 }
 
-
 .card-title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -89,7 +91,6 @@ h2 {
     font-weight: 600;
 }
 
-
 .product-price {
     font-size: 1.5rem;
     font-weight: bold;
@@ -98,7 +99,6 @@ h2 {
     text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     transition: color 0.3s ease;
 }
-
 
 .btn {
     padding: 10px;
@@ -120,25 +120,24 @@ h2 {
     transform: scale(1.05);
 }
 
-
 .view-details {
-    background-color: transparent !important; 
+    background-color: transparent !important;
     color: #000 !important; 
-    border: none !important;
-    text-decoration: none !important;
-    font-weight: normal !important;
+    border: none !important; 
+    text-decoration: none !important; 
+    font-weight: normal !important; 
     padding: 0 !important;
     text-align: center !important;
-    display: block !important;
+    display: block !important; 
     margin-top: 10px !important;
-    font-size: 1rem !important;
+    font-size: 1rem !important; 
     cursor: pointer !important;
 }
 
 .view-details:hover {
     text-decoration: underline !important; 
     color: #000 !important;
-    cursor: pointer !important;
+    cursor: pointer !important; 
 }
 
 .add-to-cart, .view-details {
@@ -149,13 +148,11 @@ h2 {
     transform: scale(0.98); 
 }
 
-
 .card .view-details, .card .add-to-cart {
     margin-top: 10px;
     width: 100%;
     display: block;
 }
-
 
 footer {
     background-color: #28a745;

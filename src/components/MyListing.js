@@ -8,13 +8,24 @@ import Footer from "./Footer";
 import FBDataService from "../context/FBService";
 
 const MyListings = () => {
+  // Accessing products and deleteProduct function from Product context
   const { products, deleteProduct } = useProductcontext();
+  // Accessing current user and their role from UserAuth context
   const { user, role } = useUserAuth();
+  
+  // State to hold products listed by the current seller
   const [sellerProducts, setSellerProducts] = useState([]);
+  
+  // State to manage the visibility of the edit modal
   const [showEditModal, setShowEditModal] = useState(false);
+  
+  // State to manage the visibility of the details modal
   const [showDetailsModal, setShowDetailsModal] = useState(false);
+  
+  // State to keep track of the product currently being edited or viewed
   const [currentProduct, setCurrentProduct] = useState(null);
 
+  // Fetch and filter products when user or products change
   useEffect(() => {
     if (user && products.length > 0) {
       const filteredProducts = products.filter(
@@ -24,23 +35,26 @@ const MyListings = () => {
     }
   }, [products, user]);
 
+  // Show the edit modal with the selected product's data
   const handleEditClick = (product) => {
     setCurrentProduct(product);
     setShowEditModal(true);
   };
 
+  // Handle deleting a product
   const handleDeleteClick = async (productId) => {
     try {
-      await deleteProduct(productId); // Using the deleteProduct function from context
+      await deleteProduct(productId); // Delete product using context function
       setSellerProducts(sellerProducts.filter((product) => product.id !== productId));
     } catch (err) {
       console.error("Error deleting product:", err);
     }
   };
 
+  // Save changes made in the edit modal
   const handleSaveChanges = async () => {
     try {
-      await FBDataService.updateData(currentProduct.id, currentProduct); // Update the product in the database
+      await FBDataService.updateData(currentProduct.id, currentProduct); // Update product in the database
       setSellerProducts(sellerProducts.map((product) =>
         product.id === currentProduct.id ? currentProduct : product
       ));
@@ -50,11 +64,13 @@ const MyListings = () => {
     }
   };
 
+  // Handle changes in the edit form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCurrentProduct({ ...currentProduct, [name]: value });
   };
 
+  // Show the details modal with the selected product's information
   const handleProductDetailsClick = (product) => {
     setCurrentProduct(product);
     setShowDetailsModal(true);
@@ -62,6 +78,7 @@ const MyListings = () => {
 
   return (
     <div className="main-content">
+      {/* Render header based on the user's role */}
       {role === "admin" && <AdminHeader />}
       {role === "seller" && <SellerHeader />}
 
@@ -76,6 +93,7 @@ const MyListings = () => {
             </tr>
           </thead>
           <tbody>
+            {/* Display products in a table */}
             {sellerProducts.map((product) => (
               <tr key={product.id}>
                 <td>
@@ -109,7 +127,7 @@ const MyListings = () => {
         <p>No products found for this seller.</p>
       )}
 
-      {/* Modal for Editing Product */}
+      {/* Modal for editing a product */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Product</Modal.Title>
@@ -176,7 +194,7 @@ const MyListings = () => {
         </Modal.Footer>
       </Modal>
 
-      {/* Modal for Product Details */}
+      {/* Modal for displaying product details */}
       <Modal show={showDetailsModal} onHide={() => setShowDetailsModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>Product Details</Modal.Title>

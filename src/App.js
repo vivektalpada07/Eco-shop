@@ -32,6 +32,8 @@ import SellerQueries from './components/SellerQueries';
 import BeSeller from './components/BeSeller';
 import CustomerHeader from './components/Customerheader';
 import CustomerOrders from './components/CustomerOrders'; 
+import AllProducts from './components/Allproducts';
+import OtherProducts from './components/Otherproducts';
 
 
 function App() {
@@ -58,6 +60,8 @@ function App() {
                 <Route path="/Cart" element={<Cart/>} />
                 <Route path="/return-refund-policy" element={<ReturnAndRefundPolicy/>} />
                 <Route path="/contactus" element={<ContactUs/>} />
+                <Route path="/Allproducts" element={<AllProducts />} />
+                <Route path="/Otherproducts" element={<OtherProducts />} />
                 <Route path="/addproduct" element={<SellerRoute><Addproducts/></SellerRoute>} />
                 <Route path="/Wishlist" element={<Wishlist/>} />
                 <Route path="/checkout" element={<Checkout/>} />

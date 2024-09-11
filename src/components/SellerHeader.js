@@ -33,16 +33,18 @@ function SellerHeader() {
         </Navbar.Toggle>
 
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto" style={{ marginTop: '-35px' }}>
+          <Nav className="ms-auto" style={{ marginTop: '-25px' }}>
             <Nav.Link href="/addproduct">Add Product</Nav.Link>
             <Nav.Link href="/mylistings">My Listings</Nav.Link>
-            <Nav.Link href="/orders" style={{ marginTop: '10px' }}>Orders</Nav.Link>
+            <Nav.Link href="/orders" style={{ marginTop: '-5px' }}>Orders</Nav.Link>
             
             {/* Additional Options from Simple Header */}
             <NavDropdown title="Category" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/Allproducts">AllProducts</NavDropdown.Item>
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
+              <NavDropdown.Item href="/Otherproducts">OtherProducts</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>

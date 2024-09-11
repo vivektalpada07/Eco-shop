@@ -23,8 +23,8 @@ function CustomerHeader() {
 
   return (
     <Navbar expand="lg" className='Header'>
-      <Container className='Navbar'>
-        <Navbar.Brand href="/customer" className="protest-guerrilla-regular">
+      <Container className='Navbar' style={{marginTop: 10}}>
+        <Navbar.Brand href="/customer" className="protest-guerrilla-regular" style={{marginTop: 5}}>
           Eco Shop
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'rgba(255, 255, 255, 0.5)' }}>
@@ -33,16 +33,17 @@ function CustomerHeader() {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <NavDropdown title="Products" id="basic-nav-dropdown">
+            <NavDropdown title="Category" id="basic-nav-dropdown">
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/Wishlist">Wishlist</Nav.Link>
-            <Nav.Link href="/Cart">Cart</Nav.Link>
             <Button variant="outline-light" onClick={() => navigate("/customer-orders")}>
             Orders
             </Button>
+            <Nav.Link href='/beseller'>BeSeller</Nav.Link>
+            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
+            <Nav.Link href="/cart">Cart</Nav.Link>
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>

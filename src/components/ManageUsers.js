@@ -147,7 +147,6 @@ const ManageUsers = () => {
           ))}
         </tbody>
       </Table>
-      <Footer />
     </div>
   );
 };

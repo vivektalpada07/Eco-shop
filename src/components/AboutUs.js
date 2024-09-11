@@ -5,7 +5,7 @@ import HeaderSwitcher from './HeaderSwitcher';
 
 function AboutUs() {
   return (
-    <div className='wrapper'>
+    <div className='content-wrapper'>
       <HeaderSwitcher/>
         <div className='main-content'>
           <Container className='AboutUs'>

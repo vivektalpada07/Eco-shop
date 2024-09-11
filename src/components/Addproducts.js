@@ -153,12 +153,13 @@ function Addproducts() {
           />
         </div>
         <div>
-          <label>Category:</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)} required>
-            <option value="furniture">Furnitures</option>
-            <option value="electricalgoods">Electrical Goods</option>
-            <option value="homewares">Homewares</option>
-          </select>
+           <label>Category:</label>
+           <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+          <option value="furniture">Furnitures</option>
+          <option value="electricalgoods">Electrical Goods</option>
+          <option value="homewares">Homewares</option>
+          <option value="other">Other Products</option> {/* Add this option */}
+        </select>
         </div>
         <div>
           <label>Upload Images:</label>

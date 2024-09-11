@@ -1,24 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { db, auth } from '../firebase';  
+import { db, auth } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Modal, Button, Carousel } from 'react-bootstrap';
-import ReactImageMagnify from 'react-image-magnify';  // Import the magnify component
-import Header from './Header';
-import Footer from './Footer';
-import { useCartContext } from '../context/Cartcontext';  
-import { useWishlistContext } from '../context/Wishlistcontext';
-import '../css/Furnitures.css';
+import ReactImageMagnify from 'react-image-magnify';
 import HeaderSwitcher from './HeaderSwitcher';
+import Footer from './Footer';
+import { useCartContext } from '../context/Cartcontext';
+import { useWishlistContext } from '../context/Wishlistcontext';
+import '../css/Furnitures.css'; // Reusing the same CSS for consistent styling
 
 function Furnitures() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [similarProducts, setSimilarProducts] = useState([]); // Store similar products
+  const [similarProducts, setSimilarProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
-  const { cartItems, addToCart } = useCartContext();  
-  const { addToWishlist } = useWishlistContext();  
+  const [sortOption, setSortOption] = useState('default');
+  const { cartItems, addToCart } = useCartContext();
+  const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
 
   useEffect(() => {
@@ -27,11 +27,11 @@ function Furnitures() {
         const q = query(collection(db, "products"), where("category", "==", "furniture"));
         const querySnapshot = await getDocs(q);
         const productsArray = querySnapshot.docs.map(doc => ({
-          productId: doc.id,  
+          productId: doc.id,
           ...doc.data()
         }));
         setProducts(productsArray);
-        setFilteredProducts(productsArray);  // Initially display all products
+        setFilteredProducts(productsArray);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -39,6 +39,18 @@ function Furnitures() {
 
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    let sortedProducts = [...filteredProducts];
+
+    if (sortOption === 'priceLowToHigh') {
+      sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
+    } else if (sortOption === 'priceHighToLow') {
+      sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
+    }
+
+    setFilteredProducts(sortedProducts);
+  }, [sortOption]);
 
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
@@ -51,10 +63,14 @@ function Furnitures() {
     setFilteredProducts(filtered);
   };
 
+  const handleSortChange = (event) => {
+    setSortOption(event.target.value);
+  };
+
   const handleShow = (product) => {
     setSelectedProduct(product);
     setShow(true);
-    fetchSimilarProducts(product.category);  // Fetch similar products when modal opens
+    fetchSimilarProducts(product.category);
   };
 
   const handleClose = () => setShow(false);
@@ -88,30 +104,23 @@ function Furnitures() {
     }
   };
 
-  // Fetch similar products based on the category of the selected product
   const fetchSimilarProducts = async (category) => {
     try {
       const q = query(collection(db, "products"), where("category", "==", category));
       const querySnapshot = await getDocs(q);
       const productsArray = querySnapshot.docs.map(doc => ({
-        productId: doc.id,  
+        productId: doc.id,
         ...doc.data()
       }));
-      setSimilarProducts(productsArray);  // Store similar products
+      setSimilarProducts(productsArray);
     } catch (error) {
       console.error("Error fetching similar products:", error);
     }
   };
 
-  // Handle clicking on a similar product (update modal)
-  const handleProductClick = (product) => {
-    setSelectedProduct(product);  // Update modal with the clicked product details
-    fetchSimilarProducts(product.category);  // Update similar products as well
-  };
-
   return (
     <div className="wrapper">
-      <HeaderSwitcher/>
+      <HeaderSwitcher />
       <div className="main-content">
         <h2 className="text-center">Our Furniture Collection</h2>
 
@@ -127,6 +136,20 @@ function Furnitures() {
           />
         </div>
 
+        {/* Sort Dropdown */}
+        <div className="sort-options text-center mb-4">
+          <select
+            value={sortOption}
+            onChange={handleSortChange}
+            className="form-control"
+            style={{ maxWidth: '200px', margin: '0 auto' }}
+          >
+            <option value="default">Sort by Price</option>
+            <option value="priceLowToHigh">Price: Low to High</option>
+            <option value="priceHighToLow">Price: High to Low</option>
+          </select>
+        </div>
+
         {filteredProducts.length > 0 ? (
           <div className="row justify-content-center">
             {filteredProducts.map((product, index) => (
@@ -134,24 +157,28 @@ function Furnitures() {
                 <div className="card text-center">
                   <div className="card-body">
                     {product.imageUrls && product.imageUrls[0] && (
-                      <img src={product.imageUrls[0]} alt={product.productName} style={{ width: '100%', height: 'auto' }} />
+                      <img
+                        src={product.imageUrls[0]}
+                        alt={product.productName}
+                        style={{ width: '100%', height: 'auto' }}
+                      />
                     )}
                     <h5 className="card-title">{product.productName}</h5>
                     <p className="card-text"><strong>Price: ${product.productPrice}</strong></p>
                     <p className="card-text">{product.productDescription}</p>
                     <p className="card-text">Seller Username: {product.sellerUsername || "Unknown"}</p>
-                    <button 
-                      className="btn add-to-cart mb-2" 
+                    <button
+                      className="btn add-to-cart mb-2"
                       onClick={() => handleAddToCart(product)}
                     >
                       Add to Cart
                     </button>
-                    <button 
-                    className="btn view-details" 
-                    style={{ backgroundColor: '#ff8c00' }} 
-                     onClick={() => handleShow(product)}
+                    <button
+                      className="btn view-details"
+                      style={{ backgroundColor: '#ff8c00' }}
+                      onClick={() => handleShow(product)}
                     >
-                     View Details
+                      View Details
                     </button>
                   </div>
                 </div>
@@ -166,7 +193,7 @@ function Furnitures() {
 
       {/* Modal for Product Details */}
       {selectedProduct && (
-        <Modal show={show} onHide={handleClose} scrollable={true}> 
+        <Modal show={show} onHide={handleClose} scrollable={true}>
           <Modal.Header closeButton>
             <Modal.Title>{selectedProduct.productName}</Modal.Title>
           </Modal.Header>
@@ -195,35 +222,43 @@ function Furnitures() {
                 ))}
               </Carousel>
             )}
-               <div className="product-details">
-               <p className="product-price">Price: ${selectedProduct.productPrice}</p>
-             <p>{selectedProduct.productDescription}</p>
-            <p className="product-description">{selectedProduct.productDetailedDescription}</p>
-            <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
-           
+            <div className="product-details">
+              <p className="product-price">Price: ${selectedProduct.productPrice}</p>
+              <p>{selectedProduct.productDescription}</p>
+              <p className="product-description">{selectedProduct.productDetailedDescription}</p>
+              <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
             </div>
 
-
-            {/* Buttons */}
             <div className="product-buttons">
-              <Button variant="warning" className="mb-3" onClick={handleAddToWishlist}>
+              <Button
+                variant="warning"
+                className="mb-3"
+                onClick={handleAddToWishlist}
+              >
                 Add to Wishlist
               </Button>
-              <Button variant="primary" className="mb-3" onClick={() => handleAddToCart(selectedProduct)}>
+              <Button
+                variant="primary"
+                className="mb-3"
+                onClick={() => handleAddToCart(selectedProduct)}
+              >
                 Add to Cart
               </Button>
-              <Button variant="secondary" className="mb-3" onClick={handleClose}>
+              <Button
+                variant="secondary"
+                className="mb-3"
+                onClick={handleClose}
+              >
                 Close
               </Button>
             </div>
 
-            {/* Display Similar Products */}
             <div className="similar-products">
               <h5>Similar Products</h5>
               <div className="row">
                 {similarProducts.map((product, index) => (
                   <div className="col-4" key={index}>
-                    <div className="card text-center"> 
+                    <div className="card text-center">
                       <img
                         src={product.imageUrls[0]}
                         alt={product.productName}
@@ -232,25 +267,25 @@ function Furnitures() {
                       <div className="card-body">
                         <h6>{product.productName}</h6>
                         <p>Price: ${product.productPrice}</p>
-                        <button 
-                          className="btn view-details" 
-                          style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
-                          onClick={() => handleShow(product)}
-                        >
-                          View Details
-                        </button>
+                        <button
+                            className="btn view-details"
+                            style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
+                            onClick={() => handleShow(product)}
+                          >
+                            View Details
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            </Modal.Body>
+          </Modal>
+        )}
+      </div>
+    );
+  }
 
-          </Modal.Body>
-        </Modal>
-      )}
-    </div>
-  );
-}
+  export default Furnitures;
 
-export default Furnitures;

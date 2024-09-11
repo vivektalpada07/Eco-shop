@@ -34,9 +34,11 @@ function CustomerHeader() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             <NavDropdown title="Category" id="basic-nav-dropdown">
+            <NavDropdown.Item href="/Allproducts">AllProducts</NavDropdown.Item>
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
+              <NavDropdown.Item href="/Otherproducts">OtherProducts</NavDropdown.Item>
             </NavDropdown>
             <Button variant="outline-light" onClick={() => navigate("/customer-orders")}>
             Orders

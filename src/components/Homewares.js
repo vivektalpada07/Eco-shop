@@ -17,6 +17,7 @@ function Homewares() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
+  const [sortOrder, setSortOrder] = useState('asc'); // New state for sorting
   const { cartItems, addToCart } = useCartContext();  
   const { addToWishlist } = useWishlistContext();  
   const currentUser = auth.currentUser;
@@ -40,6 +41,18 @@ function Homewares() {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    // Sort filtered products whenever the sortOrder changes
+    const sortedProducts = [...filteredProducts].sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a.productPrice - b.productPrice;
+      } else {
+        return b.productPrice - a.productPrice;
+      }
+    });
+    setFilteredProducts(sortedProducts);
+  }, [sortOrder]);
+
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
@@ -49,6 +62,10 @@ function Homewares() {
       product.sellerUsername?.toLowerCase().includes(value)
     );
     setFilteredProducts(filtered);
+  };
+
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
   };
 
   const handleShow = (product) => {
@@ -127,6 +144,19 @@ function Homewares() {
           />
         </div>
 
+        {/* Sort Dropdown */}
+        <div className="sort-dropdown text-center mb-4">
+          <select
+            value={sortOrder}
+            onChange={handleSortChange}
+            className="form-control"
+            style={{ maxWidth: '200px', margin: '0 auto' }}
+          >
+            <option value="asc">Sort by Price: Low to High</option>
+            <option value="desc">Sort by Price: High to Low</option>
+          </select>
+        </div>
+
         {filteredProducts.length > 0 ? (
           <div className="row justify-content-center">
             {filteredProducts.map((product, index) => (
@@ -147,13 +177,12 @@ function Homewares() {
                       Add to Cart
                     </button>
                     <button 
-                    className="btn view-details" 
-                    style={{ backgroundColor: '#ff8c00' }} 
-                     onClick={() => handleShow(product)}
+                      className="btn view-details" 
+                      style={{ backgroundColor: '#ff8c00' }} 
+                      onClick={() => handleShow(product)}
                     >
-                     View Details
+                      View Details
                     </button>
-
                   </div>
                 </div>
               </div>
@@ -196,13 +225,12 @@ function Homewares() {
                 ))}
               </Carousel>
             )}
-               <div className="product-details">
-            <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
-            <p>{selectedProduct.productDescription}</p>
-            <p className="product-description">{selectedProduct.productDetailedDescription}</p>
-            <p className="product-price">Price: ${selectedProduct.productPrice}</p>
+            <div className="product-details">
+              <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
+              <p>{selectedProduct.productDescription}</p>
+              <p className="product-description">{selectedProduct.productDetailedDescription}</p>
+              <p className="product-price">Price: ${selectedProduct.productPrice}</p>
             </div>
-
 
             {/* Buttons */}
             <div className="product-buttons">
@@ -223,7 +251,7 @@ function Homewares() {
               <div className="row">
                 {similarProducts.map((product, index) => (
                   <div className="col-4" key={index}>
-                    <div className="card text-center"> 
+                                        <div className="card text-center"> 
                       <img
                         src={product.imageUrls[0]}
                         alt={product.productName}
@@ -235,7 +263,7 @@ function Homewares() {
                         <button 
                           className="btn view-details" 
                           style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
-                          onClick={() => handleShow(product)}
+                          onClick={() => handleProductClick(product)}
                         >
                           View Details
                         </button>
@@ -254,3 +282,4 @@ function Homewares() {
 }
 
 export default Homewares;
+

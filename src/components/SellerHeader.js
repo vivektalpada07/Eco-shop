@@ -40,9 +40,11 @@ function SellerHeader() {
             
             {/* Additional Options from Simple Header */}
             <NavDropdown title="Category" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/Allproducts">AllProducts</NavDropdown.Item>
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
+              <NavDropdown.Item href="/Otherproducts">OtherProducts</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>

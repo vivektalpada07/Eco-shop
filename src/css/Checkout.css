@@ -1,6 +1,6 @@
 .align-items {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns: one for label, one for value */
+    grid-template-columns: 1fr 1fr; 
     justify-content: "space-between";
     margin-bottom: "8px";
 }
@@ -56,7 +56,7 @@
     flex: 1;
     padding: 30px;
     text-align: center;
-    margin-top: 20px; /* Adjusted to prevent overlap with header */
+    margin-top: 20px; 
     margin-bottom: 10px;
   }
 

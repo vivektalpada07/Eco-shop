@@ -2,39 +2,37 @@
 form {
     max-width: 600px;
     margin: 50px auto;
-    padding: 30px; /* Increased padding for more space */
-    border: 1px solid #ddd; /* Lighter border */
-    border-radius: 10px; /* Softer rounded corners */
-    background-color: #ffffff; /* Crisp white background */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 30px; 
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #ffffff; 
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
 }
 
-/* Styling input fields and textareas */
 input[type="text"], input[type="number"], textarea, select {
     width: 100%;
-    padding: 12px; /* Slightly larger padding */
-    margin: 12px 0; /* More space between form elements */
+    padding: 12px;
+    margin: 12px 0; 
     border: 1px solid #ccc;
-    border-radius: 6px; /* Softer corners */
+    border-radius: 6px; 
     box-sizing: border-box;
-    font-size: 16px; /* Larger font for readability */
-    transition: border-color 0.3s ease; /* Smooth transition */
+    font-size: 16px; 
+    transition: border-color 0.3s ease; 
 }
 
-/* Hover effect for inputs */
+
 input[type="text"]:hover, input[type="number"]:hover, textarea:hover, select:hover {
-    border-color: #888; /* Slightly darker border on hover */
+    border-color: #888; 
 }
 
-/* Focus effect for inputs */
 input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
-    border-color: #4CAF50; /* Green border on focus */
-    outline: none; /* Remove default outline */
+    border-color: #4CAF50;
+    outline: none; 
 }
 
-/* Styling the buttons */
+
 button, input[type="button"] {
-    background-color: #ff8c00; /* Bright orange */
+    background-color: #ff8c00; 
     color: white;
     padding: 14px 22px;
     margin: 10px 0;
@@ -44,31 +42,30 @@ button, input[type="button"] {
     width: 100%;
     text-align: center;
     font-size: 18px;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease; 
 }
 
-/* Button hover effect */
+
 button:hover, input[type="button"]:hover {
-    background-color: #e07b00; /* Darker orange on hover */
+    background-color: #e07b00;
 }
 
-/* Labels styling */
+
 label {
     font-weight: bold;
     display: block;
     margin-bottom: 8px;
     font-size: 16px;
-    color: #333; /* Darker color for readability */
+    color: #333; 
 }
 
-/* File input styling */
+
 input[type="file"] {
     margin-top: 10px;
     padding: 10px;
     font-size: 14px;
 }
 
-/* Flexbox for inline elements */
 .inline-elements {
     display: flex;
     justify-content: space-between;
@@ -76,24 +73,24 @@ input[type="file"] {
     margin-top: 12px;
 }
 
-/* Each inline element */
+
 .inline-elements > * {
     flex: 1;
     margin-right: 10px;
 }
 
-/* Remove margin for the last child */
+
 .inline-elements > *:last-child {
     margin-right: 0;
 }
 
-/* Styling for form buttons and file input */
+
 form .inline-elements input[type="file"], form .inline-elements input[type="button"] {
     width: auto;
     font-size: 14px;
 }
 
-/* Responsive form styling for mobile */
+
 @media (max-width: 768px) {
     form {
         padding: 20px;

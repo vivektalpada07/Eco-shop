@@ -126,7 +126,7 @@ function OtherProducts() {
   return (
     <div className="wrapper">
       <HeaderSwitcher />
-      <div className="main-content" style={{marginTop: 80}}>
+      <div className="main-content">
         <h2 className="text-center">Other Products</h2>
 
         {/* Search Bar */}

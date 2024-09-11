@@ -36,10 +36,10 @@ const Signup = () => {
         id: user.uid,
         name,
         email,
-        mobile,   // Include mobile number in the user data
-        username, // Include username in the user data
-        role,     // Assign the default role 'customer'
-        createdAt // Store the time when the user was created
+        mobile,   
+        username, 
+        role,     
+        createdAt 
       };
 
       await FBDataService.setData(newData);

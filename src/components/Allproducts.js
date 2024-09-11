@@ -7,24 +7,20 @@ import HeaderSwitcher from './HeaderSwitcher';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';
 import { useWishlistContext } from '../context/Wishlistcontext';
-import '../css/Furnitures.css';  // Using shared CSS for consistent look and feel
+import '../css/Furnitures.css';  // Reusing the same CSS for consistent styling
 
 function AllProducts() {
-  // State variables for handling product data, search, modal, and sorting
-  const [products, setProducts] = useState([]);  // List of all products
-  const [filteredProducts, setFilteredProducts] = useState([]);  // Products after search/filter
-  const [similarProducts, setSimilarProducts] = useState([]);  // List of products similar to the selected one
-  const [searchTerm, setSearchTerm] = useState('');  // Stores search input
-  const [selectedProduct, setSelectedProduct] = useState(null);  // Tracks the currently selected product
-  const [show, setShow] = useState(false);  // Controls the product details modal visibility
-  const [sortOption, setSortOption] = useState('default');  // Tracks the current sorting option
-
-  // Access to cart and wishlist functions from their respective contexts
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [similarProducts, setSimilarProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [show, setShow] = useState(false);
+  const [sortOption, setSortOption] = useState('default');
   const { cartItems, addToCart } = useCartContext();
   const { addToWishlist } = useWishlistContext();
-  const currentUser = auth.currentUser;  // Current authenticated user
+  const currentUser = auth.currentUser;
 
-  // Fetch all products from the Firestore database on component load
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -34,7 +30,7 @@ function AllProducts() {
           ...doc.data()
         }));
         setProducts(productsArray);
-        setFilteredProducts(productsArray);  // Initially set filtered products as all products
+        setFilteredProducts(productsArray);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -43,65 +39,56 @@ function AllProducts() {
     fetchProducts();
   }, []);
 
-  // Sort products when the selected sorting option changes
   useEffect(() => {
-    let sortedProducts = [...filteredProducts];  // Copy the filtered products list
+    let sortedProducts = [...filteredProducts];
 
-    // Sorting logic for different options
     if (sortOption === 'priceLowToHigh') {
-      sortedProducts.sort((a, b) => a.productPrice - b.productPrice);  // Ascending order by price
+      sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
     } else if (sortOption === 'priceHighToLow') {
-      sortedProducts.sort((a, b) => b.productPrice - a.productPrice);  // Descending order by price
+      sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
     }
 
-    setFilteredProducts(sortedProducts);  // Update the state with sorted products
+    setFilteredProducts(sortedProducts);
   }, [sortOption]);
 
-  // Handle the search input and filter the product list based on the search term
   const handleSearch = (event) => {
-    const value = event.target.value.toLowerCase();  // Convert input to lowercase for case-insensitive search
-    setSearchTerm(value);  // Update search term
+    const value = event.target.value.toLowerCase();
+    setSearchTerm(value);
     const filtered = products.filter(product =>
       product.productName.toLowerCase().includes(value) ||
       product.productDescription.toLowerCase().includes(value) ||
-      product.sellerUsername?.toLowerCase().includes(value)  // Check if search term matches name, description, or seller
+      product.sellerUsername?.toLowerCase().includes(value)
     );
-    setFilteredProducts(filtered);  // Update the filtered products based on search
+    setFilteredProducts(filtered);
   };
 
-  // Handle change in sorting option from the dropdown
   const handleSortChange = (event) => {
-    setSortOption(event.target.value);  // Update sorting option
+    setSortOption(event.target.value);
   };
 
-  // Open the product details modal and fetch similar products based on the category
   const handleShow = (product) => {
-    setSelectedProduct(product);  // Set the currently selected product
-    setShow(true);  // Show the modal
-    fetchSimilarProducts(product.category);  // Fetch products in the same category
+    setSelectedProduct(product);
+    setShow(true);
+    fetchSimilarProducts(product.category);
   };
 
-  // Close the product details modal
   const handleClose = () => setShow(false);
 
-  // Add the product to the cart, ensuring the user is logged in and the product is not already in the cart
   const handleAddToCart = (product) => {
     if (!currentUser) {
       alert("Please log in to add items to the cart.");
       return;
     }
 
-    // Check if the product is already in the cart
     const isAlreadyInCart = cartItems.some(item => item.productId === product.productId);
 
     if (isAlreadyInCart) {
       alert("This product is already in your cart.");
     } else {
-      addToCart({ ...product });  // Add product to cart
+      addToCart({ ...product });
     }
   };
 
-  // Add the selected product to the wishlist, ensuring the user is logged in
   const handleAddToWishlist = () => {
     if (!currentUser) {
       alert("Please log in to add items to your wishlist.");
@@ -109,14 +96,13 @@ function AllProducts() {
     }
 
     if (selectedProduct) {
-      addToWishlist({ ...selectedProduct });  // Add product to wishlist
-      handleClose();  // Close the modal after adding
+      addToWishlist({ ...selectedProduct });
+      handleClose();
     } else {
       console.error("No product selected or product data is incomplete.");
     }
   };
 
-  // Fetch products in the same category as the selected product for recommendations
   const fetchSimilarProducts = async (category) => {
     try {
       const q = query(collection(db, "products"), where("category", "==", category));
@@ -125,7 +111,7 @@ function AllProducts() {
         productId: doc.id,
         ...doc.data()
       }));
-      setSimilarProducts(productsArray);  // Update similar products state
+      setSimilarProducts(productsArray);
     } catch (error) {
       console.error("Error fetching similar products:", error);
     }
@@ -133,11 +119,11 @@ function AllProducts() {
 
   return (
     <div className="wrapper">
-      <HeaderSwitcher />  {/* Component that switches between headers based on the user role */}
-      <div className="main-content" style={{marginTop: 80}}>
+      <HeaderSwitcher />
+      <div className="main-content">
         <h2 className="text-center">All Products</h2>
 
-        {/* Search Bar for filtering products */}
+        {/* Search Bar */}
         <div className="search-bar text-center mb-4">
           <input
             type="text"
@@ -145,20 +131,19 @@ function AllProducts() {
             value={searchTerm}
             onChange={handleSearch}
             className="form-control"
-            style={{ maxWidth: '400px', margin: '0 auto' }}  // Center the search input
+            style={{ maxWidth: '400px', margin: '0 auto' }}
           />
         </div>
 
-        {/* Dropdown for sorting products */}
+        {/* Sort Dropdown */}
         <div className="sort-options text-center mb-4">
           <select value={sortOption} onChange={handleSortChange} className="form-control" style={{ maxWidth: '200px', margin: '0 auto' }}>
-            <option value="default">Sort by Price</option>
+            <option value="default">Price</option>
             <option value="priceLowToHigh">Price: Low to High</option>
             <option value="priceHighToLow">Price: High to Low</option>
           </select>
         </div>
 
-        {/* Display filtered products in a grid */}
         {filteredProducts.length > 0 ? (
           <div className="row justify-content-center">
             {filteredProducts.map((product, index) => (
@@ -187,9 +172,9 @@ function AllProducts() {
           <p>No products found.</p>
         )}
       </div>
-      <Footer />  {/* Footer component to display at the bottom */}
+      <Footer />
 
-      {/* Modal for displaying selected product details */}
+      {/* Modal for Product Details */}
       {selectedProduct && (
         <Modal show={show} onHide={handleClose} scrollable={true}>
           <Modal.Header closeButton>
@@ -211,35 +196,62 @@ function AllProducts() {
                           src: url,
                           width: 1200,
                           height: 1200
-                        }
+                        },
+                        enlargedImagePosition: "beside",
+                        isHintEnabled: true
                       }}
                     />
                   </Carousel.Item>
                 ))}
               </Carousel>
             )}
-            <p>{selectedProduct.productDescription}</p>
-            <p><strong>Price:</strong> ${selectedProduct.productPrice}</p>
-            <p><strong>Category:</strong> {selectedProduct.category}</p>
+            <div className="product-details">
+              <p className="product-price">Price: ${selectedProduct.productPrice}</p>
+              <p>{selectedProduct.productDescription}</p>
+              <p className="product-description">{selectedProduct.productDetailedDescription}</p>
+              <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
+            </div>
 
-            {/* Display similar products */}
+            <div className="product-buttons">
+              <Button variant="warning" className="mb-3" onClick={handleAddToWishlist}>
+                Add to Wishlist
+              </Button>
+              <Button variant="primary" className="mb-3" onClick={() => handleAddToCart(selectedProduct)}>
+                Add to Cart
+              </Button>
+              <Button variant="secondary" className="mb-3" onClick={handleClose}>
+                Close
+              </Button>
+            </div>
+
             <div className="similar-products">
               <h5>Similar Products</h5>
-              {similarProducts.length > 0 ? (
-                <ul>
-                  {similarProducts.map((similarProduct, index) => (
-                    <li key={index}>{similarProduct.productName}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No similar products found.</p>
-              )}
+              <div className="row">
+                {similarProducts.map((product, index) => (
+                  <div className="col-4" key={index}>
+                    <div className="card text-center">
+                      <img
+                        src={product.imageUrls[0]}
+                        alt={product.productName}
+                        style={{ width: '100%', height: 'auto' }}
+                      />
+                      <div className="card-body">
+                        <h6>{product.productName}</h6>
+                        <p>Price: ${product.productPrice}</p>
+                        <button
+                          className="btn view-details"
+                          style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
+                          onClick={() => handleShow(product)}
+                          >
+                          View Details
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>Close</Button>
-            <Button variant="primary" onClick={handleAddToWishlist}>Add to Wishlist</Button>
-          </Modal.Footer>
         </Modal>
       )}
     </div>
@@ -247,3 +259,4 @@ function AllProducts() {
 }
 
 export default AllProducts;
+

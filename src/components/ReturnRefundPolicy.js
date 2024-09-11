@@ -9,17 +9,17 @@ import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 function ReturnAndRefundPolicy() {
   const [policyImage, setPolicyImage] = useState("");
 
-  // Initialize Firebase Storage
+  
   const storage = getStorage();
 
   useEffect(() => {
     // Fetch image URL from Firebase Storage
     const fetchImage = async () => {
       try {
-        // Create a reference to the file in Firebase Storage
+
         const imageRef = ref(storage, "images/r&rpolicy.png"); 
 
-        // Get the download URL
+
         const url = await getDownloadURL(imageRef);
 
         // Set the image URL to state

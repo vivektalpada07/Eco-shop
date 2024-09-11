@@ -65,7 +65,7 @@ const Orders = () => {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{marginTop: -70}}>
       <HeaderSwitcher />
       <h2>My Orders</h2>
       <div className="table-container">

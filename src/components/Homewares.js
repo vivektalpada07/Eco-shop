@@ -129,7 +129,7 @@ function Homewares() {
   return (
     <div className="wrapper">
       <HeaderSwitcher/>
-      <div className="main-content">
+      <div className="main-content" style={{marginTop: -70}}>
         <h2 className="text-center">Our Homewares Collection</h2>
 
         {/* Search Bar */}

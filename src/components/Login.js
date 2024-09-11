@@ -91,7 +91,7 @@ const Login = () => {
   return (
     <>
       <Header /> {/* Display the page header */}
-      <div className="main-content">
+      <div className="main-content" style={{marginTop: -70}}>
         <h2>Login</h2> {/* Page heading */}
         <div className="login-container">
           <div className="image-section">

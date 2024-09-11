@@ -67,7 +67,7 @@ function AdminDashboard() {
     }, [user]); // Re-run when the user state changes (e.g., when the user logs in/out)
 
     return (
-      <div className='main-content'>
+      <div className='main-content' style={{marginTop: -40}}>
         <AdminHeader /> {/* Renders the admin dashboard header */}
         <h2 className='welcome-message'>Welcome to the Admin Dashboard, {userName}!</h2> {/* Display a personalized welcome message */}
         <div className="content">

@@ -59,7 +59,7 @@ const SellerQueries = () => {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{marginTop: -70}}>
       <AdminHeader />
       <h2>Seller Queries</h2>
       {queries.length > 0 ? (

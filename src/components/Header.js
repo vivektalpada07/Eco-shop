@@ -8,7 +8,7 @@
 
   function Header() {
     return (
-      <Navbar expand="lg" className='Header' style={{marginTop: -35}}>
+      <Navbar expand="lg" className='Header' >
         <Container className='Navbar'>
           <Navbar.Brand href="/" className="protest-guerrilla-regular" style={{marginTop: 8}}>
             Eco Shop

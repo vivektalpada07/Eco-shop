@@ -24,19 +24,19 @@ function AdminHeader() {
 
   return (
     <Navbar expand="lg" className='Header'> {/* Navbar expands on large screens, className applied for custom styles */}
-      <Container className='Navbar'> {/* Container for aligning navbar content */}
-        <Navbar.Brand href="/admin" className="protest-guerrilla-regular">
+      <Container className='Navbar' style={{marginTop:20}}> {/* Container for aligning navbar content */}
+        <Navbar.Brand href="/admin" className="protest-guerrilla-regular" style={{marginTop: 5}}>
           Eco Shop {/* Brand or logo with a custom font style */}
         </Navbar.Brand>
 
         {/* Navbar toggle button for mobile view with custom styling */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'rgba(255, 255, 255, 0.5)' }}>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'rgba(255, 255, 255, 0.5)'  }}>
           <span className="navbar-toggler-icon" style={{ backgroundImage: "url('data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e')" }}>
           </span>
         </Navbar.Toggle>
 
         <Navbar.Collapse id="basic-navbar-nav"> {/* Collapsible part of the navbar for toggling on small screens */}
-          <Nav className="ms-auto" style={{ marginTop: '-25px' }}> {/* Align navigation to the right (ms-auto) */}
+          <Nav className="ms-auto"> {/* Align navigation to the right (ms-auto) */}
             
             {/* Admin Dashboard Menu Dropdown */}
             <NavDropdown title="Dashboard" id="admin-dashboard-dropdown">

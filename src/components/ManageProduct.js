@@ -41,7 +41,7 @@ const ManageProducts = () => {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{marginTop: -70}}>
       <AdminHeader /> {/* Display the admin header */}
       <h2>Manage Products</h2> {/* Page heading */}
       <Table striped bordered hover>

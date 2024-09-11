@@ -53,7 +53,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{marginTop: -130}}>
       <Header/>
       <div className="p-4 box">
         <h2 className="mb-3">Signup</h2>

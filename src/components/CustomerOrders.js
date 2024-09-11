@@ -104,7 +104,6 @@ const CustomerOrders = () => {
                 <th>Product Name</th>
                 <th>Price</th>
                 <th>Status</th>
-                <th>Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -116,11 +115,7 @@ const CustomerOrders = () => {
                     <td>{item.productName}</td>
                     <td>{item.productPrice.toFixed(2)}</td>
                     <td>{order.status}</td>
-                    <td>
-                      {order.createdAt && order.createdAt.seconds
-                        ? new Date(order.createdAt.seconds * 1000).toLocaleDateString()
-                        : "N/A"}
-                    </td>
+                    
                     <td>
                       {/* Show 'Leave Review' button if the order is complete */}
                       {order.status === "complete" && (

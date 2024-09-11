@@ -50,7 +50,7 @@ function AdminHeader() {
               <NavDropdown.Item href="/manageproduct">Manage Products</NavDropdown.Item> {/* Links to manage products page */}
               <NavDropdown.Item href="/addproduct">Add Product</NavDropdown.Item> {/* Links to add product page */}
               <NavDropdown.Item href="/mylistings">My Listings</NavDropdown.Item> {/* Links to user's product listings */}
-              <NavDropdown.Item href="/admin-reviews">Customer review</NavDropdown.Item> {/* Links to customer reviews page */}
+             
             </NavDropdown>
 
             <Nav.Link href="/orders">Orders</Nav.Link> {/* Links to orders page */}
@@ -65,8 +65,8 @@ function AdminHeader() {
             </NavDropdown>
 
             <Nav.Link href="/customer-orders">Purchase Orders</Nav.Link> {/* Links to customer orders */}
-            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link> {/* Links to wishlist page */}
-            <Nav.Link href="/cart">Cart</Nav.Link> {/* Links to cart page */}
+            <Nav.Link href="/cart">Cart</Nav.Link>
+            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             
             {/* Logout Button */}
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button> {/* Calls handleLogout when clicked */}

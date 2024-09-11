@@ -53,8 +53,9 @@ function CustomerHeader() {
             {/* Links for purchase orders, becoming a seller, wishlist, and cart */}
             <Nav.Link href="/customer-orders">Purchase Orders</Nav.Link>
             <Nav.Link href='/beseller'>Become a Seller</Nav.Link>
-            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
+            <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
+            
             {/* Button to log out */}
             <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>

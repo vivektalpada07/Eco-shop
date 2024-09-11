@@ -7,10 +7,9 @@ import HeaderSwitcher from './HeaderSwitcher';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';
 import { useWishlistContext } from '../context/Wishlistcontext';
-import '../css/Furnitures.css'; // Apply consistent styling across the furniture section
+import '../css/Furnitures.css'; // Reusing the same CSS for consistent styling
 
 function Furnitures() {
-  // State variables for managing products and user interactions
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [similarProducts, setSimilarProducts] = useState([]);
@@ -22,14 +21,11 @@ function Furnitures() {
   const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
 
-  // Fetch products from the Firestore database when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Query the Firestore database for furniture products
         const q = query(collection(db, "products"), where("category", "==", "furniture"));
         const querySnapshot = await getDocs(q);
-        // Map the data from Firestore into a more usable format
         const productsArray = querySnapshot.docs.map(doc => ({
           productId: doc.id,
           ...doc.data()
@@ -44,7 +40,6 @@ function Furnitures() {
     fetchProducts();
   }, []);
 
-  // Sort the filtered products based on the selected sort option
   useEffect(() => {
     let sortedProducts = [...filteredProducts];
 
@@ -57,7 +52,6 @@ function Furnitures() {
     setFilteredProducts(sortedProducts);
   }, [sortOption]);
 
-  // Filter products based on the search term
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
@@ -69,22 +63,18 @@ function Furnitures() {
     setFilteredProducts(filtered);
   };
 
-  // Handle changes to the sorting dropdown
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
   };
 
-  // Show the product details modal and fetch similar products
   const handleShow = (product) => {
     setSelectedProduct(product);
     setShow(true);
     fetchSimilarProducts(product.category);
   };
 
-  // Close the product details modal
   const handleClose = () => setShow(false);
 
-  // Add a product to the cart
   const handleAddToCart = (product) => {
     if (!currentUser) {
       alert("Please log in to add items to the cart.");
@@ -100,7 +90,6 @@ function Furnitures() {
     }
   };
 
-  // Add a product to the wishlist
   const handleAddToWishlist = () => {
     if (!currentUser) {
       alert("Please log in to add items to your wishlist.");
@@ -115,7 +104,6 @@ function Furnitures() {
     }
   };
 
-  // Fetch products similar to the selected product's category
   const fetchSimilarProducts = async (category) => {
     try {
       const q = query(collection(db, "products"), where("category", "==", category));
@@ -133,10 +121,10 @@ function Furnitures() {
   return (
     <div className="wrapper">
       <HeaderSwitcher />
-      <div className="main-content" style={{marginTop: 80}}>
+      <div className="main-content">
         <h2 className="text-center">Our Furniture Collection</h2>
 
-        {/* Search Bar for filtering products */}
+        {/* Search Bar */}
         <div className="search-bar text-center mb-4">
           <input
             type="text"
@@ -148,7 +136,7 @@ function Furnitures() {
           />
         </div>
 
-        {/* Dropdown for sorting products */}
+        {/* Sort Dropdown */}
         <div className="sort-options text-center mb-4">
           <select
             value={sortOption}
@@ -162,7 +150,6 @@ function Furnitures() {
           </select>
         </div>
 
-        {/* Displaying filtered products */}
         {filteredProducts.length > 0 ? (
           <div className="row justify-content-center">
             {filteredProducts.map((product, index) => (
@@ -204,7 +191,7 @@ function Furnitures() {
       </div>
       <Footer />
 
-      {/* Modal for displaying product details */}
+      {/* Modal for Product Details */}
       {selectedProduct && (
         <Modal show={show} onHide={handleClose} scrollable={true}>
           <Modal.Header closeButton>
@@ -266,46 +253,39 @@ function Furnitures() {
               </Button>
             </div>
 
-            {/* Displaying similar products */}
-            {similarProducts.length > 0 && (
-              <>
-                <h5>Similar Products</h5>
-                <div className="row">
-                  {similarProducts.map((product, index) => (
-                    <div className="col-md-4" key={index}>
-                      <div className="card">
-                        <img
-                          src={product.imageUrls && product.imageUrls[0]}
-                          alt={product.productName}
-                          style={{ width: '100%', height: 'auto' }}
-                        />
-                        <div className="card-body">
-                          <h5 className="card-title">{product.productName}</h5>
-                          <p className="card-text">${product.productPrice}</p>
-                          <Button
-                            variant="warning"
-                            onClick={() => handleAddToWishlist(product)}
+            <div className="similar-products">
+              <h5>Similar Products</h5>
+              <div className="row">
+                {similarProducts.map((product, index) => (
+                  <div className="col-4" key={index}>
+                    <div className="card text-center">
+                      <img
+                        src={product.imageUrls[0]}
+                        alt={product.productName}
+                        style={{ width: '100%', height: 'auto' }}
+                      />
+                      <div className="card-body">
+                        <h6>{product.productName}</h6>
+                        <p>Price: ${product.productPrice}</p>
+                        <button
+                            className="btn view-details"
+                            style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
+                            onClick={() => handleShow(product)}
                           >
-                            Add to Wishlist
-                          </Button>
-                          <Button
-                            variant="primary"
-                            onClick={() => handleAddToCart(product)}
-                          >
-                            Add to Cart
-                          </Button>
+                            View Details
+                          </button>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
-              </>
-            )}
-          </Modal.Body>
-        </Modal>
-      )}
-    </div>
-  );
-}
+              </div>
+            </Modal.Body>
+          </Modal>
+        )}
+      </div>
+    );
+  }
 
-export default Furnitures;
+  export default Furnitures;
+

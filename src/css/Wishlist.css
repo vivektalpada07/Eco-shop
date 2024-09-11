@@ -2,7 +2,6 @@
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
-    margin-top: 20px;
 }
 
 h2 {
@@ -180,3 +179,4 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+

@@ -3,8 +3,35 @@ import '../css/ReturnRefundPolicy.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row } from 'react-bootstrap';
 import HeaderSwitcher from './HeaderSwitcher';
+import { useEffect, useState } from 'react';
+import { getDownloadURL, getStorage, ref } from 'firebase/storage';
 
 function ReturnAndRefundPolicy() {
+  const [policyImage, setPolicyImage] = useState("");
+
+  // Initialize Firebase Storage
+  const storage = getStorage();
+
+  useEffect(() => {
+    // Fetch image URL from Firebase Storage
+    const fetchImage = async () => {
+      try {
+        // Create a reference to the file in Firebase Storage
+        const imageRef = ref(storage, "images/r&rpolicy.png"); 
+
+        // Get the download URL
+        const url = await getDownloadURL(imageRef);
+
+        // Set the image URL to state
+        setPolicyImage(url);
+      } catch (error) {
+        console.error("Error fetching image:", error);
+      }
+    };
+
+    fetchImage();
+  }, []);
+
   return (
     <div className='wrapper'>
       <HeaderSwitcher/>
@@ -44,6 +71,12 @@ function ReturnAndRefundPolicy() {
                 If your product is approved, we will do a refund to any payment method of your choice.
               </p>
             </Row>
+            {/* Display the fetched image */}
+            {policyImage ? (
+              <img src={policyImage} alt="R&RPolicy" className="policy-image" />
+            ): (
+              <p>Loading Image...</p>
+            )}
           </Container>
         </div>
       <Footer />

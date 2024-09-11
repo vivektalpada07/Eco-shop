@@ -103,7 +103,7 @@ function ContactUs() {
           </Form.Group>
 
           <div className="d-grid gap-2">
-            <Button variant="primary" type="submit">
+            <Button variant="success" type="submit">
               Send Message
             </Button>
           </div>

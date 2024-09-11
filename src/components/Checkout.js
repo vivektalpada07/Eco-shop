@@ -356,7 +356,6 @@ function Checkout() {
                             </div>
                         </Form>
                     </div>
-                    <Footer/>
                 </div> 
             </div>
             {/* Success Modal */}

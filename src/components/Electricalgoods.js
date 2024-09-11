@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';  
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Modal, Button, Carousel } from 'react-bootstrap';
-import ReactImageMagnify from 'react-image-magnify';  // Import the magnify component
-import Header from './Header';
+import ReactImageMagnify from 'react-image-magnify';
+import HeaderSwitcher from './HeaderSwitcher';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
 import '../css/Electricalgoods.css';
-import HeaderSwitcher from './HeaderSwitcher';
 
 function Electricalgoods() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [similarProducts, setSimilarProducts] = useState([]); // Store similar products
+  const [similarProducts, setSimilarProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
-  const { cartItems, addToCart } = useCartContext();  
-  const { addToWishlist } = useWishlistContext();  
+  const [sortOrder, setSortOrder] = useState('asc'); // For sorting
+  const { cartItems, addToCart } = useCartContext();
+  const { addToWishlist } = useWishlistContext();
   const currentUser = auth.currentUser;
 
   useEffect(() => {
@@ -27,11 +27,11 @@ function Electricalgoods() {
         const q = query(collection(db, "products"), where("category", "==", "electricalgoods"));
         const querySnapshot = await getDocs(q);
         const productsArray = querySnapshot.docs.map(doc => ({
-          productId: doc.id,  
+          productId: doc.id,
           ...doc.data()
         }));
         setProducts(productsArray);
-        setFilteredProducts(productsArray);  // Initially display all products
+        setFilteredProducts(productsArray);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -39,6 +39,17 @@ function Electricalgoods() {
 
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    const sortProducts = (products) => {
+      return [...products].sort((a, b) => {
+        return sortOrder === 'asc' 
+          ? a.productPrice - b.productPrice 
+          : b.productPrice - a.productPrice;
+      });
+    };
+    setFilteredProducts(sortProducts(filteredProducts));
+  }, [sortOrder]);
 
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
@@ -54,7 +65,7 @@ function Electricalgoods() {
   const handleShow = (product) => {
     setSelectedProduct(product);
     setShow(true);
-    fetchSimilarProducts(product.category);  // Fetch similar products when modal opens
+    fetchSimilarProducts(product.category);
   };
 
   const handleClose = () => setShow(false);
@@ -88,24 +99,27 @@ function Electricalgoods() {
     }
   };
 
-  // Fetch similar products based on the category of the selected product
   const fetchSimilarProducts = async (category) => {
     try {
       const q = query(collection(db, "products"), where("category", "==", category));
       const querySnapshot = await getDocs(q);
       const productsArray = querySnapshot.docs.map(doc => ({
-        productId: doc.id,  
+        productId: doc.id,
         ...doc.data()
       }));
-      setSimilarProducts(productsArray);  // Store similar products
+      setSimilarProducts(productsArray);
     } catch (error) {
       console.error("Error fetching similar products:", error);
     }
   };
 
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
   return (
     <div className="wrapper">
-      <HeaderSwitcher/>
+      <HeaderSwitcher />
       <div className="main-content">
         <h2 className="text-center">Our Electrical Goods Collection</h2>
 
@@ -121,10 +135,23 @@ function Electricalgoods() {
           />
         </div>
 
+        {/* Sort Dropdown */}
+        <div className="sort-dropdown text-center mb-4">
+          <select 
+            value={sortOrder}
+            onChange={handleSortChange}
+            className="form-control"
+            style={{ maxWidth: '200px', margin: '0 auto' }}
+          >
+            <option value="asc">Price: Low to High</option>
+            <option value="desc">Price: High to Low</option>
+          </select>
+        </div>
+
         {filteredProducts.length > 0 ? (
           <div className="row justify-content-center">
-            {filteredProducts.map((product, index) => (
-              <div className="col-md-4" key={index}>
+            {filteredProducts.map((product) => (
+              <div className="col-md-4" key={product.productId}>
                 <div className="card text-center">
                   <div className="card-body">
                     {product.imageUrls && product.imageUrls[0] && (
@@ -141,11 +168,11 @@ function Electricalgoods() {
                       Add to Cart
                     </button>
                     <button 
-                    className="btn view-details" 
-                    style={{ backgroundColor: '#ff8c00' }} 
-                     onClick={() => handleShow(product)}
+                      className="btn view-details" 
+                      style={{ backgroundColor: '#ff8c00' }} 
+                      onClick={() => handleShow(product)}
                     >
-                     View Details
+                      View Details
                     </button>
                   </div>
                 </div>
@@ -164,7 +191,7 @@ function Electricalgoods() {
           <Modal.Header closeButton>
             <Modal.Title>{selectedProduct.productName}</Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ maxHeight: '500px', overflowY: 'auto' }}> {/* Enable scrolling inside modal body */}
+          <Modal.Body style={{ maxHeight: '500px', overflowY: 'auto' }}>
             {selectedProduct.imageUrls && selectedProduct.imageUrls.length > 0 && (
               <Carousel>
                 {selectedProduct.imageUrls.map((url, index) => (
@@ -190,10 +217,10 @@ function Electricalgoods() {
               </Carousel>
             )}
             <div className="product-details">
-            <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
-            <p>{selectedProduct.productDescription}</p>
-            <p className="product-description">{selectedProduct.productDetailedDescription}</p>
-            <p className="product-price">Price: ${selectedProduct.productPrice}</p>
+              <p className="product-seller-username">Seller Username: {selectedProduct.sellerUsername || "Unknown"}</p>
+              <p>{selectedProduct.productDescription}</p>
+              <p className="product-description">{selectedProduct.productDetailedDescription}</p>
+              <p className="product-price">Price: ${selectedProduct.productPrice}</p>
             </div>
 
             {/* Buttons */}
@@ -213,20 +240,22 @@ function Electricalgoods() {
             <div className="similar-products">
               <h5>Similar Products</h5>
               <div className="row">
-                {similarProducts.map((product, index) => (
-                  <div className="col-4" key={index}>
-                    <div className="card text-center"> 
-                      <img
-                        src={product.imageUrls[0]}
-                        alt={product.productName}
-                        style={{ width: '100%', height: 'auto' }}
-                      />
+                {similarProducts.map((product) => (
+                  <div className="col-md-4" key={product.productId}>
+                    <div className="card text-center">
+                      {product.imageUrls && product.imageUrls[0] && (
+                        <img
+                          src={product.imageUrls[0]}
+                          alt={product.productName}
+                          style={{ width: '100%', height: 'auto' }}
+                        />
+                      )}
                       <div className="card-body">
                         <h6>{product.productName}</h6>
                         <p>Price: ${product.productPrice}</p>
                         <button 
-                          className="btn view-details" 
-                          style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
+                          className="btn view-details"
+                          style={{ backgroundColor: '#ff8c00' }}
                           onClick={() => handleShow(product)}
                         >
                           View Details

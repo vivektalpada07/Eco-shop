@@ -112,7 +112,6 @@ const SellerQueries = () => {
       ) : (
         <p>No seller queries found.</p>
       )}
-      <Footer />
     </div>
   );
 };

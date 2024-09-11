@@ -25,7 +25,7 @@ function AdminHeader() {
   return (
     <Navbar expand="lg" className='Header'>
       <Container className='Navbar'>
-      <Navbar.Brand href="/admin" className="protest-guerrilla-regular">
+        <Navbar.Brand href="/admin" className="protest-guerrilla-regular">
           Eco Shop
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" style={{ borderColor: 'rgba(255, 255, 255, 0.5)' }}>
@@ -51,15 +51,17 @@ function AdminHeader() {
 
             <Nav.Link href="/orders">Orders</Nav.Link>
 
-            <NavDropdown title="Products" id="basic-nav-dropdown">
+            <NavDropdown title="Category" id="basic-nav-dropdown">
+            <NavDropdown.Item href="/Allproducts">AllProducts</NavDropdown.Item>
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
+              <NavDropdown.Item href="/Otherproducts">OtherProducts</NavDropdown.Item>
             </NavDropdown>
             
             <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>
-            <Button variant="outline-light" onClick={handleLogout} style={{ marginTop: '-5px' }}>Logout</Button>
+            <Button variant="outline-light" onClick={handleLogout}>Logout</Button>
           </Nav>
         </Navbar.Collapse>
       </Container>

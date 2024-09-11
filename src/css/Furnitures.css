@@ -10,10 +10,17 @@ h2 {
     margin-bottom: 30px;
 }
 
-/* Centering the search bar */
-.search-bar {
+/* Container for Search and Sort */
+.search-sort-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 40px;
-    text-align: center;
+}
+
+/* Search Bar */
+.search-bar {
+    flex: 1; /* Allow the search bar to take up available space */
 }
 
 .search-bar input {
@@ -27,6 +34,11 @@ h2 {
 .search-bar input:focus {
     border-color: #007bff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
+}
+
+/* Sort Dropdown */
+.sort-dropdown {
+    margin-left: 20px; /* Space between search bar and dropdown */
 }
 
 /* Product Card Styles */

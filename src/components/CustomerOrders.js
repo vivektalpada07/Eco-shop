@@ -97,7 +97,6 @@ const CustomerOrders = () => {
                 <th>Product Name</th>
                 <th>Price</th>
                 <th>Status</th>
-                <th>Ordered Date</th>
                 <th>Actions</th>
               </tr>
             </thead>

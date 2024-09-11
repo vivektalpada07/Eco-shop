@@ -40,9 +40,7 @@ function CustomerHeader() {
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>
               <NavDropdown.Item href="/Otherproducts">OtherProducts</NavDropdown.Item>
             </NavDropdown>
-            <Button variant="outline-light" onClick={() => navigate("/customer-orders")}>
-            Orders
-            </Button>
+            <Nav.Link href="/customer-orders">Orders</Nav.Link>
             <Nav.Link href='/beseller'>BeSeller</Nav.Link>
             <Nav.Link href='/Wishlist'>Wishlist</Nav.Link>
             <Nav.Link href="/cart">Cart</Nav.Link>

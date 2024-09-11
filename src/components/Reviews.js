@@ -20,7 +20,7 @@ const Reviews = () => {
       <h2>All Product Reviews (Admin)</h2>
 
       {/* Button to toggle review display */}
-      <Button onClick={() => setShowReviews(!showReviews)}>
+      <Button size='md' onClick={() => setShowReviews(!showReviews)}>
         {showReviews ? 'Hide Reviews' : 'Show All Reviews'}
       </Button>
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore'; // Import updateDoc
+import { collection, getDocs, addDoc, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 
 const ProductContext = createContext();
@@ -8,12 +8,13 @@ export function ProductContextProvider({ children }) {
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
+  // Fetch products and orders from Firestore
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "products"));
         const productsArray = querySnapshot.docs.map(doc => ({
-          id: doc.id, // Store Firestore document ID as id
+          id: doc.id, // Firestore document ID as the unique product ID
           ...doc.data()
         }));
         console.log("Fetched Products:", productsArray);
@@ -40,19 +41,21 @@ export function ProductContextProvider({ children }) {
     fetchOrders();
   }, []);
 
+  // Add a new product
   async function addProduct(product) {
     try {
+      const docRef = await addDoc(collection(db, "products"), product); // Add product to Firestore
       const newProduct = {
+        id: docRef.id, // Firestore document ID is used as the unique product ID
         ...product,
-        productId: products.length + 1,  // Simulate auto-increment
       };
-      const docRef = await addDoc(collection(db, "products"), newProduct);
-      setProducts((prevProducts) => [...prevProducts, { id: docRef.id, ...newProduct }]);
+      setProducts((prevProducts) => [...prevProducts, newProduct]);
     } catch (e) {
       console.error("Error adding product:", e);
     }
   }
 
+  // Update product
   function updateProduct(productId, updatedProduct) {
     setProducts((prevProducts) =>
       prevProducts.map((product) =>
@@ -61,6 +64,7 @@ export function ProductContextProvider({ children }) {
     );
   }
 
+  // Delete product by productId
   async function deleteProduct(productId) {
     try {
       await deleteDoc(doc(db, "products", productId)); // Delete product from Firestore
@@ -72,6 +76,7 @@ export function ProductContextProvider({ children }) {
     }
   }
 
+  // Update order status by orderId
   async function updateOrderStatus(orderId, status) {
     try {
       const orderRef = doc(db, "checkout", orderId);
@@ -95,6 +100,7 @@ export function ProductContextProvider({ children }) {
   );
 }
 
+// Hook to use the Product context
 export function useProductcontext() {
   return useContext(ProductContext);
 }

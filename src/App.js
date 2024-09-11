@@ -16,6 +16,7 @@ import { UserAuthContextProvider } from "./context/UserAuthContext";
 import { ProductContextProvider } from "./context/Productcontext";
 import { CartContextProvider } from "./context/Cartcontext";
 import { WishlistContextProvider } from './context/Wishlistcontext';
+import { ReviewProvider } from './context/ReviewContext'; 
 import AboutUs from './components/AboutUs';
 import ReturnAndRefundPolicy from './components/ReturnRefundPolicy';
 import ContactUs from './components/ContactUs';
@@ -29,12 +30,18 @@ import MyListings from './components/MyListing';
 import Orders from './components/Orders';
 import SellerQueries from './components/SellerQueries';
 import BeSeller from './components/BeSeller';
+import CustomerHeader from './components/Customerheader';
+import CustomerOrders from './components/CustomerOrders'; 
+
+
 function App() {
   return (
     <UserAuthContextProvider>
       <ProductContextProvider>
         <CartContextProvider>
           <WishlistContextProvider>
+            <ReviewProvider>
+        
         <Container>
           <Row>
             <Col>
@@ -61,10 +68,13 @@ function App() {
                 <Route path="/orders" element={<SellerRoute><Orders/></SellerRoute>}/>
                 <Route path="/sellerqueries" element={<AdminRoute><SellerQueries/></AdminRoute>}/>
                 <Route path="/beseller" element={<CustomerRoute><BeSeller/></CustomerRoute>}/>
+                <Route path="/customer-orders" element={<CustomerOrders />} /> 
+
               </Routes>
             </Col>
           </Row>
         </Container>
+        </ReviewProvider>
         </WishlistContextProvider>
         </CartContextProvider>
       </ProductContextProvider>

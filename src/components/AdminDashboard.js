@@ -6,6 +6,7 @@ import '../css/AdminDashboard.css';
 import CheckoutService from '../context/CheckoutServices'; // Import CheckoutService to fetch checkouts
 import FBDataService from '../context/FBService'; // Import FBDataService for user data
 import { useUserAuth } from '../context/UserAuthContext'; // Import the useUserAuth hook
+import Reviews from './Reviews'; // Import updated Reviews component
 
 function AdminDashboard() {
     const [totalServerFees, setTotalServerFees] = useState(0);
@@ -63,10 +64,10 @@ function AdminDashboard() {
     return (
       <div className='main-content'>
         <AdminHeader/>
-        {/* Display the user's name in the welcome message */}
         <h2 className='welcome-message'>Welcome to the Admin Dashboard, {userName}!</h2>
         <div className="content">
           <div className="user-profile"><UserProfile/></div>
+          <Reviews/> {/* The updated Reviews component */}
           <div className="dashboard-summary">
             <h3 className='summary-box'>
               <p className="text">Total Server Fees </p>${totalServerFees}

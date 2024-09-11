@@ -8,6 +8,7 @@ import Footer from "./Footer";
 const SellerQueries = () => {
   const [queries, setQueries] = useState([]);
 
+  // Fetch seller queries from Firestore 
   useEffect(() => {
     const fetchQueries = async () => {
       try {
@@ -16,7 +17,7 @@ const SellerQueries = () => {
           id: doc.id,
           ...doc.data()
         }));
-        setQueries(queriesArray);
+        setQueries(queriesArray); // Store fetched queries in state
       } catch (e) {
         console.error("Error fetching queries:", e);
       }
@@ -25,18 +26,17 @@ const SellerQueries = () => {
     fetchQueries();
   }, []);
 
+ 
   const handleApprove = async (query) => {
     try {
-      // Update the user's role in the database (assuming you have a users collection)
+      // Update user's role to 'seller' in the users collection
       const userRef = doc(db, "users", query.userId);
-      await updateDoc(userRef, {
-        role: "seller"
-      });
+      await updateDoc(userRef, { role: "seller" });
 
-      // Remove the query from the sellerQueries collection
+      // Remove the query from the 'sellerQueries' collection after approval
       await deleteDoc(doc(db, "sellerQueries", query.id));
 
-      // Update the UI
+      // Update the UI by removing the approved query
       setQueries((prevQueries) => prevQueries.filter((q) => q.id !== query.id));
       alert("User approved as seller.");
     } catch (e) {
@@ -44,12 +44,13 @@ const SellerQueries = () => {
     }
   };
 
+  // Handle declining a seller query
   const handleDecline = async (queryId) => {
     try {
-      // Remove the query from the sellerQueries collection
+      // Remove the query from the 'sellerQueries' collection
       await deleteDoc(doc(db, "sellerQueries", queryId));
 
-      // Update the UI
+      // Update the UI by removing the declined query
       setQueries((prevQueries) => prevQueries.filter((q) => q.id !== queryId));
       alert("Seller query declined.");
     } catch (e) {

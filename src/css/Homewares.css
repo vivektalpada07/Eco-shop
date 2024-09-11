@@ -1,4 +1,4 @@
-/* General Page Styling */
+
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
@@ -10,7 +10,7 @@ h2 {
     margin-bottom: 30px;
 }
 
-/* Container for Search and Sort */
+
 .search-sort-container {
     display: flex;
     justify-content: center;
@@ -18,9 +18,9 @@ h2 {
     margin-bottom: 40px;
 }
 
-/* Search Bar */
+
 .search-bar {
-    flex: 1; /* Allow the search bar to take up available space */
+    flex: 1; 
 }
 
 .search-bar input {
@@ -36,12 +36,12 @@ h2 {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.4);
 }
 
-/* Sort Dropdown */
+
 .sort-dropdown {
-    margin-left: 20px; /* Space between search bar and dropdown */
+    margin-left: 20px; 
 }
 
-/* Product Card Styles */
+
 .card {
     border: none;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
@@ -70,7 +70,7 @@ h2 {
     transform: scale(1.05);
 }
 
-/* Typography */
+
 .card-title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -90,7 +90,7 @@ h2 {
     font-weight: 600;
 }
 
-/* Price Styling - Now at the bottom */
+
 .product-price {
     font-size: 1.5rem;
     font-weight: bold;
@@ -100,7 +100,7 @@ h2 {
     transition: color 0.3s ease;
 }
 
-/* Button Styling */
+
 .btn {
     padding: 10px;
     font-size: 1rem;
@@ -121,44 +121,43 @@ h2 {
     transform: scale(1.05);
 }
 
-/* View Details Button Styling */
+
 .view-details {
-    background-color: transparent !important; /* No background */
-    color: #000 !important; /* Black text */
-    border: none !important; /* No border */
-    text-decoration: none !important; /* No underline initially */
-    font-weight: normal !important; /* Normal font weight */
-    padding: 0 !important; /* Remove padding */
-    text-align: center !important; /* Center align */
-    display: block !important; /* Make sure it behaves like a block element */
+    background-color: transparent !important;
+    color: #000 !important; 
+    border: none !important; 
+    text-decoration: none !important; 
+    font-weight: normal !important; 
+    padding: 0 !important;
+    text-align: center !important;
+    display: block !important; 
     margin-top: 10px !important;
-    font-size: 1rem !important; /* Adjust font size if needed */
+    font-size: 1rem !important; 
     cursor: pointer !important;
 }
 
 .view-details:hover {
-    text-decoration: underline !important; /* Add underline on hover */
-    color: #000 !important; /* Keep the text color black */
-    cursor: pointer !important; /* Pointer cursor on hover */
-} /* Pointer cursor on hover */
+    text-decoration: underline !important; 
+    color: #000 !important;
+    cursor: pointer !important; 
+}
 
-/* Button Transition Effect */
 .add-to-cart, .view-details {
     transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .add-to-cart:active, .view-details:active {
-    transform: scale(0.98); /* Slight shrinking effect on click */
+    transform: scale(0.98); 
 }
 
-/* Button Placement for Consistency */
+
 .card .view-details, .card .add-to-cart {
     margin-top: 10px;
     width: 100%;
     display: block;
 }
 
-/* Footer Styles */
+
 footer {
     background-color: #28a745;
     color: white;

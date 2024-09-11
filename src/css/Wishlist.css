@@ -1,4 +1,4 @@
-/* General Page Styling */
+
 body {
     font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
@@ -11,12 +11,12 @@ h2 {
     margin-top: 20px;
 }
 
-/* Cart Container */
+
 .container {
     margin-top: 40px;
 }
 
-/* Cart Product Card Styles */
+
 .product-card {
     border: none;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
@@ -45,7 +45,7 @@ h2 {
     transform: scale(1.05);
 }
 
-/* Product Card Body Styling */
+
 .product-card-body {
     padding: 20px;
     text-align: center;
@@ -55,7 +55,7 @@ h2 {
     margin-bottom: 10px;
 }
 
-/* Typography */
+
 .card-title {
     font-size: 1.5rem;
     font-weight: bold;
@@ -78,14 +78,14 @@ h2 {
     transition: color 0.3s ease;
 }
 
-/* Button Container */
+
 .button-container {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Space between buttons */
+    gap: 5px;
 }
 
-/* Buy Now Button */
+
 .buy-now-button {
     background-color: #007bff;
     color: white;
@@ -109,7 +109,7 @@ h2 {
     background-color: #0056b3;
 }
 
-/* Remove from Cart Button */
+
 .remove-cart-button {
     background-color: #dc3545;
     color: white;
@@ -127,7 +127,7 @@ h2 {
     background-color: #c82333;
 }
 
-/* Total Price Section */
+
 .total-price {
     font-size: 1.5rem;
     font-weight: bold;
@@ -137,7 +137,7 @@ h2 {
     text-align: center;
 }
 
-/* Checkout Button */
+
 .checkout-button {
     padding: 15px 30px;
     font-size: 1.2rem;
@@ -159,7 +159,7 @@ h2 {
     cursor: not-allowed;
 }
 
-/* Footer Styles */
+
 footer {
     background-color: #28a745;
     color: white;

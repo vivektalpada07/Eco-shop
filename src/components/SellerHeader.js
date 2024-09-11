@@ -39,7 +39,7 @@ function SellerHeader() {
             <Nav.Link href="/orders" style={{ marginTop: '10px' }}>Orders</Nav.Link>
             
             {/* Additional Options from Simple Header */}
-            <NavDropdown title="Products" id="basic-nav-dropdown">
+            <NavDropdown title="Category" id="basic-nav-dropdown">
               <NavDropdown.Item href="/Furnitures">Furnitures</NavDropdown.Item>
               <NavDropdown.Item href="/Homewares">Homewares</NavDropdown.Item>
               <NavDropdown.Item href="/Electricalgoods">Electrical Goods</NavDropdown.Item>

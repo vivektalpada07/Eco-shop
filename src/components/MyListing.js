@@ -195,8 +195,6 @@ const MyListings = () => {
           )}
         </Modal.Body>
       </Modal>
-
-      {/* <Footer /> */}
     </div>
   );
 };

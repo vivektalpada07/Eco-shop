@@ -12,10 +12,9 @@ const collectionName = "checkout";
 const checkoutCollectionRef = collection(db, collectionName);
 
 class CheckoutService {
-  // Use addDoc to add a new document with an auto-generated ID
   addCheckout = async (newCheckout, userId) => {
     try {
-      console.log("userId passed to checkout: ", userId); // Add this to check userId
+      console.log("userId passed to checkout: ", userId);
       const docRef = await addDoc(checkoutCollectionRef, {
         ...newCheckout,
         userId,

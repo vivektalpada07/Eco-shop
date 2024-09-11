@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Footer from './Footer';
 import SellerHeader from './SellerHeader';
 import UserProfile from './UserProfile';
 import { useUserAuth } from '../context/UserAuthContext';
@@ -67,7 +66,6 @@ function SellerDashboard() {
                     </h3>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 }

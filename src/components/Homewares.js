@@ -2,37 +2,39 @@ import React, { useEffect, useState } from 'react';
 import { db, auth } from '../firebase';  
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Modal, Button, Carousel } from 'react-bootstrap';
-import ReactImageMagnify from 'react-image-magnify';  // Import the magnify component
+import ReactImageMagnify from 'react-image-magnify';  // Allows users to zoom in on product images
 import Header from './Header';
 import Footer from './Footer';
 import { useCartContext } from '../context/Cartcontext';  
 import { useWishlistContext } from '../context/Wishlistcontext';
-import '../css/Homewares.css';  // Add your CSS file here
+import '../css/Homewares.css';  // Custom styles for the Homewares page
 import HeaderSwitcher from './HeaderSwitcher';
 
 function Homewares() {
+  // State hooks to manage products, filtered products, and similar products
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [similarProducts, setSimilarProducts] = useState([]); // Store similar products
+  const [similarProducts, setSimilarProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [show, setShow] = useState(false);
-  const [sortOrder, setSortOrder] = useState('asc'); // New state for sorting
+  const [sortOrder, setSortOrder] = useState('asc'); // Default sorting order
   const { cartItems, addToCart } = useCartContext();  
   const { addToWishlist } = useWishlistContext();  
   const currentUser = auth.currentUser;
 
+  // Fetch products when the component mounts
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const q = query(collection(db, "products"), where("category", "==", "homewares"));
         const querySnapshot = await getDocs(q);
         const productsArray = querySnapshot.docs.map(doc => ({
-          productId: doc.id,  
+          productId: doc.id,
           ...doc.data()
         }));
         setProducts(productsArray);
-        setFilteredProducts(productsArray);  // Initially display all products
+        setFilteredProducts(productsArray); // Display all products initially
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -41,18 +43,15 @@ function Homewares() {
     fetchProducts();
   }, []);
 
+  // Sort the filtered products whenever the sortOrder changes
   useEffect(() => {
-    // Sort filtered products whenever the sortOrder changes
     const sortedProducts = [...filteredProducts].sort((a, b) => {
-      if (sortOrder === 'asc') {
-        return a.productPrice - b.productPrice;
-      } else {
-        return b.productPrice - a.productPrice;
-      }
+      return sortOrder === 'asc' ? a.productPrice - b.productPrice : b.productPrice - a.productPrice;
     });
     setFilteredProducts(sortedProducts);
   }, [sortOrder]);
 
+  // Handle search input and filter products based on the search term
   const handleSearch = (event) => {
     const value = event.target.value.toLowerCase();
     setSearchTerm(value);
@@ -64,18 +63,21 @@ function Homewares() {
     setFilteredProducts(filtered);
   };
 
+  // Handle sorting options
   const handleSortChange = (event) => {
     setSortOrder(event.target.value);
   };
 
+  // Show product details modal and fetch similar products
   const handleShow = (product) => {
     setSelectedProduct(product);
     setShow(true);
-    fetchSimilarProducts(product.category);  // Fetch similar products when modal opens
+    fetchSimilarProducts(product.category);  // Get similar products based on category
   };
 
   const handleClose = () => setShow(false);
 
+  // Add product to the cart if user is logged in
   const handleAddToCart = (product) => {
     if (!currentUser) {
       alert("Please log in to add items to the cart.");
@@ -91,6 +93,7 @@ function Homewares() {
     }
   };
 
+  // Add product to the wishlist if user is logged in
   const handleAddToWishlist = () => {
     if (!currentUser) {
       alert("Please log in to add items to your wishlist.");
@@ -111,28 +114,28 @@ function Homewares() {
       const q = query(collection(db, "products"), where("category", "==", category));
       const querySnapshot = await getDocs(q);
       const productsArray = querySnapshot.docs.map(doc => ({
-        productId: doc.id,  
+        productId: doc.id,
         ...doc.data()
       }));
-      setSimilarProducts(productsArray);  // Store similar products
+      setSimilarProducts(productsArray); // Update state with similar products
     } catch (error) {
       console.error("Error fetching similar products:", error);
     }
   };
 
-  // Handle clicking on a similar product (update modal)
+  // Update modal with details of a clicked similar product
   const handleProductClick = (product) => {
-    setSelectedProduct(product);  // Update modal with the clicked product details
-    fetchSimilarProducts(product.category);  // Update similar products as well
+    setSelectedProduct(product);
+    fetchSimilarProducts(product.category);  // Refresh similar products list
   };
 
   return (
     <div className="wrapper">
       <HeaderSwitcher/>
-      <div className="main-content">
+      <div className="main-content" style={{marginTop: 80}}>
         <h2 className="text-center">Our Homewares Collection</h2>
 
-        {/* Search Bar */}
+        {/* Search Bar for filtering products */}
         <div className="search-bar text-center mb-4">
           <input
             type="text"
@@ -144,7 +147,7 @@ function Homewares() {
           />
         </div>
 
-        {/* Sort Dropdown */}
+        {/* Sort Dropdown for ordering products by price */}
         <div className="sort-dropdown text-center mb-4">
           <select
             value={sortOrder}
@@ -158,6 +161,7 @@ function Homewares() {
           </select>
         </div>
 
+        {/* Display filtered products */}
         {filteredProducts.length > 0 ? (
           <div className="row justify-content-center">
             {filteredProducts.map((product, index) => (
@@ -195,7 +199,7 @@ function Homewares() {
       </div>
       <Footer />
 
-      {/* Modal for Product Details */}
+      {/* Modal for displaying product details */}
       {selectedProduct && (
         <Modal show={show} onHide={handleClose} scrollable={true}> 
           <Modal.Header closeButton>
@@ -233,7 +237,7 @@ function Homewares() {
               <p className="product-price">Price: ${selectedProduct.productPrice}</p>
             </div>
 
-            {/* Buttons */}
+            {/* Action buttons for the modal */}
             <div className="product-buttons">
               <Button variant="warning" className="mb-3" onClick={handleAddToWishlist}>
                 Add to Wishlist
@@ -241,40 +245,30 @@ function Homewares() {
               <Button variant="primary" className="mb-3" onClick={() => handleAddToCart(selectedProduct)}>
                 Add to Cart
               </Button>
-              <Button variant="secondary" className="mb-3" onClick={handleClose}>
+              <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
             </div>
 
-            {/* Display Similar Products */}
-            <div className="similar-products">
-              <h5>Similar Products</h5>
-              <div className="row">
-                {similarProducts.map((product, index) => (
-                  <div className="col-4" key={index}>
-                                        <div className="card text-center"> 
-                      <img
-                        src={product.imageUrls[0]}
-                        alt={product.productName}
-                        style={{ width: '100%', height: 'auto' }}
-                      />
-                      <div className="card-body">
-                        <h6>{product.productName}</h6>
-                        <p>Price: ${product.productPrice}</p>
-                        <button 
-                          className="btn view-details" 
-                          style={{ backgroundColor: '#ff8c00', color: 'white', width: '100%', marginTop: '10px' }}
-                          onClick={() => handleProductClick(product)}
-                        >
-                          View Details
-                        </button>
+            {/* Display similar products */}
+            {similarProducts.length > 0 && (
+              <div className="similar-products mt-4">
+                <h5>Similar Products</h5>
+                <div className="row">
+                  {similarProducts.map((product, index) => (
+                    <div className="col-md-3" key={index} onClick={() => handleProductClick(product)}>
+                      <div className="card">
+                        <img src={product.imageUrls?.[0]} alt={product.productName} style={{ width: '100%' }} />
+                        <div className="card-body">
+                          <h6 className="card-title">{product.productName}</h6>
+                          <p className="card-text">Price: ${product.productPrice}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-
+            )}
           </Modal.Body>
         </Modal>
       )}
@@ -283,4 +277,3 @@ function Homewares() {
 }
 
 export default Homewares;
-

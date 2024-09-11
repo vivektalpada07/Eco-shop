@@ -1,25 +1,29 @@
 import React, { useState } from "react";
 import { Form, Alert, InputGroup, Button } from "react-bootstrap";
-import Contactusservice from "../context/Contactusservice"; // Adjust import as needed
+import Contactusservice from "../context/Contactusservice"; // Service to handle contact form submissions
 import Footer from "./Footer";
 import HeaderSwitcher from "./HeaderSwitcher";
 
 function ContactUs() {
+  // State variables to manage form inputs and feedback messages
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [feedback, setFeedback] = useState({ error: false, msg: "" });
 
+  // Handles form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFeedback({ error: false, msg: "" });
 
+    // Check if all fields are filled
     if (name === "" || email === "" || subject === "" || message === "") {
-      setFeedback({ error: true, msg: "All fields are mandatory!" });
+      setFeedback({ error: true, msg: "Please fill out all fields!" });
       return;
     }
 
+    // Create contact data object
     const contactData = {
       name,
       email,
@@ -28,6 +32,7 @@ function ContactUs() {
     };
 
     try {
+      // Send contact data to the server
       await Contactusservice.addContact(contactData);
       setFeedback({ error: false, msg: "Your message has been sent successfully!" });
     } catch (err) {
@@ -35,6 +40,7 @@ function ContactUs() {
       setFeedback({ error: true, msg: "Failed to send message. Please try again later." });
     }
 
+    // Clear form fields after submission
     setName("");
     setEmail("");
     setSubject("");
@@ -43,8 +49,9 @@ function ContactUs() {
 
   return (
     <div className="main-content">
-    <HeaderSwitcher/>
+      <HeaderSwitcher />
       <div className="p-4 box">
+        {/* Display feedback message if any */}
         {feedback.msg && (
           <Alert
             variant={feedback.error ? "danger" : "success"}
@@ -56,6 +63,7 @@ function ContactUs() {
         )}
         <h2>Contact Us</h2>
         <Form onSubmit={handleSubmit}>
+          {/* Form field for name */}
           <Form.Group className="mb-3" controlId="formContactName">
             <InputGroup>
               <InputGroup.Text id="formContactName">Name</InputGroup.Text>
@@ -68,6 +76,7 @@ function ContactUs() {
             </InputGroup>
           </Form.Group>
 
+          {/* Form field for email */}
           <Form.Group className="mb-3" controlId="formContactEmail">
             <InputGroup>
               <InputGroup.Text id="formContactEmail">@</InputGroup.Text>
@@ -80,6 +89,7 @@ function ContactUs() {
             </InputGroup>
           </Form.Group>
 
+          {/* Form field for subject */}
           <Form.Group className="mb-3" controlId="formContactSubject">
             <InputGroup>
               <InputGroup.Text id="formContactSubject">Subject</InputGroup.Text>
@@ -92,6 +102,7 @@ function ContactUs() {
             </InputGroup>
           </Form.Group>
 
+          {/* Form field for message */}
           <Form.Group className="mb-3" controlId="formContactMessage">
             <Form.Control
               as="textarea"
@@ -102,6 +113,7 @@ function ContactUs() {
             />
           </Form.Group>
 
+          {/* Submit button */}
           <div className="d-grid gap-2">
             <Button variant="success" type="submit">
               Send Message
@@ -109,7 +121,7 @@ function ContactUs() {
           </div>
         </Form>
       </div>
-    <Footer/>
+      <Footer />
     </div>
   );
 }

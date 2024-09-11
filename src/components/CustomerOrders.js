@@ -91,7 +91,7 @@ const CustomerOrders = () => {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{ marginTop: -70}}>
       <HeaderSwitcher /> {/* Switch header based on user context */}
       <h2>My Orders</h2>
       <div className="table-container">

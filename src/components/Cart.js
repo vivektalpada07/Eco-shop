@@ -84,7 +84,7 @@ function Cart() {
   return (
     <div className="wrapper">
       <HeaderSwitcher />
-      <div className="content" style={{ marginTop: 80 }}>
+      <div className="content" >
         <Container>
           <h2 className="text-center mb-4">Your Cart</h2>
           {cartItems.length > 0 ? (

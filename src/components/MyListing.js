@@ -77,7 +77,7 @@ const MyListings = () => {
   };
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{marginTop: -70}}>
       {/* Render header based on the user's role */}
       {role === "admin" && <AdminHeader />}
       {role === "seller" && <SellerHeader />}

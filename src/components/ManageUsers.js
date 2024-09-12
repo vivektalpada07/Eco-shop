@@ -71,7 +71,7 @@ const ManageUsers = () => {
   );
 
   return (
-    <div className="main-content">
+    <div className="main-content" style={{marginTop: -70}}>
       <AdminHeader /> {/* Render the admin header */}
       <h2>Manage Users</h2>
 

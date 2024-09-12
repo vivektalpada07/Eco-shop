@@ -120,7 +120,7 @@ function AllProducts() {
   return (
     <div className="wrapper">
       <HeaderSwitcher />
-      <div className="main-content">
+      <div className="main-content" style={{marginTop: -70}}>
         <h2 className="text-center">All Products</h2>
 
         {/* Search Bar */}

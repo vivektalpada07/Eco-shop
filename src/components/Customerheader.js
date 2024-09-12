@@ -29,7 +29,7 @@ function CustomerHeader() {
 
   return (
     <Navbar expand="lg" className='Header'>
-      <Container className='Navbar' style={{marginTop: 10}}>
+      <Container className='Navbar'>
         {/* Branding for the navigation bar */}
         <Navbar.Brand href="/customer" className="protest-guerrilla-regular" style={{marginTop: 5}}>
           Eco Shop

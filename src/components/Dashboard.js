@@ -40,7 +40,6 @@ function Dashboard() {
             <div className='user-profile'>
                 <UserProfile /> {/* Render the user's profile component */}
             </div>
-            <Footer /> {/* Render the footer */}
         </div>
     );
 }
